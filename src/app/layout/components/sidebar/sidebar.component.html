@@ -1,0 +1,203 @@
+<nav class="sidebar" [ngClass]="{ sidebarPushRight: isActive }" [@routerTransition]
+>
+  <div class="list-group">
+    <div class="p-1"></div>
+    <a [routerLink]="['/admin/main']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+      <i class="fa fa-fw fa-home"></i>&nbsp;{{ 'sideBar.home' | translate }}
+    </a>
+
+    <div class="nested-menu">
+      <a class="list-group-item" (click)="addExpandClass('publication')">
+        <span><i class="fa fa-fw fa-desktop"></i>&nbsp; Quản lý Cân:</span>
+      </a>
+      <li class="nested" [class.expand]="showMenu === 'publication'">
+        <ul class="submenu">
+          <li>
+            <a class="fa fa-fw fa-list" style="width: 70%; font-size: 14px; text-align: left;"
+              [routerLink]="['/admin/can']" [routerLinkActive]="['router-link-active']">
+              Thêm cân
+            </a>
+          </li>
+<!--          <li>-->
+<!--            <a class="fa fa-fw fa-list" style="width: 70%; font-size: 14px; text-align: left;"-->
+<!--              [routerLink]="['/admin/khambenh']" [routerLinkActive]="['router-link-active']">-->
+<!--              Khám bệnh-->
+<!--            </a>-->
+<!--          </li>-->
+<!--          <li>-->
+<!--            <a class="fa fa-fw fa-list" style="width: 70%; font-size: 14px; text-align: left;"-->
+<!--              [routerLink]="['/admin/tomtatcc']" [routerLinkActive]="['router-link-active']">-->
+<!--              Sổ theo dõi-->
+<!--            </a>-->
+<!--          </li>-->
+          <!-- <li>
+            <a class="fa fa-fw fa-list" style="width: 70%; font-size: 14px; text-align: left;"
+              [routerLink]="['/admin/excelltool']" [routerLinkActive]="['router-link-active']">
+              Công cụ
+            </a>
+          </li> -->
+        </ul>
+      </li>
+    </div>
+
+<!--    <div class="nested-menu">-->
+<!--      <a class="list-group-item" (click)="addExpandClass('publication')">-->
+<!--        <span><i class="fa fa-fw fa-desktop"></i>&nbsp; Quản lý Thuốc:</span>-->
+<!--      </a>-->
+<!--      <li class="nested" [class.expand]="showMenu === 'publication'">-->
+<!--        <ul class="submenu">-->
+<!--          <li>-->
+<!--            <a class="fa fa-fw fa-list" style="width: 70%; font-size: 14px; text-align: left;"-->
+<!--              [routerLink]="['/admin/category']" [routerLinkActive]="['router-link-active']">-->
+<!--              Nhóm Thuốc-->
+<!--            </a>-->
+<!--          </li>-->
+<!--          <li>-->
+<!--            <a class="fa fa-fw fa-list" style="width: 70%; font-size: 14px; text-align: left;"-->
+<!--              [routerLink]="['/admin/thuoc']" [routerLinkActive]="['router-link-active']">-->
+<!--              Danh mục Thuốc-->
+<!--            </a>-->
+<!--          </li>-->
+<!--          <li>-->
+<!--            <a class="fa fa-fw fa-list" style="width: 70%; font-size: 14px; text-align: left;"-->
+<!--              [routerLink]="['/admin/thongke']" [routerLinkActive]="['router-link-active']">-->
+<!--              Thống kê-->
+<!--            </a>-->
+<!--          </li>-->
+<!--          <li>-->
+<!--            <a class="fa fa-fw fa-list" style="width: 70%; font-size: 14px; text-align: left;"-->
+<!--              [routerLink]="['/admin/nhacc']" [routerLinkActive]="['router-link-active']">-->
+<!--              Nhà cung cấp-->
+<!--            </a>-->
+<!--          </li>-->
+<!--          <li>-->
+<!--            <a class="fa fa-fw fa-list" style="width: 70%; font-size: 14px; text-align: left;"-->
+<!--              [routerLink]="['/admin/nhapthuoc']" [routerLinkActive]="['router-link-active']">-->
+<!--              Nhập Thuốc-->
+<!--            </a>-->
+<!--          </li>-->
+<!--          &lt;!&ndash; <li>-->
+<!--            <a class="fa fa-fw fa-list" style="width: 70%; font-size: 14px; text-align: left;"-->
+<!--              [routerLink]="['/admin/xuatthuoc']" [routerLinkActive]="['router-link-active']">-->
+<!--              Xuất Thuốc-->
+<!--            </a>-->
+<!--          </li> &ndash;&gt;-->
+<!--          <li>-->
+<!--            <a class="fa fa-fw fa-list" style="width: 70%; font-size: 14px; text-align: left;"-->
+<!--              [routerLink]="['/admin/nhaptieuhao']" [routerLinkActive]="['router-link-active']">-->
+<!--              Tiêu Hao - DV-->
+<!--            </a>-->
+<!--          </li>-->
+<!--          &lt;!&ndash; <li>-->
+<!--            <a class="fa fa-fw fa-list" style="width: 70%; font-size: 14px; text-align: left;"-->
+<!--              [routerLink]="['/admin/nhixuan']" [routerLinkActive]="['router-link-active']">-->
+<!--              Nhập Xuất-->
+<!--            </a>-->
+<!--          </li> &ndash;&gt;-->
+<!--        </ul>-->
+<!--      </li>-->
+<!--    </div>-->
+
+<!--    <div class="nested-menu">-->
+<!--      <a class="list-group-item" (click)="addExpandClass('publication')">-->
+<!--        &lt;!&ndash; <span><i class="fa fa-fw fa-cog"></i>&nbsp; {{ 'sideBar.settings' | translate }}</span> &ndash;&gt;-->
+<!--        <span><i class="fa fa-fw fa-cog"></i>&nbsp; Kế Toán </span>-->
+<!--      </a>-->
+<!--      <li class="nested" [class.expand]="showMenu === 'publication'">-->
+<!--        <ul class="submenu">-->
+<!--          <li>-->
+<!--            <a class="fa fa-fw fa-list" style="width: 70%; font-size: 14px; text-align: left;"-->
+<!--              [routerLink]="['/admin/patientreport']" [routerLinkActive]="['router-link-active']">-->
+<!--              BC bệnh nhân-->
+<!--            </a>-->
+<!--          </li>-->
+<!--          <li>-->
+<!--            <a class="fa fa-fw fa-list" style="width: 70%; font-size: 14px; text-align: left;"-->
+<!--              [routerLink]="['/admin/ketoanthongke']" [routerLinkActive]="['router-link-active']">-->
+<!--              BC Khu&Kho-->
+<!--            </a>-->
+<!--          </li>-->
+<!--          <li>-->
+<!--            <a class="fa fa-fw fa-list" style="width: 70%; font-size: 14px; text-align: left;"-->
+<!--              [routerLink]="['/admin/tonghop']" [routerLinkActive]="['router-link-active']">-->
+<!--              BC Tổng Hợp-->
+<!--            </a>-->
+<!--          </li>-->
+<!--          <li>-->
+<!--            <a class="fa fa-fw fa-list" style="width: 70%; font-size: 14px; text-align: left;"-->
+<!--              [routerLink]="['/admin/xuatnhapton']" [routerLinkActive]="['router-link-active']">-->
+<!--              Xuất Nhập Tồn-->
+<!--            </a>-->
+<!--          </li>-->
+<!--          <li>-->
+<!--            <a class="fa fa-fw fa-list" style="width: 70%; font-size: 14px; text-align: left;"-->
+<!--              [routerLink]="['/admin/thekho']" [routerLinkActive]="['router-link-active']">-->
+<!--              Thẻ Kho-->
+<!--            </a>-->
+<!--          </li>-->
+<!--          <li>-->
+<!--            <a class="fa fa-fw fa-list" style="width: 70%; font-size: 14px; text-align: left;"-->
+<!--              [routerLink]="['/admin/thuocreport']" [routerLinkActive]="['router-link-active']">-->
+<!--              BC Thuốc-->
+<!--            </a>-->
+<!--          </li>-->
+<!--        </ul>-->
+<!--      </li>-->
+<!--    </div>-->
+
+<!--    <div class="nested-menu">-->
+<!--      <a class="list-group-item" (click)="addExpandClass('publication')">-->
+<!--        &lt;!&ndash; <span><i class="fa fa-fw fa-cog"></i>&nbsp; {{ 'sideBar.settings' | translate }}</span> &ndash;&gt;-->
+<!--        <span><i class="fa fa-fw fa-cog"></i>&nbsp; Cài đặt Giá </span>-->
+<!--      </a>-->
+<!--      <li class="nested" [class.expand]="showMenu === 'publication'">-->
+<!--        <ul class="submenu">-->
+<!--          &lt;!&ndash; <li>-->
+<!--            <a class="fa fa-fw fa-list" style="width: 70%; font-size: 14px; text-align: left;"-->
+<!--              [routerLink]="['/admin/giathuoc']" [routerLinkActive]="['router-link-active']">-->
+<!--              Tiêu Hao-->
+<!--            </a>-->
+<!--          </li> &ndash;&gt;-->
+<!--          <li>-->
+<!--            <a class="fa fa-fw fa-list" style="width: 70%; font-size: 14px; text-align: left;"-->
+<!--              [routerLink]="['/admin/giacls']" [routerLinkActive]="['router-link-active']">-->
+<!--              Giá CLS-->
+<!--            </a>-->
+<!--          </li>-->
+<!--          <li>-->
+<!--            <a class="fa fa-fw fa-list" style="width: 70%; font-size: 14px; text-align: left;"-->
+<!--              [routerLink]="['/admin/parseexcel']" [routerLinkActive]="['router-link-active']">-->
+<!--              Nhập từ Excel-->
+<!--            </a>-->
+<!--          </li>-->
+<!--          <li>-->
+<!--            <a class="fa fa-fw fa-list" style="width: 70%; font-size: 14px; text-align: left;"-->
+<!--              [routerLink]="['/admin/pkbexcel']" [routerLinkActive]="['router-link-active']">-->
+<!--              PKB Excel-->
+<!--            </a>-->
+<!--          </li>-->
+<!--        </ul>-->
+<!--      </li>-->
+<!--    </div>-->
+    <!--
+    <a [routerLink]="['/charts']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+      <i class="fa fa-fw fa-bar-chart-o"></i>&nbsp;{{ 'Charts' | translate }}
+    </a>
+    <a [routerLink]="['/tables']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+      <i class="fa fa-fw fa-table"></i>&nbsp;{{ 'Tables' | translate }}
+    </a>
+    <a [routerLink]="['/forms']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+      <i class="fa fa-fw fa-edit"></i>&nbsp;{{ 'Forms' | translate }}
+    </a>
+    <a [routerLink]="['/bs-element']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+      <i class="fa fa-fw fa-desktop"></i>&nbsp;{{ 'Bootstrap Element' | translate }}
+    </a>
+    <a [routerLink]="['/grid']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+      <i class="fa fa-fw fa-wrench"></i>&nbsp;{{ 'Bootstrap Grid' | translate }}
+    </a>
+    <a [routerLink]="['/components']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+      <i class="fa fa-th-list"></i>&nbsp;{{ 'Component' | translate }}
+    </a>
+    -->
+  </div>
+</nav>

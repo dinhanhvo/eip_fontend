@@ -1,0 +1,69 @@
+$topnav-background-color: #222;
+
+:host {
+    .navbar {
+        background-color: $topnav-background-color;
+        padding: 0 1rem;
+
+        .navbar-brand {
+            color: #1976D2;
+            width: 235px;
+            margin-right: 0;
+            padding: 0;
+
+            .logo {
+                max-width: 235px;
+                max-height: 50px;
+            }
+        }
+
+        .nav-item>a {
+            color: #444;
+
+            &:hover {
+                color: #337ab7;
+            }
+        }
+
+        .sidebar-toggler {
+            border: 0;
+            background-color: inherit;
+            margin-right: 10px;
+            font-size: 1.5rem;
+        }
+    }
+
+    .navbar-default {
+        background-color: #f8f8f8;
+        border-color: #e7e7e7;
+    }
+
+    .messages {
+        width: 300px;
+
+        .media {
+            border-bottom: 1px solid #ddd;
+            padding: 5px 10px;
+
+            &:last-child {
+                border-bottom: none;
+            }
+        }
+
+        .media-body {
+            h5 {
+                font-size: 13px;
+                font-weight: 600;
+            }
+
+            .small {
+                margin: 0;
+            }
+
+            .last {
+                font-size: 12px;
+                margin: 0;
+            }
+        }
+    }
+}

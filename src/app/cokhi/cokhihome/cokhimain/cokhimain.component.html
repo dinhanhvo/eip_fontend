@@ -1,0 +1,55 @@
+<!-- <p>cokhimain works!</p> -->
+<div *ngIf="commonItems!=undefined">
+    <!-- {{commonItems | json}} -->
+<div class="p-grid" *ngIf="commonItems[0]!=undefined">
+    <div class="p-col-9" style=" padding-left: 40px; border-left: solid 5px red; margin-top: 20px;">
+        <h4 style="color: #0F1176;">
+            {{commonItems[0].description}}
+        </h4>
+    </div>
+</div>
+<div *ngIf="commonItems[1]!=undefined" class="p-grid" style="width: 100%; margin-top: 20px; background-color: #F5F5F5;">
+    <div class="p-col-12 p-md-6 p-lg-7" style="padding: 40px;">
+        <div class="box" >
+            <h4>
+                {{commonItems[1].description}}
+            </h4>
+            <!-- <br>
+            <h4>
+                {{commonItem[2]}}
+            </h4> -->
+        </div>
+    </div>
+    <div class="p-col-12 p-md-6 p-lg-5">
+        <div class="box">
+            <img src="{{commonItems[1].imagepath}}" style="width: 100%;"/>
+        </div>
+    </div>
+</div>
+</div>
+
+<!-- products -->
+<div  style="width: 100%; margin-top: 20px;">
+    <app-products></app-products>
+</div>
+
+<!-- Carousel -->
+<div *ngIf="products!=undefined" class="p-col-12"  style="margin-top: 20px; width: 1250px;">
+    <p-carousel headerText="Sản phẩm nổi bật" [value]="products" 
+    [style]="{'margin-top':'20px','margin-bottom':'20px'}"
+    [autoplayInterval]="3000">
+        <ng-template let-prod pTemplate="item">
+            <div class="ui-g" style="text-align:center">
+                <div class="ui-g-12"><img src="{{prod.imagepath}}" width="160"></div>
+                <div class="ui-g-6">Tên</div>
+                <div class="ui-g-6">{{prod.name}}</div>
+                
+                <div class="ui-g-6">Giá:</div>
+                <div class="ui-g-6">{{prod.price}}</div>
+                
+                <div class="ui-g-6">Đơn vị</div>
+                <div class="ui-g-6">{{prod.unit}}</div>
+            </div>
+        </ng-template>
+    </p-carousel>
+</div>

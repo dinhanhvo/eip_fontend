@@ -1,0 +1,33 @@
+<p-panel class="ad-panel">
+  <p-header>
+    <div class="p-2">{{ 'fmtStrategy.title' | translate }}</div>
+  </p-header>
+  <div class="px-3 pt-2">
+    <form class="cd-form">
+      <div *ngFor="let row of fmtRows" class="form-group form-row">
+        <label class="col-sm-2 text-right">{{ 'language' | translate }} ({{ row.lang }})</label>
+        <div class="col-sm-10">
+          <p-dropdown
+            name="strategy_{{ row.lang }}"
+            [options]="siStrategies"
+            [(ngModel)]="row.setting.value"
+            class="dropdown-sm"
+          ></p-dropdown>
+        </div>
+      </div>
+    </form>
+  </div>
+  <p-footer>
+    <div class="text-right">
+      <button type="button" pButton icon="fa fa-save" label="{{ 'save' | translate }}" (click)="onBtnOK()"></button>
+      <button
+        type="button"
+        class="ml-2"
+        pButton
+        icon="fa fa-undo"
+        label="{{ 'cancel' | translate }}"
+        (click)="onBtnCancel()"
+      ></button>
+    </div>
+  </p-footer>
+</p-panel>

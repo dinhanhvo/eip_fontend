@@ -1,0 +1,39 @@
+{
+  "bu": "Univers des affaires",
+  "dashboard": "Tableau de bord",
+  "download": "Télécharger",
+  "help": "Aidez-moi",
+  "language": "La langue",
+  "logOut": "Connectez - Out",
+  "open": "Ouvrir",
+  "save": "sauvegarder",
+  "saveAs": "Enregistrer sous..",
+  "saveAsFile": "Enregistrer en fichier",
+  "share": "Partager",
+  "version": "Version",
+  "hdrMnu": {
+    "changePwd": "Changer le mot de passe",
+    "downPdf": "Télécharger le fichier PDF",
+    "helpC": "Contenu de l'aide",
+    "newWb": "Nouveau tableau de bord",
+    "tools": "Outils"
+  },
+  "lang": {
+    "en": "Anglais",
+    "fr": "français",
+    "es": "Espanol",
+    "de": "allemand"
+  },
+  "sideBar": {
+    "adgConf": "Paramètres du générateur AD",
+    "dateNumFmt": "Format date et numéro",
+    "home": "Accueil",
+    "massPub": "Publication de masse",
+    "pub": "Publication",
+    "pubMng": "Gestionnaire de publication",
+    "resStatus": "Etat des ressources",
+    "searchPub": "Liste des tableaux de bord AD",
+    "startStopAdg": "Démarrer / Arrêter le générateur AD",
+    "settings": "Réglages"
+  }
+}

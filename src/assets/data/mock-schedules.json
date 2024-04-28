@@ -1,0 +1,246 @@
+{
+    "schedules": [
+        {
+            "name": "annual",
+            "status": "Pending",
+            "runtime": "00:00:12",
+            "runDate": "04-06-2018 10:30:00",
+            "nextRun": "04-05-2019 00:00:00",
+            "createdBy": "imx",
+            "repPeriods": 1,
+            "periodicity": "Annually",
+            "id": 8486406
+        },
+        {
+            "name": "bian",
+            "status": "Pending with no data",
+            "runtime": "00:00:03",
+            "runDate": "04-06-2018 10:30:00",
+            "nextRun": "10-05-2018 00:00:00",
+            "createdBy": "imx",
+            "repPeriods": 1,
+            "periodicity": "Biannually",
+            "id": 8486405
+        },
+        {
+            "name": "BivanovTest",
+            "status": "Completed",
+            "runtime": "00:00:06",
+            "runDate": "06-28-2018 12:54:00",
+            "nextRun": "",
+            "createdBy": "imx",
+            "repPeriods": 1,
+            "periodicity": "Once",
+            "id": 8973252
+        },
+        {
+            "name": "Bozhidar Test",
+            "status": "Completed with warning",
+            "runtime": "00:00:09",
+            "runDate": "05-10-2018 14:48:00",
+            "nextRun": "",
+            "createdBy": "imx",
+            "repPeriods": 1,
+            "periodicity": "Once",
+            "id": 8680551
+        },
+        {
+            "name": "Bozhidar_Test_Name",
+            "status": "Completed",
+            "runtime": "00:00:03",
+            "runDate": "05-25-2018 14:57:00",
+            "nextRun": "",
+            "createdBy": "imx",
+            "repPeriods": 1,
+            "periodicity": "Once",
+            "id": 8846550
+        },
+        {
+            "name": "HUY_TEST",
+            "status": "Unscheduled",
+            "runtime": "",
+            "runDate": "",
+            "nextRun": "",
+            "createdBy": "imx",
+            "repPeriods": 1,
+            "periodicity": "Once",
+            "id": 8973800
+        },
+        {
+            "name": "monthly-pdf",
+            "status": "Expired",
+            "runtime": "00:00:30",
+            "runDate": "07-06-2018 00:00:00",
+            "nextRun": "08-06-2018 00:00:00",
+            "createdBy": "imx",
+            "repPeriods": 1,
+            "periodicity": "Monthly",
+            "id": 8486403
+        },
+        {
+            "name": "Nhi",
+            "status": "Completed",
+            "runtime": "00: 00: 14",
+            "runDate": "06-29-2018 13: 56: 00",
+            "nextRun": "",
+            "createdBy": "imx",
+            "repPeriods": 1,
+            "periodicity": "Once",
+            "id": 8973848
+        },
+        {
+            "name": "Nhi",
+            "status": "Completed",
+            "runtime": "00: 00: 04",
+            "runDate": "07-16-2018 12: 00: 00",
+            "nextRun": "",
+            "createdBy": "imx",
+            "repPeriods": 1,
+            "periodicity": "Once",
+            "id": 8973251
+        },
+        {
+            "name": "Nhi_1",
+            "status": "Completed",
+            "runtime": "00: 00: 13",
+            "runDate": "06-29-2018 14: 06: 00",
+            "nextRun": "",
+            "createdBy": "imx",
+            "repPeriods": 1,
+            "periodicity": "Once",
+            "id": 8973849
+        },
+        {
+            "name": "Nhi_a",
+            "status": "Completed",
+            "runtime": "00: 00: 14",
+            "runDate": "07-02-2018 09: 35: 00",
+            "nextRun": "",
+            "createdBy": "imx",
+            "repPeriods": 1,
+            "periodicity": "Once",
+            "id": 8985500
+        },
+        {
+            "name": "once_2003",
+            "status": "Completed",
+            "runtime": "00: 00: 12",
+            "runDate": "04-06-2018 09: 58: 00",
+            "nextRun": "",
+            "createdBy": "imx",
+            "repPeriods": 1,
+            "periodicity": "Once",
+            "id": 8486400
+        },
+        {
+            "name": "quarterly",
+            "status": "Pending with no data",
+            "runtime": "00: 00: 08",
+            "runDate": "07-05-2018 00: 00: 00",
+            "nextRun": "10-05-2018 00: 00: 00",
+            "createdBy": "imx",
+            "repPeriods": 1,
+            "periodicity": "Quarterly",
+            "id": 8486404
+        },
+        {
+            "name": "test_mail_distribution",
+            "status": "Completed",
+            "runtime": "00: 00: 03",
+            "runDate": "06-25-2018 21: 54: 00",
+            "nextRun": "",
+            "createdBy": "imx",
+            "repPeriods": 1,
+            "periodicity": "Once",
+            "id": 8964250
+        },
+        {
+            "name": "TestBivanov",
+            "status": "Completed",
+            "runtime": "00: 00: 05",
+            "runDate": "06-28-2018 12: 47: 00",
+            "nextRun": "",
+            "createdBy": "imx",
+            "repPeriods": 1,
+            "periodicity": "Once",
+            "id": 8973250
+        },
+        {
+            "name": "TestBivanovCSV",
+            "status": "Completed",
+            "runtime": "00: 00: 03",
+            "runDate": "06-27-2018 16: 08: 00",
+            "nextRun": "",
+            "createdBy": "imx",
+            "repPeriods": 1,
+            "periodicity": "Once",
+            "id": 8971400
+        },
+        {
+            "name": "testPDF",
+            "status": "Expired",
+            "runtime": "",
+            "runDate": "",
+            "nextRun": "",
+            "createdBy": "imx",
+            "repPeriods": 1,
+            "periodicity": "Once",
+            "id": 8980682
+        },
+        {
+            "name": "TestPublicationBozhidar",
+            "status": "Completed with warning",
+            "runtime": "00: 00: 18",
+            "runDate": "05-10-2018 13: 54: 00",
+            "nextRun": "",
+            "createdBy": "imx",
+            "repPeriods": 1,
+            "periodicity": "Once",
+            "id": 8680550
+        },
+        {
+            "name": "tst1",
+            "status": "Completed with warning",
+            "runtime": "00: 00: 02",
+            "runDate": "07-27-2018 08: 28: 00",
+            "nextRun": "",
+            "createdBy": "imx",
+            "repPeriods": 1,
+            "periodicity": "Once",
+            "id": 9082350
+        },
+        {
+            "name": "tst2",
+            "status": "Completed with warning",
+            "runtime": "00: 00: 02",
+            "runDate": "07-26-2018 07: 21: 00",
+            "nextRun": "",
+            "createdBy": "imx",
+            "repPeriods": 1,
+            "periodicity": "Once",
+            "id": 9082351
+        },
+        {
+            "name": "tst3",
+            "status": "Completed with warning",
+            "runtime": "00: 00: 02",
+            "runDate": "07-27-2018 08: 28: 00",
+            "nextRun": "",
+            "createdBy": "imx",
+            "repPeriods": 1,
+            "periodicity": "Once",
+            "id": 9082352
+        },
+        {
+            "name": "weekly-csv",
+            "status": "Fault",
+            "runtime": "00: 00: 00",
+            "runDate": "08-17-2018 00: 00: 00",
+            "nextRun": "",
+            "createdBy": "imx",
+            "repPeriods": 1,
+            "periodicity": "Weekly",
+            "id": 8486402
+        }
+    ]
+}

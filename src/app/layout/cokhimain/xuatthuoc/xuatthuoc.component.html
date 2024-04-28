@@ -1,0 +1,246 @@
+<p-toast [style]="{marginTop: '80px'}"></p-toast>
+<p-accordion [multiple]="true">
+  <p-accordionTab header="Xuất thuốc" [selected]="true">
+    <br>
+    <div class="row ">
+      <div class="col-1"></div>
+      <div class="col-3">
+        Ngày: <p-calendar [(ngModel)]="phieuxuatForm.exported_at" [showIcon]="true" dateFormat="dd/mm/yy"
+          name="exported_at"></p-calendar>
+      </div>
+      <!-- Kho-MaLo -->
+      <div class="col-3 r">
+        Kho:
+        <p-dropdown [options]="khoNhaps" optionLabel="name" (onChange)="changeKho()" placeholder="Chọn kho"
+          [(ngModel)]="phieuxuatForm.kho" name="khoXuat">
+        </p-dropdown>
+        <!-- {{phieuxuatForm.kho.name}} -->
+      </div>
+      <!-- KHU -->
+      <div class="col-3">
+        Khu:
+        <p-dropdown [options]="khuXuats" optionLabel="name" placeholder="Chọn khu" (onChange)="changeKhu()"
+          [(ngModel)]="phieuxuatForm.khu" name="khuXuat">
+        </p-dropdown>
+      </div>
+      <div class="col-2">
+        <span style="float: left;">
+          <button type="button" pButton icon="fa fa-check" (click)="xemDanhSach()" label="Xem">
+          </button>
+        </span>
+      </div>
+
+    </div>
+    <br>
+    <!-- [disabled]="selectedPatient.patientName==undefined"  -->
+    <div>
+      <p-pickList [source]="listYCRow" [target]="targetYCKBs" sourceHeader="Danh sách thuốc yêu cầu"
+        targetHeader="Danh sách xuất" [responsive]="true" filterBy="tenthuoc" dragdrop="true"
+        sourceFilterPlaceholder="Tìm theo tên thuốc" targetFilterPlaceholder="Tìm theo tên thuốc"
+        [sourceStyle]="{'height':'500px'}" [targetStyle]="{'height':'500px'}">
+        <ng-template let-car pTemplate="item">
+          <div class="ui-helper-clearfix">
+            <!-- <img src="assets/showcase/images/demo/car/{{car.brand}}.png" style="display:inline-block;margin:2px 0 2px 2px" width="48"> -->
+            <div style="display:inline-block;" width="48">
+              {{car.stt}}.<b>{{car.tenthuoc}}</b>
+            </div>
+            <div style="font-size:14px;float:right;">{{car.soluong}} - {{car.unit}} </div>
+          </div>
+        </ng-template>
+      </p-pickList>
+    </div>
+    <br>
+    <br>
+    <div class="row" style="align-items: center; width: 100%; 
+            justify-content: center;">
+      <button type="button" style="width: 150px; height: 30px;" pButton icon="fa fa-check" (click)="xuat()"
+        label="Xuất">
+      </button>
+    </div>
+    <br>
+
+  </p-accordionTab>
+  <br>
+  <p-accordionTab header="Tìm kiếm">
+    <!-- Search form -->
+    <div class="row">
+      <div class="p-col-2"></div>
+      <div class="p-col-3">
+        Kho:
+        <p-dropdown [options]="khoNhaps" optionLabel="name" 
+          (onChange)="changeKho()" [(ngModel)]="selectedKhoXuat"
+          name="khoXuat">
+        </p-dropdown>
+      </div>
+      <div class="p-col-2">
+        Khu:
+        <p-dropdown [options]="khuXuats" optionLabel="name" placeholder="Chọn khu" [(ngModel)]="selectedKhuXuat"
+          name="khuXuat">
+        </p-dropdown>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="p-col-2"></div>
+      <div class="p-col-3">
+        Từ:
+        <p-calendar [(ngModel)]="xuatFrom" [showIcon]="true" dateFormat="dd/mm/yy"></p-calendar>
+      </div>
+      <div class="p-col-3">
+        Đến:
+        <p-calendar [(ngModel)]="xuatTo" [showIcon]="true" dateFormat="dd/mm/yy" [minDate]="xuatFrom"></p-calendar>
+      </div>
+      <div class="p-col-4">
+        <button type="button" pButton icon="fa fa-check" (click)="timPhieuXuat()" label="Tìm">
+        </button>
+      </div>
+    </div>
+    <br>
+    <!-- table -->
+    <div class="p-grid">
+    </div>
+  </p-accordionTab>
+  <br>
+  <!-- table -->
+  <p-accordionTab header="Danh Sách phiếu Xuất">
+    <div class="shadow-sm card" style="width: 100%;">
+      <p-table #dt [columns]="cols" [value]="listphieuxuatTable" selectionMode="single" [(selection)]="phieuxuatTable"
+        (onRowSelect)="onRowSelect($event)" [paginator]="true" [rows]="25">
+        <ng-template pTemplate="caption">
+          <!-- Danh sách Phiếu nhập -->
+          <div style="text-align: right">
+            <i class="pi pi-search" style="margin:4px 4px 0 0"></i>
+            <input type="text" pInputText size="50" placeholder="Tìm tt chung"
+              (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+          </div>
+        </ng-template>
+        <!-- <ng-template pTemplate="caption">
+              <div class="ui-helper-clearfix" style="text-align: left">
+                  <button type="button" pButton icon="pi pi-file-excel" iconPos="left" 
+                    label="EXCEL" (click)="exportDanhsachNhap()"
+                    style="margin-right: 0.5em; float:right" class="ui-button-success">
+                  </button>
+              </div>
+          </ng-template> -->
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+              {{col.header}}
+              <p-sortIcon [field]="col.field"></p-sortIcon>
+            </th>
+          </tr>
+          <tr>
+            <th *ngFor="let col of columns" [ngSwitch]="col.field">
+              <div *ngSwitchCase="'imported_at'"> ngày/tháng/năm</div>
+              <input *ngSwitchCase="'shd'" pInputText type="text"
+                (input)="dt.filter($event.target.value, col.field, 'contains')">
+              <input *ngSwitchCase="'mact'" pInputText type="text"
+                (input)="dt.filter($event.target.value, col.field, 'contains')">
+              <input *ngSwitchCase="'mst'" pInputText type="text"
+                (input)="dt.filter($event.target.value, col.field, 'contains')">
+              <input *ngSwitchCase="'sdt'" pInputText type="text"
+                (input)="dt.filter($event.target.value, col.field, 'contains')">
+              <input *ngSwitchCase="'name'" pInputText type="text"
+                (input)="dt.filter($event.target.value, col.field, 'contains')">
+            </th>
+          </tr>
+          <tr>
+            <th *ngFor="let col of columns" [ngSwitch]="col.field">
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+          <tr [pSelectableRow]="rowData">
+            <td *ngFor="let col of columns">
+              <div>
+                {{rowData[col.field]}}
+              </div>
+              <!-- <div  *ngIf="col.field=='ngaykham'">
+                    {{formatDate(rowData[col.field])}}
+                  </div>
+                  <div  *ngIf="col.field==='clsjs'">
+                    {{getNXOptionsNames(rowData[col.field])}}
+                  </div>
+                  <div  *ngIf="col.field==='ketluan'">
+                    {{rowData[col.field]}}
+                  </div>
+                  <div  *ngIf="col.field==='mabenhnhan' || col.field==='khu_name' || col.field==='fullname'">
+                    {{rowData[col.field]}}
+                  </div> -->
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+    <div>
+    </div>
+  </p-accordionTab>
+</p-accordion>
+
+<div *ngIf="phieuxuatTable">
+  <p-dialog header="Chọn hành động!" [(visible)]="displayDialog" [responsive]="true" showEffect="fade"
+    class="ui-dialog-titlebar" [modal]="true" [style]="{width: '700px'}">
+    <form #phieukhambenhForm="ngForm">
+      <!-- Dialog confirm -->
+      <div>
+        <!-- <div class="ui-g">
+          <div class="ui-g-12 ui-md-4 ui-lg-4" style="text-align: center">Số hóa đơn:</div>
+          <div class="ui-g-12 ui-md-8 ui-lg-8">
+            <b>{{phieuxuatTable.shd}}</b>
+          </div>
+        </div> -->
+        <div class="ui-g">
+          <div class="ui-g-12 ui-md-4 ui-lg-4" style="text-align: center">Kho:</div>
+          <div class="ui-g-12 ui-md-8 ui-lg-8">
+            <b>{{phieuxuatTable.kho}}</b>
+          </div>
+        </div>
+        <div class="ui-g">
+          <div class="ui-g-12 ui-md-4 ui-lg-4" style="text-align: center">Khu:</div>
+          <div class="ui-g-12 ui-md-8 ui-lg-8">
+            <b>{{phieuxuatTable.khu}}</b>
+          </div>
+        </div>
+        <div class="ui-g">
+          <div class="ui-g-12 ui-md-4 ui-lg-4" style="text-align: center">Ngày xuất:</div>
+          <div class="ui-g-12 ui-md-8 ui-lg-8">
+            <b>{{phieuxuatTable.exported_at}}</b>
+          </div>
+        </div>
+        <!-- <div class="ui-g">
+          <div class="ui-g-12 ui-md-4 ui-lg-4" style="text-align: center">Tổng tiền:</div>
+          <div class="ui-g-12 ui-md-8 ui-lg-8">
+            <b>{{phieuxuatTable.numthuocs}}</b>
+          </div>
+        </div> -->
+      </div>
+      <br>
+      <br>
+      <div class="ui-dialog-buttonpane ui-helper-clearfix">
+        <div style="float: right; margin-right: 10px;">
+          <button type="button" pButton icon="fa fa-check" (click)="cancelDel()" label="Đóng"
+            class="ui-button-rounded ui-button-success"></button>
+        </div>
+        <div style="float: right; margin-right: 10px;">
+          <button type="button" pButton icon="fa fa-pen" (click)="editPhieu()" label="Sửa"
+            class="ui-button-rounded ui-button-success"></button>
+        </div>
+        <!-- <div style="float: right; margin-right: 10px;">
+          <button type="button" pButton icon="fa fa-copy" (click)="copyPhieu()" label="Copy"
+          class="ui-button-rounded ui-button-success"
+          ></button>
+        </div> -->
+        <div style="float: right; margin-right: 10px;">
+          <button type="button" pButton icon="fa fa-copy" (click)="xemChiTietPhieu()" label="Xem Chi Tiết"
+            class="ui-button-rounded ui-button-warning">
+          </button>
+        </div>
+        <div style="float: left; ">
+          <button type="button" pButton icon="fa fa-close" (click)="delete()" class="ui-button-raised ui-button-danger"
+            label="Xóa Phiếu Xuất">
+          </button>
+        </div>
+      </div>
+    </form>
+  </p-dialog>
+</div>

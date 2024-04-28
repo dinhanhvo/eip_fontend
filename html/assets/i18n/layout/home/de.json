@@ -1,0 +1,9 @@
+{
+  "main": {
+    "delete": "Löschen",
+    "home": "Zuhause",
+    "listOfWbs": "Liste der Dashboards",
+    "openWb": "Öffnen Sie das Dashboard",
+    "sharing": "Teilen ..."
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "langs": [
+    "en",
+    "fr",
+    "es",
+    "de"
+  ],
+  "profiles": [
+    {
+      "name": "PRODUCT SERVER",
+      "api": "http://128.199.74.135:8089/api",
+      "default": false
+    },
+    {
+      "name": "LOCAL SERVER",
+      "api": "http://localhost:8089/api",
+      "default": true
+    }
+  ]
+}

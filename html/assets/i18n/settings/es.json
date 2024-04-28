@@ -1,0 +1,20 @@
+{
+  "cancel": "Cancelar",
+  "disabled": "Discapacitado",
+  "enabled": "Habilitado",
+  "lang": "Idioma",
+  "minutes": "minutos",
+  "ok": "Okay",
+  "save": "Salvar",
+  "fmtStrategy": {
+    "title": "Elija la estrategia de formato de fecha y número"
+  },
+  "resStatus": {
+    "title": "Configuración de recopilación de estado de recursos",
+    "lblColRes": "Recopilar estado del recurso",
+    "lblColPeriod": "Recopilar el estado de los recursos cada",
+    "lblCleanUp": "Datos de estado de limpieza",
+    "lblClJobInt": "Intervalo de trabajo de limpieza",
+    "lblCleanAfter": "Datos de estado limpios después"
+  }
+}

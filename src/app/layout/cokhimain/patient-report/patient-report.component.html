@@ -1,0 +1,407 @@
+<p-toast [style]="{marginTop: '80px'}"></p-toast>
+    <!-- <p-tabPanel header="THỐNG KÊ THEO BỆNH NHÂN" > -->
+<p-tabView (onChange)="onTabChange()">
+    <p-tabPanel header="Tổng hợp theo 1 Bệnh nhân">
+        <div class="ui-g-12">
+            <div class="ui-g-2" style="text-align: right;">
+                <i class="fa fa-user-circle" aria-hidden="true"></i>Bệnh nhân:
+            </div>
+            <div class="ui-g-3">
+                <p-dropdown [options]="patients" optionLabel="fullname" [autoDisplayFirst]="false" placeholder="tenNamSinh"
+                    [filter]="true" (onChange)="changePatient()" [(ngModel)]="selectedPatient" name="patientFullname">
+                </p-dropdown>
+                <p-dropdown [options]="patients" placeholder="Mã" optionLabel="patientId" [autoDisplayFirst]="false"
+                    [filter]="true" (onChange)="changePatient()" [(ngModel)]="selectedPatient" name="patientId">
+                </p-dropdown>
+        
+            </div>
+            <div class="ui-g-1" style="text-align: right;">
+                Tên:
+            </div>
+            <div class="ui-g-3">
+                <p-dropdown [options]="patients" placeholder="Tên" optionLabel="patientName" [(ngModel)]="selectedPatient"
+                    (onChange)="changePatient()" name="patientName" [filter]="true" [autoDisplayFirst]="false">
+                </p-dropdown>
+            </div>
+            <div class="ui-g-3">
+                Năm sinh: <b>{{selectedPatient.birthYear}}</b>
+                <!-- <br> Khu: <b>{{selectedPatient.khu}}</b> -->
+                <br> Mã BN: <b>{{selectedPatient.patientId}}</b>
+                <br> Địa chỉ: <b>{{selectedPatient.address}}</b>
+            </div>
+        </div>
+        <div class="p-grid">
+            <!-- <div class="p-col-2">
+                </div> -->
+            <div class="p-col-2">
+                <div style="float: right;" class="label">
+                    Từ ngày: </div>
+            </div>
+            <div class="p-col-3">
+                <span class="ui-float-label">
+                    <p-calendar [(ngModel)]="theodoiFrom" [showIcon]="true" dateFormat="dd/mm/yy" name="theodoiFrom">
+                    </p-calendar>
+                </span>
+            </div>
+            <div class="p-col-1">
+                <div style="float: right;" class="label">
+                    Đến ngày:
+                </div>
+            </div>
+            <div class="p-col-6" style="float: right;">
+                <!-- <span class="ui-float-label"> -->
+                <p-calendar [(ngModel)]="theodoiTo" [showIcon]="true" dateFormat="dd/mm/yy" name="theodoiTo"
+                    [minDate]="theodoiFrom">
+                </p-calendar>
+                <!-- </span> -->
+                <span style="float: right;">
+                    <button type="button" pButton icon="fa fa-check" (click)="xemBaoCao()"
+                        [disabled]="selectedPatient.patientName==undefined" label="Xem"></button>
+                </span>
+            </div>
+        </div>
+        <p-table #dttt [columns]="tkTheoDoiTTCols" [value]="tkTheoDoiTTRows"
+         [loading]="searching" [autoLayout]="true" dataKey="typename"
+            [resizableColumns]="true">
+            <ng-template pTemplate="caption">
+                Danh sách thuốc
+                <div class="ui-helper-clearfix" style="text-align: left">
+                    <button type="button" pButton icon="pi pi-file-excel" iconPos="left" label="EXCEL"
+                        (click)="exportDSTT()" style="margin-right: 0.5em; float:right" class="ui-button-success"></button>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header" let-columns>
+                <tr>
+                    <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                        <div *ngIf="col.field != 'typename'">
+                            {{col.header}}
+                        </div>
+                    </th>
+                </tr>
+                <!-- <tr>
+                    <th *ngFor="let col of columns" [ngSwitch]="col.field">
+                    </th>
+                </tr> -->
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" let-expanded="expanded" let-columns="columns">
+                <tr class="ui-widget-header" *ngIf="rowGroupMetadata[rowData.typename].index === rowIndex"
+                    style="background-color: #7aa3f0; font-size: 14px; font-weight: bold">
+                    <td colspan="6">
+                        <a href="#" [pRowToggler]="rowData" style="color:blue; background-color: #7aa3f0; font-size: 14px; font-weight: bold">
+                            <i [ngClass]="expanded ? 'fa fa-fw fa-chevron-circle-down' : 'fa fa-fw fa-chevron-circle-right'"></i>
+                            <span>{{rowData.typename}}</span>
+                        </a>
+                    </td>
+                    <!-- <td>
+                    </td> -->
+                    <td>
+                        <span>
+                        Tổng: 
+                        <b *ngIf="sumamryData && sumamryData.length > 0" style="color: blue">
+                            {{sumamryData[rowGroupMetadata[rowData.typename].stt].tong  | number}}
+                        </b>
+                        </span>
+                    </td>
+                </tr>
+                <!-- <tr>
+                    {{rowData.typename}}
+                </tr> -->
+                <!-- <tr [pSelectableRow]="rowData">
+                    <td *ngFor="let col of columns">
+                        {{rowData[col.field]}}
+                    </td>
+                </tr> -->
+            </ng-template>
+            <ng-template pTemplate="rowexpansion" let-rowData let-rowIndex="rowIndex" let-columns="columns">
+                <tr [pSelectableRow]="rowData">
+                    <td *ngFor="let col of columns">
+                        <div *ngIf="col.field!=='typename'">
+                            <div *ngIf="col.field=='dongia' || col.field=='soluong' || col.field=='thanhtien'; else num0"> 
+                                {{rowData[col.field] | number}}
+                            </div>
+
+                            <ng-template #num0>
+                                {{rowData[col.field]}}
+                            </ng-template>
+                        </div>  
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage" let-columns>
+                <tr>
+                    <td [attr.colspan]="columns.length" style="text-align: center; height: 150px; font-weight: bold;">
+                        Không có dữ liệu ngày {{theodoiFrom | date: 'dd/MM'}} tới ngày {{theodoiTo | date: 'dd/MM/yyyy'}}
+                    </td>
+                </tr>
+            </ng-template>
+            <!-- <ng-template pTemplate="footer" let-columns>
+                <tr>
+                    <td colspan="6">
+
+                    </td>
+                    <td>
+                        Tổng tiền thuốc: 
+                        <b>
+                            {{sumamryData[sumamryData.length - 1].tong | number}}
+                        </b>
+                    </td>
+                </tr>
+            </ng-template> -->
+            <ng-template pTemplate="summary">
+                <span>
+                Tổng tiền thuốc: 
+                <!-- <div *ngIf="sumamryData && sumamryData.length > 0" style="color: blue"> -->
+                    <b *ngIf="sumamryData && sumamryData.length > 0" style="color: blue">
+                        {{sumamryData[sumamryData.length - 1].tong | number}}
+                    </b>
+                <!-- </div> -->
+                </span>
+            </ng-template>
+        </p-table>
+        <br>
+        <p-table #dtPkb [columns]="colsPkbs" [value]="listPkb" 
+        selectionMode="single"
+         [(selection)]="pkbSelected"
+        (onRowSelect)="onRowSelectPkb()" 
+        [autoLayout]="true"
+        [paginator]="true" [rows]="25">
+        <ng-template pTemplate="caption">
+            Danh sách Khám bệnh
+            <div style="text-align: right">
+                <i class="pi pi-search" style="margin:4px 4px 0 0"></i>
+                <input type="text" pInputText size="50" placeholder="Tìm tt chung"
+                    (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+            </div>
+            <div class="ui-helper-clearfix" style="text-align: left">
+                <button type="button" pButton icon="pi pi-file-excel" iconPos="left" label="EXCEL"
+                    (click)="exportDSHV('tổng hợp')" style="margin-right: 0.5em; float:right" class="ui-button-success"></button>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                    {{col.header}}
+                    <p-sortIcon [field]="col.field"></p-sortIcon>
+                </th>
+            </tr>
+            <tr>
+                <th *ngFor="let col of columns" [ngSwitch]="col.field">
+                    <div *ngSwitchCase="'exported_at'"> ngày/tháng/năm</div>
+                    <input *ngSwitchCase="'kho'" pInputText type="text"
+                        (input)="dt.filter($event.target.value, col.field, 'contains')">
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+            <tr [pSelectableRow]="rowData">
+                <td *ngFor="let col of columns">
+                    <div *ngIf="col.field=='ngaykham'; else notdate">
+                        {{rowData[col.field] | date:'dd/MM/yyy'}}
+                      </div>
+                      <ng-template #notdate>
+                        <div *ngIf="col.field=='mabenhnhan' || col.field=='fullname' || col.field=='khu'; else num"> 
+                            {{rowData[col.field]}}
+                          </div>
+                      </ng-template>
+                      <ng-template #num>
+                          {{rowData[col.field] | number}}
+                      </ng-template>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+            TỔNG TIỀN THANH TOÁN: 
+            <b *ngIf="sumamryData && sumamryData.length > 0" style="color: blue; font-size: 18px">
+                {{TTT | number}}
+            </b>
+        </ng-template>
+        </p-table>        
+    </p-tabPanel>    
+    <p-tabPanel header="Danh Sách Tính Tiền Thuốc theo ngày">
+        <div class="ui-g">
+            <div class="ui-g-3">
+                Kho:
+                <p-dropdown [options]="khoNhaps" optionLabel="name"
+                    (onChange)="changeKho()"
+                    [(ngModel)]="kho" name="kho">
+                </p-dropdown>
+            </div>
+            <div class="ui-g-7">
+                Ngày:
+            <!-- <span class="ui-float-label"> -->
+                <p-calendar [(ngModel)]="theodoiFrom" [showIcon]="true"
+                dateFormat="dd/mm/yy"
+                [maxDate]="theodoiTo"
+                >
+              </p-calendar>
+              <p-calendar [(ngModel)]="theodoiTo" [showIcon]="true"
+                name="thuocphatTo"
+                [minDate]="theodoiFrom"
+                dateFormat="dd/mm/yy"
+                >
+              </p-calendar>
+              <!-- </span> -->
+              <span style="float: right;">
+                  <button type="button" pButton icon="fa fa-check" 
+                  (click)="xemTHTheongay()" label="Xem"></button>
+              </span>
+            </div>
+            <div class="ui-g-2">
+                <!-- <div class="ui-helper-clearfix" style="text-align: left"> -->
+                <button type="button" pButton icon="pi pi-file-excel" iconPos="left" label="EXCEL"
+                    (click)="exportTHTienthuocTheongay()" style="margin-right: 0.5em; float:right" class="ui-button-success"></button>
+                <!-- </div> -->
+            </div>
+
+        </div>
+        <p-table #dtngay [columns]="colsHVTheongay" [value]="listHVTheongay" 
+            selectionMode="single"
+            [loading]="searching"
+            [(selection)]="rowSelected"
+            (onRowSelect)="onRowSelect()" 
+            [autoLayout]="true"
+            [paginator]="true" [rows]="25">
+            <ng-template pTemplate="caption">
+                TỔNG HỢP TIỀN THUỐC THEO TỪNG NGÀY
+                <div style="text-align: right">
+                    <i class="pi pi-search" style="margin:4px 4px 0 0"></i>
+                    <input type="text" pInputText size="50" placeholder="Tìm tt chung"
+                        (input)="dtngay.filterGlobal($event.target.value, 'contains')" style="width:auto">
+                </div>
+
+            </ng-template>
+            <ng-template pTemplate="header" let-columns>
+                <tr>
+                    <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                        {{col.header}}
+                        <p-sortIcon [field]="col.field"></p-sortIcon>
+                    </th>
+                </tr>
+                <tr>
+                    <th *ngFor="let col of columns" [ngSwitch]="col.field">
+                        <div *ngSwitchCase="'exported_at'"> ngày/tháng/năm</div>
+                        <input *ngSwitchCase="'mabenhnhan'" pInputText type="text"
+                            (input)="dtngay.filter($event.target.value, col.field, 'contains')">
+                        <input *ngSwitchCase="'fullname'" pInputText type="text"
+                        (input)="dtngay.filter($event.target.value, col.field, 'contains')">
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData let-columns="columns">
+                <tr [pSelectableRow]="rowData">
+                    <td *ngFor="let col of columns">
+                        <div *ngIf="col.field=='ngaykham'; else notdate">
+                            {{rowData[col.field] | date:'dd/MM/yyy'}}
+                        </div>
+                        <ng-template #notdate>
+                            <div *ngIf="col.field=='mabenhnhan' || 
+                            col.field=='fullname' ||
+                            col.field=='birth_year'; else num">
+                            {{rowData[col.field]}}
+
+                            </div>
+                        </ng-template>
+                        <ng-template #num>
+                            {{rowData[col.field] | number}}
+                        </ng-template>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </p-tabPanel>  
+    <p-tabPanel header="Danh Sách Tính Tiền Khám bệnh ">
+        <div class="ui-g">
+            <div class="ui-g-3">
+                Kho:
+                <p-dropdown [options]="khoNhaps" optionLabel="name"
+                    (onChange)="changeKho()"
+                    [(ngModel)]="kho" name="kho">
+                </p-dropdown>
+            </div>
+            <div class="ui-g-7">
+                Ngày:
+            <!-- <span class="ui-float-label"> -->
+                <p-calendar [(ngModel)]="theodoiFrom" [showIcon]="true"
+                dateFormat="dd/mm/yy"
+                [maxDate]="theodoiTo"
+                >
+              </p-calendar>
+              <p-calendar [(ngModel)]="theodoiTo" [showIcon]="true"
+                name="thuocphatTo"
+                [minDate]="theodoiFrom"
+                dateFormat="dd/mm/yy"
+                >
+              </p-calendar>
+              <!-- </span> -->
+              <span style="float: right;">
+                  <button type="button" pButton icon="fa fa-check" 
+                  (click)="xemTT()" label="Xem"></button>
+              </span>
+              </div>
+            <div class="ui-g-2">
+                <!-- <div class="ui-helper-clearfix" style="text-align: left"> -->
+                    <button type="button" pButton icon="pi pi-file-excel" iconPos="left" label="EXCEL"
+                        (click)="exportDSHV('học viên')" style="margin-right: 0.5em; float:right" class="ui-button-success"></button>
+                <!-- </div> -->
+    
+            </div>
+
+        </div>
+        <p-table #dt [columns]="colsHV" [value]="listHV" 
+        selectionMode="single"
+         [(selection)]="rowSelected"
+        (onRowSelect)="onRowSelect()" 
+        [autoLayout]="true"
+        [paginator]="true" [rows]="25">
+        <ng-template pTemplate="caption">
+            Danh sách Bệnh Nhân
+            <div style="text-align: right">
+                <i class="pi pi-search" style="margin:4px 4px 0 0"></i>
+                <input type="text" pInputText size="50" placeholder="Tìm tt chung"
+                    (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                    {{col.header}}
+                    <p-sortIcon [field]="col.field"></p-sortIcon>
+                </th>
+            </tr>
+            <tr>
+                <th *ngFor="let col of columns" [ngSwitch]="col.field">
+                    <div *ngSwitchCase="'exported_at'"> ngày/tháng/năm</div>
+                    <input *ngSwitchCase="'kho'" pInputText type="text"
+                        (input)="dt.filter($event.target.value, col.field, 'contains')">
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+            <tr [pSelectableRow]="rowData">
+                <td *ngFor="let col of columns">
+                    <div *ngIf="col.field=='ngaykham'; else notdate">
+                        {{rowData[col.field] | date:'dd/MM/yyy'}}
+                    </div>
+                    <ng-template #notdate>
+                        <div *ngIf="col.field=='mabenhnhan' || 
+                        col.field=='fullname' ||
+                         col.field=='khu'; else num">
+                         {{rowData[col.field]}}
+
+                        </div>
+                    </ng-template>
+                    <ng-template #num>
+                        {{rowData[col.field] | number}}
+                    </ng-template>
+                </td>
+            </tr>
+        </ng-template>
+        </p-table>
+    </p-tabPanel> 
+</p-tabView>
+<p-dialog [(visible)]="exporting" [modal]="true" 
+        [closable] = false [maximizable] = false
+        [responsive]="true" [style]="{width: '600px'}" 
+        [maximizable]="true" [baseZIndex]="10000">
+        <p-progressBar mode="indeterminate" [style]="{'height': '6px'}"></p-progressBar>
+</p-dialog>

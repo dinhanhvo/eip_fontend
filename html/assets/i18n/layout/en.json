@@ -1,0 +1,40 @@
+{
+  "bu": "Business universe",
+  "dashboard": "Dashboard",
+  "download": "Download",
+  "help": "Help",
+  "language": "Language",
+  "logOut": "Logout",
+  "open": "Open",
+  "save": "Save",
+  "saveAs": "Save as..",
+  "saveAsFile": "Save as file",
+  "share": "Share",
+  "version": "Version",
+
+  "hdrMnu": {
+    "changePwd": "Change password",
+    "downPdf": "Download PDF",
+    "helpC": "Help contents",
+    "newWb": "New dashboard",
+    "tools": "Tools"
+  },
+  "lang": {
+    "en": "English",
+    "fr": "French",
+    "es": "Spanish",
+    "de": "German"
+  },
+  "sideBar": {
+    "adgConf": "AD Generator settings",
+    "dateNumFmt": "Date & number format",
+    "home": "Home",
+    "massPub": "Mass publication",
+    "pub": "Publication",
+    "pubMng": "Publication manager",
+    "resStatus": "Resources status",
+    "searchPub": "List of AD dashboards",
+    "startStopAdg": "Start / Stop AD Generator",
+    "settings": "Settings"
+  }
+}

@@ -1,0 +1,104 @@
+<p-toast [style]="{marginTop: '80px'}"></p-toast>
+
+<br>
+<div class="p-grid">
+    <!-- <div class="p-col-1">
+      <p-inputSwitch [(ngModel)]="isTheKho" (onChange)="changeThe()"></p-inputSwitch>
+    </div> -->
+    <div class="p-col-6 ui-g">
+        <div>
+          Kho:
+          <p-dropdown [options]="khoNhaps" optionLabel="name"
+            (onChange)="changeKho()"
+             [(ngModel)]="kho" name="kho">
+          </p-dropdown>
+        </div>
+        <div *ngIf="isTheKho">
+          Thuốc: 
+         <p-dropdown [options]="thuocs" optionLabel="maThuoc" 
+           [filter]="true"
+           [autoDisplayFirst]="false" (onChange)="changeThuoc()"
+           [(ngModel)]="selectedThuoc"
+           placeholder="Mã thuốc"
+           name="mathuoc">
+         </p-dropdown>
+         <p-dropdown [options]="thuocs" optionLabel="tenThuoc" 
+             (onChange)="changeThuoc()"
+             [autoDisplayFirst]="false" [filter]="true"
+             [(ngModel)]="selectedThuoc" 
+             placeholder="Tên thuốc"
+             name="tenThuoc">
+         </p-dropdown>
+        </div>
+    </div>
+    <div class="p-col-5">
+        <!-- <span class="ui-float-label"> -->
+        <p-calendar [(ngModel)]="tkFrom" [showIcon]="true"
+          dateFormat="dd/mm/yy"
+          [maxDate]="tkTo"
+          >
+        </p-calendar>->
+        <p-calendar [(ngModel)]="tkTo" [showIcon]="true"
+          name="thuocphatTo"
+          [minDate]="tkFrom"
+          dateFormat="dd/mm/yy"
+          >
+        </p-calendar>
+        <!-- </span> -->
+        <button type="button" pButton icon="fa fa-check" 
+        (click)="xemDS()" label="Xem"></button>
+        <span style="float: right;">
+          <button type="button" pButton icon="pi pi-file-excel" iconPos="left" label="EXCEL" 
+                  (click)="exportThekhoExcel()" style="margin-right: 0.5em; float:right" 
+                  class="ui-button-success" ></button>
+        </span>
+    </div>
+</div>
+
+<p-table #dt [columns]="colsThekho" [value]="reportData" 
+selectionMode="single" [(selection)]="reportRow"
+[autoLayout]="true"
+(onRowSelect)="onRowSelect($event)" [paginator]="true" [rows]="25">
+<ng-template pTemplate="caption">
+   <div *ngIf="tons">
+     Tồn đầu: {{tons[2]?tons[2]:0}}, Số lượng nhập thêm: {{tons[3]}} ------ Tổng Xuất: {{tons[4]}} ------- Tồn cuối: {{tons[5]}} 
+
+   </div>
+  <div style="text-align: right">
+    <i class="pi pi-search" style="margin:4px 4px 0 0"></i>
+    <input type="text" pInputText size="50" placeholder="Tìm tt chung"
+      (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+  </div>
+</ng-template>
+<ng-template pTemplate="header" let-columns>
+  <tr>
+    <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+      {{col.header}}
+      <p-sortIcon [field]="col.field"></p-sortIcon>
+    </th>
+  </tr>
+  <tr>
+    <th *ngFor="let col of columns" [ngSwitch]="col.field">
+      <!-- <input *ngSwitchCase="'mabenhnhan'" pInputText type="text"
+        (input)="dt.filter($event.target.value, col.field, 'contains')">
+      <input *ngSwitchCase="'fullname'" pInputText type="text"
+      (input)="dt.filter($event.target.value, col.field, 'contains')"> -->
+    </th>
+  </tr>
+  <!-- <tr>
+    <th *ngFor="let col of columns" [ngSwitch]="col.field">
+    </th>
+  </tr> -->
+</ng-template>
+<ng-template pTemplate="body" let-rowData let-columns="columns">
+  <tr [pSelectableRow]="rowData">
+    <td *ngFor="let col of columns">
+      <div >
+        {{rowData[col.field]}}
+      </div>
+    </td>
+    <!-- <td *ngFor="let col of columns">
+    </td> -->
+  </tr>
+</ng-template>
+</p-table>

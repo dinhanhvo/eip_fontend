@@ -1,0 +1,58 @@
+{
+  "lang": {
+    "en": "Engleză",
+    "fr": "limba franceza",
+    "es": "Spaniolă",
+    "de": "limba germana"
+  },
+  "login": {
+    "language": "Limba",
+    "login": "Autentificare",
+    "password": "Introdu parola",
+    "server": "Server",
+    "username": "Introduceti numele de utilizator"
+  },
+  "etlInfo": {
+    "status": {
+      "completedSuccess": "Completat cu succes",
+      "completedWarning": "Completat cu avertismente",
+      "connectError": "Eroare de conexiune la baza de date",
+      "error": "A apărut o eroare când încercați să obțineți statut ETL.",
+      "failure": "eșec",
+      "latency": "Latența:",
+      "notAvailable": "Nu e disponibil",
+      "onGoing": "În curs de desfășurare",
+      "packageError": "Nu e disponibil",
+      "schema.completedErrors": "Date încărcate cu erori. Verificați SYS1 sau contactați CODIX.",
+      "schema.completedSuccess": "Datele au fost încărcate cu succes la: data",
+      "schema.completedWarning": "Date încărcate cu avertismente. Verificați SYS1 pentru detalii.",
+      "schema.failure": "Nerespectarea. Verificați SYS1 sau contactați CODIX.",
+      "schema.load": "Pentru a încărca:: încărcare; Încărcat: încărcat -: a eșuat",
+      "startDate": "Data de început:",
+      "statusFor": "Stare pentru: nume:",
+      "statusFor3NF": "Stare pentru 3NF:",
+      "statusForAllStarSchema": "Stare pentru toate STEMA SCHEMA:"
+    }
+  },
+  "pubStatus": {
+    "error": "Statisticile de publicare nu sunt disponibile din cauza unei erori.",
+    "globalStat.adGeneratorStopped": "Generatorul AD a fost oprit",
+    "globalStat.error": "Eroare de stare",
+    "globalStat.noOngoingPublications": "Nu există publicații în desfășurare",
+    "globalStat.ongoingPublications": "Publicații în curs:",
+    "statMember.extranet": "Publicat în Extranet:",
+    "statMember.failed": "Programarea a eșuat:",
+    "statMember.genFiles": "Fișiere generate:",
+    "statMember.intranet": "Publicat în Intranet:",
+    "statMember.mail": "Publicat prin poștă:",
+    "statMember.success": "Planificarea a fost finalizată cu succes:",
+    "statMember.timeOut": "Expirat:",
+    "activity": {
+      "complete": "Activitate",
+      "error": "Eroare de activitate",
+      "last24Hours": "Activitate în ultimele 24 de ore",
+      "lastMonth": "Activitate din ultima lună",
+      "lastWeek": "Activitate din ultima săptămână"
+    }
+  }
+}

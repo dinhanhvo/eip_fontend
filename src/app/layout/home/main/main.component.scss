@@ -1,0 +1,8 @@
+.no-scroll {
+    .ui-table-resizable{
+        >
+        .ui-table-wrapper{
+            overflow-x:unset  !important;
+        }
+    }
+}

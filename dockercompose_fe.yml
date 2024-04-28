@@ -1,0 +1,10 @@
+version: "3.9"
+services:
+    nhixuan-frontend-service:
+       container_name: nhixuan_fe
+       build:
+          context: .
+          dockerfile: Dockerfile_nx_fe
+       ports:
+           - "4201:80"
+        

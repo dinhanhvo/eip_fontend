@@ -1,0 +1,399 @@
+[
+	{
+		"category": [
+			{
+				"layout": {
+					"name": "glayout_area_default_1",
+					"image": "glayout_area_default_1.gif"
+				},
+				"name": "gtype_area_default",
+				"image": "gtype_area_default.gif",
+				"id": "31"
+			},
+			{
+				"layout": {
+					"name": "glayout_area_split_dualy_1",
+					"image": "glayout_area_split_dualy_1.gif"
+				},
+				"name": "gtype_area_split_dualy",
+				"image": "gtype_area_split_dualy.gif",
+				"id": "33"
+			},
+			{
+				"layout": {
+					"name": "glayout_area_percent_1",
+					"image": "glayout_area_percent_1.gif"
+				},
+				"name": "gtype_area_percent",
+				"image": "gtype_area_percent.gif",
+				"id": "35"
+			},
+			{
+				"layout": {
+					"name": "glayout_area_stacked_1",
+					"image": "glayout_area_stacked_1.gif"
+				},
+				"name": "gtype_area_stacked",
+				"image": "gtype_area_stacked.gif",
+				"id": "32"
+			},
+			{
+				"layout": {
+					"name": "glayout_area_split_dualy_stacked_1",
+					"image": "glayout_area_split_dualy_stacked_1.gif"
+				},
+				"name": "gtype_area_split_dualy_stacked",
+				"image": "gtype_area_split_dualy_stacked.gif",
+				"id": "34"
+			}
+		],
+		"name": "gcat_area",
+		"image": "gcat_area.gif"
+	},
+	{
+		"category": [
+			{
+				"layout": {
+					"name": "glayout_bar_default_1",
+					"image": "glayout_bar_default_1.gif"
+				},
+				"name": "gtype_bar_default",
+				"image": "gtype_bar_default.gif",
+				"id": "17"
+			},
+			{
+				"layout": {
+					"name": "glayout_bar_dualy_1",
+					"image": "glayout_bar_dualy_1.gif"
+				},
+				"name": "gtype_bar_dualy",
+				"image": "gtype_bar_dualy.gif",
+				"id": "19"
+			},
+			{
+				"layout": {
+					"name": "glayout_bar_split_dualy_1",
+					"image": "glayout_bar_split_dualy_1.gif"
+				},
+				"name": "gtype_bar_split_dualy",
+				"image": "gtype_bar_split_dualy.gif",
+				"id": "21"
+			},
+			{
+				"layout": {
+					"name": "glayout_bar_percent_1",
+					"image": "glayout_bar_percent_1.gif"
+				},
+				"name": "gtype_bar_percent",
+				"image": "gtype_bar_percent.gif",
+				"id": "23"
+			},
+			{
+				"layout": {
+					"name": "glayout_bar_stacked_1",
+					"image": "glayout_bar_stacked_1.gif"
+				},
+				"name": "gtype_bar_stacked",
+				"image": "gtype_bar_stacked.gif",
+				"id": "18"
+			},
+			{
+				"layout": {
+					"name": "glayout_bar_dualy_stacked_1",
+					"image": "glayout_bar_dualy_stacked_1.gif"
+				},
+				"name": "gtype_bar_dualy_stacked",
+				"image": "gtype_bar_dualy_stacked.gif",
+				"id": "20"
+			},
+			{
+				"layout": {
+					"name": "glayout_bar_split_dualy_stacked_1",
+					"image": "glayout_bar_split_dualy_stacked_1.gif"
+				},
+				"name": "gtype_bar_split_dualy_stacked",
+				"image": "gtype_bar_split_dualy_stacked.gif",
+				"id": "22"
+			},
+			{
+				"layout": {
+					"name": "gtype_bar_floating_stacked_1",
+					"image": "glayout_bar_floating_stacked_1.gif"
+				},
+				"name": "gtype_bar_floating_stacked",
+				"image": "gtype_bar_floating_stacked.gif",
+				"id": "95"
+			}
+		],
+		"name": "gcat_bar",
+		"image": "gcat_bar.gif"
+	},
+	{
+		"category": [
+			{
+				"layout": {
+					"name": "glayout_hbar_default_1",
+					"image": "glayout_hbar_default_1.gif"
+				},
+				"name": "gtype_hbar_default",
+				"image": "gtype_hbar_default.gif",
+				"id": "24"
+			},
+			{
+				"layout": {
+					"name": "glayout_hbar_dualy_1",
+					"image": "glayout_hbar_dualy_1.gif"
+				},
+				"name": "gtype_hbar_dualy",
+				"image": "gtype_hbar_dualy.gif",
+				"id": "26"
+			},
+			{
+				"layout": {
+					"name": "glayout_hbar_split_dualy_1",
+					"image": "glayout_hbar_split_dualy_1.gif"
+				},
+				"name": "gtype_hbar_split_dualy",
+				"image": "gtype_hbar_split_dualy.gif",
+				"id": "28"
+			},
+			{
+				"layout": {
+					"name": "glayout_hbar_percent_1",
+					"image": "glayout_hbar_percent_1.gif"
+				},
+				"name": "gtype_hbar_percent",
+				"image": "gtype_hbar_percent.gif",
+				"id": "30"
+			},
+			{
+				"layout": {
+					"name": "glayout_hbar_stacked_1",
+					"image": "glayout_hbar_stacked_1.gif"
+				},
+				"name": "gtype_hbar_stacked",
+				"image": "gtype_hbar_stacked.gif",
+				"id": "25"
+			},
+			{
+				"layout": {
+					"name": "glayout_hbar_dualy_stacked_1",
+					"image": "glayout_hbar_dualy_stacked_1.gif"
+				},
+				"name": "gtype_hbar_dualy_stacked",
+				"image": "gtype_hbar_dualy_stacked.gif",
+				"id": "27"
+			},
+			{
+				"layout": {
+					"name": "glayout_hbar_split_dualy_stacked_1",
+					"image": "glayout_hbar_split_dualy_stacked_1.gif"
+				},
+				"name": "gtype_hbar_split_dualy_stacked",
+				"image": "gtype_hbar_split_dualy_stacked.gif",
+				"id": "29"
+			}
+		],
+		"name": "gcat_hbar",
+		"image": "gcat_hbar.gif"
+	},
+	{
+		"category": [
+			{
+				"layout": {
+					"name": "glayout_combination_default_1",
+					"image": "glayout_combination_default_1.gif"
+				},
+				"name": "gtype_combination_default",
+				"image": "gtype_combination_default.gif",
+				"id": "97"
+			},
+			{
+				"layout": {
+					"name": "glayout_combination_dualy_1",
+					"image": "glayout_combination_dualy_1.gif"
+				},
+				"name": "gtype_combination_dualy",
+				"image": "gtype_combination_dualy.gif",
+				"id": "98"
+			}
+		],
+		"name": "gcat_combination",
+		"image": "gcat_combination.gif"
+	},
+	{
+		"category": [
+			{
+				"layout": {
+					"name": "glayout_line_default_1",
+					"image": "glayout_line_default_1.gif"
+				},
+				"name": "gtype_line_default",
+				"image": "gtype_line_default.gif",
+				"id": "41"
+			},
+			{
+				"layout": {
+					"name": "glayout_line_dualy_1",
+					"image": "glayout_line_dualy_1.gif"
+				},
+				"name": "gtype_line_dualy",
+				"image": "gtype_line_dualy.gif",
+				"id": "43"
+			},
+			{
+				"layout": {
+					"name": "glayout_line_split_dualy_1",
+					"image": "glayout_line_split_dualy_1.gif"
+				},
+				"name": "gtype_line_split_dualy",
+				"image": "gtype_line_split_dualy.gif",
+				"id": "45"
+			},
+			{
+				"layout": {
+					"name": "glayout_line_percent_1",
+					"image": "glayout_line_percent_1.gif"
+				},
+				"name": "gtype_line_percent",
+				"image": "gtype_line_percent.gif",
+				"id": "47"
+			},
+			{
+				"layout": {
+					"name": "glayout_line_stacked_1",
+					"image": "glayout_line_stacked_1.gif"
+				},
+				"name": "gtype_line_stacked",
+				"image": "gtype_line_stacked.gif",
+				"id": "42"
+			},
+			{
+				"layout": {
+					"name": "glayout_line_dualy_stacked_1",
+					"image": "glayout_line_dualy_stacked_1.gif"
+				},
+				"name": "gtype_line_dualy_stacked",
+				"image": "gtype_line_dualy_stacked.gif",
+				"id": "44"
+			},
+			{
+				"layout": {
+					"name": "glayout_line_split_dualy_stacked_1",
+					"image": "glayout_line_split_dualy_stacked_1.gif"
+				},
+				"name": "gtype_line_split_dualy_stacked",
+				"image": "gtype_line_split_dualy_stacked.gif",
+				"id": "46"
+			}
+		],
+		"name": "gcat_line",
+		"image": "gcat_line.gif"
+	},
+	{
+		"category": [{
+			"layout": {
+				"name": "glayout_pareto_default_1",
+				"image": "glayout_pareto_default_1.gif"
+			},
+			"name": "gtype_pareto_default",
+			"image": "gtype_pareto_default.gif",
+			"id": "96"
+		}],
+		"name": "gcat_pareto",
+		"image": "gcat_pareto.gif"
+	},
+	{
+		"category": [
+			{
+				"layout": {
+					"name": "glayout_pie_default_1",
+					"image": "glayout_pie_default_1.gif"
+				},
+				"name": "gtype_pie_default",
+				"image": "gtype_pie_default.gif",
+				"id": "55"
+			},
+			{
+				"layout": {
+					"name": "glayout_pie_multiple_1",
+					"image": "glayout_pie_multiple_1.gif"
+				},
+				"name": "gtype_pie_multiple",
+				"image": "gtype_pie_multiple.gif",
+				"id": "57"
+			},
+			{
+				"layout": {
+					"name": "glayout_pie_bar_1",
+					"image": "glayout_pie_bar_1.gif"
+				},
+				"name": "gtype_pie_bar",
+				"image": "gtype_pie_bar.gif",
+				"id": "93"
+			},
+			{
+				"layout": {
+					"name": "glayout_pie_ring_1",
+					"image": "glayout_pie_ring_1.gif"
+				},
+				"name": "gtype_pie_ring",
+				"image": "gtype_pie_ring.gif",
+				"id": "56"
+			},
+			{
+				"layout": {
+					"name": "glayout_pie_multiple_ring_1",
+					"image": "glayout_pie_multiple_ring_1.gif"
+				},
+				"name": "gtype_pie_multiple_ring",
+				"image": "gtype_pie_multiple_ring.gif",
+				"id": "58"
+			},
+			{
+				"layout": {
+					"name": "glayout_pie_ring_bar_1",
+					"image": "glayout_pie_ring_bar_1.gif"
+				},
+				"name": "gtype_pie_ring_bar",
+				"image": "gtype_pie_ring_bar.gif",
+				"id": "94"
+			}
+		],
+		"name": "gcat_pie",
+		"image": "gcat_pie.gif"
+	},
+	{
+		"category": [
+			{
+				"layout": {
+					"name": "glayout_scatter_default_1",
+					"image": "glayout_scatter_default_1.gif"
+				},
+				"name": "gtype_scatter_default",
+				"image": "gtype_scatter_default.gif",
+				"id": "61"
+			},
+			{
+				"layout": {
+					"name": "glayout_scatter_dualy_1",
+					"image": "glayout_scatter_dualy_1.gif"
+				},
+				"name": "gtype_scatter_dualy",
+				"image": "gtype_scatter_dualy.gif",
+				"id": "62"
+			},
+			{
+				"layout": {
+					"name": "glayout_scatter_polar_1",
+					"image": "glayout_scatter_polar_1.gif"
+				},
+				"name": "gtype_scatter_polar",
+				"image": "gtype_scatter_polar.gif",
+				"id": "65"
+			}
+		],
+		"name": "gcat_scatter",
+		"image": "gcat_scatter.gif"
+	}
+]

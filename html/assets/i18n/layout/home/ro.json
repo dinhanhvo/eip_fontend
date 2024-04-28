@@ -1,0 +1,9 @@
+{
+  "main": {
+    "delete": "Șterge",
+    "home": "Acasă",
+    "listOfWbs": "Lista tablourilor de bord",
+    "openWb": "Deschide tabloul de bord",
+    "sharing": "Partajarea ..."
+  }
+}

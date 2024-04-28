@@ -1,0 +1,46 @@
+<div class="p-grid vertical-container cokhifooter " style="margin-top: 20px; min-height: 200px;">
+    <div *ngIf="commonItems[5]!=undefined" class="p-col-12 p-grid p-md-12 p-lg-12  vertical-container footercenter">
+        <div *ngIf="commonItems!=undefined" class="p-col-4 p-col-align-start">
+            <div class="" style="color: white; padding-left: 20px; ">
+                <h4 style="border-bottom: 5px solid white; color: #808080;">
+                    <!-- WHY WINDSOR -->
+                    {{commonItems[2].description}}
+                </h4>
+                <br>
+                <pre style="color: white; font-size: 14px; display: flex; flex-wrap: wrap;">
+            <!-- Quality & client satisfaction is our utmost priority.
+            We are commited to give satisfaction to our clients
+            through excellence:
+                Cutting edge Techonology
+                Delivery of Consignment in Time -->
+                {{commonItems[3].description}}
+                </pre>
+            </div>
+        </div>
+        <div  class="p-col-4 p-col-align-start">
+            <div class="" style="color: white; padding-left: 40px; ">
+                <h4 style="border-bottom: 5px solid white; color: #808080; word-wrap: normal;">
+                    <!-- REGISTRATIONS -->
+                    {{commonItems[4].description}}
+                </h4>
+                <br>
+                <pre style="color: white;">
+                    <!-- ISO : 9001:2015
+                    GST : 06AAAFW1072G1ZG
+                    PAN : AAAFW1072G
+                    IEC : 0596003838 -->
+                    {{commonItems[5].description}}
+                </pre>
+            </div>
+        </div >
+        <div class="p-col-4  p-col-align-center" style="padding-left: 150px; ">
+            <img src="/assets/images/cokhi/logocokhi.png" />
+        </div>
+    </div>
+    <div class="p-col-12" style="height: 50px; background-color: #333333; 
+                color: white; text-align: center;;">
+        <h4 style=" line-height: 50px">
+            Copyright © 2020, SmartEVN. All rights reserved.
+        </h4>
+    </div>
+</div>

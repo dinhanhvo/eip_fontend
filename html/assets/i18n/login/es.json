@@ -1,0 +1,58 @@
+{
+  "lang": {
+    "en": "Inglés",
+    "fr": "francés",
+    "es": "Español",
+    "de": "alemán"
+  },
+  "login": {
+    "language": "Idioma",
+    "login": "Iniciar sesión",
+    "password": "Introducir la contraseña",
+    "server": "Servidor",
+    "username": "Introduzca su nombre de usuario"
+  },
+  "etlInfo": {
+    "status": {
+      "completedSuccess": "Completado satisfactoriamente",
+      "completedWarning": "Completado con advertencias",
+      "connectError": "Error de conexión a la base de datos",
+      "error": "Se produce un error al intentar obtener el estado ETL.",
+      "failure": "Fracaso",
+      "latency": "Latencia:",
+      "notAvailable": "No disponible",
+      "onGoing": "En marcha",
+      "packageError": "No disponible",
+      "schema.completedErrors": "Datos cargados de errores. Verifique SYS1 o comuníquese con CODIX.",
+      "schema.completedSuccess": "Datos cargados con éxito en: fecha",
+      "schema.completedWarning": "Datos cargados de advertencias. Verifique SYS1 para más detalles.",
+      "schema.failure": "Fracaso. Verifique SYS1 o comuníquese con CODIX.",
+      "schema.load": "Para cargar:: cargar; Cargado: cargado -: falló",
+      "startDate": "Fecha de inicio:",
+      "statusFor": "Estado para: nombre:",
+      "statusFor3NF": "Estado para 3NF:",
+      "statusForAllStarSchema": "Estado de todos los ESQUEMAS DE ESTRELLAS:"
+    }
+  },
+  "pubStatus": {
+    "error": "Las estadísticas de publicación no están disponibles debido a un error.",
+    "globalStat.adGeneratorStopped": "Generador de AD detenido",
+    "globalStat.error": "Error de estado",
+    "globalStat.noOngoingPublications": "No hay publicaciones en curso.",
+    "globalStat.ongoingPublications": "Publicaciones en curso:",
+    "statMember.extranet": "Publicado en Extranet:",
+    "statMember.failed": "La programación falló:",
+    "statMember.genFiles": "Archivos generados:",
+    "statMember.intranet": "Publicado en Intranet:",
+    "statMember.mail": "Publicado por correo:",
+    "statMember.success": "Programación completada con éxito:",
+    "statMember.timeOut": "Caducado:",
+    "activity": {
+      "complete": "Actividad",
+      "error": "Error de actividad",
+      "last24Hours": "Actividad en las últimas 24 horas.",
+      "lastMonth": "Actividad en el último mes",
+      "lastWeek": "Actividad en la ultima semana"
+    }
+  }
+}

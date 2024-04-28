@@ -1,0 +1,600 @@
+<!-- <p-messages [(value)]="msgs"></p-messages> -->
+<p-toast [style]="{marginTop: '80px'}"></p-toast>
+<p-tabView>
+    <p-tabPanel header="SỐ THUỐC PHÁT CẮT CƠN" >
+        <div class="p-grid">
+            <div class="p-col-3">
+                Khu:
+                <p-dropdown [options]="khukbs" optionLabel="name" [(ngModel)]="phatthuocKhu" name="khu">
+                </p-dropdown>
+            </div>
+            <div class="p-col-1">
+                <div style="float: right;" class="label">
+                    Từ ngày: </div>
+            </div>
+            <div class="p-col-3">
+                <span class="ui-float-label">
+                    <p-calendar [(ngModel)]="thuocphatFrom" [showIcon]="true"
+                    dateFormat="dd/mm/yy"
+                    ></p-calendar>
+                </span>
+            </div>
+            <div class="p-col-1">
+                <div style="float: right;" class="label">
+                    Đến ngày: </div>
+            </div>
+            <div class="p-col-4">
+                <!-- <span class="ui-float-label"> -->
+                <p-calendar [(ngModel)]="thuocphatTo" [showIcon]="true"
+                name="thuocphatTo"
+                [minDate]="thuocphatFrom"
+                dateFormat="dd/mm/yy"
+                >
+                </p-calendar>
+                <!-- </span> -->
+                <span style="float: right;">
+                    <button type="button" pButton icon="fa fa-check" 
+                    (click)="xemDS(false)" label="Xem"></button>
+                </span>
+            </div>
+        </div>
+        <p-table #dtPhatCC [columns]="tkPhatThuocCols" [value]="tkPhatThuocRows" 
+            [loading]="searching"
+            [autoLayout]="true" [resizableColumns]="true"
+            selectionMode="single" [(selection)]="phieuModelTB"
+            (onRowSelect)="onRowSelect()" [paginator]="true" [rows]="25">
+            <ng-template pTemplate="caption">
+                <div *ngIf="tkPhatThuocRows.length > 0">
+                    {{tkPhatThuocRows.length}} bệnh nhân/{{tkPhatThuocCols.length - 7}} loại thuốc
+                </div>
+                <div class="ui-helper-clearfix" style="text-align: left">
+                    <button type="button" pButton icon="pi pi-file-excel" iconPos="left" label="EXCEL" 
+                    (click)="exportPhatThuocCC()" style="margin-right: 0.5em; float:right" 
+                    class="ui-button-success" ></button>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header" let-columns>
+                <tr>
+                    <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                        {{col.header}}
+                        <p-sortIcon [field]="col.field"></p-sortIcon>
+                    </th>
+                </tr>
+                <tr>
+                    <th *ngFor="let col of columns" [ngSwitch]="col.field">
+                    </th>
+                </tr>
+                <!-- <tr>
+                    <th *ngFor="let col of columns" [ngSwitch]="col.field">
+                      <div *ngSwitchCase="'ngayhh'"> ngày/tháng/năm</div>
+                      <input *ngSwitchCase="'maphieu'" pInputText type="text"
+                        (input)="dtPhatCC.filter($event.target.value, col.field, 'contains')">
+                      <input *ngSwitchCase="'tenthuoc'" pInputText type="text"
+                      (input)="dtPhatCC.filter($event.target.value, col.field, 'contains')">
+                      <input *ngSwitchCase="'kho_name'" pInputText type="text"
+                        (input)="dtPhatCC.filter($event.target.value, col.field, 'contains')">
+                        <input *ngSwitchCase="'khu_name'" pInputText type="text"
+                        (input)="dtPhatCC.filter($event.target.value, col.field, 'contains')">
+                    </th>
+                </tr> -->
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData let-columns="columns">
+                <tr [pSelectableRow]="rowData">
+                    <td *ngFor="let col of columns">
+                        <!-- <div  *ngIf="col.field=='ngaykham'">
+                            {{formatDate(rowData[col.field])}}
+                          </div> -->
+                          <div>
+                              {{rowData[col.field]}}
+                          </div>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage" let-columns>
+                <tr>
+                    <td [attr.colspan]="columns.length" style="text-align: center; height: 150px; font-weight: bold;">
+                        Không có dữ liệu từ ngày {{thuocphatFrom | date: 'dd/MM'}} tới ngày {{thuocphatTo | date: 'dd/MMM/yyyy'}}
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </p-tabPanel>
+
+    <p-tabPanel header="PHIẾU LĨNH THUỐC HÀNG NGÀY" [selected]="true" >
+        <div class="p-grid">
+            <div class="p-col-3">
+                Khu:
+                <p-dropdown [options]="khukbs" optionLabel="name" 
+                [(ngModel)]="lanhthuocKhu" name="lanhthuocKhu">
+                </p-dropdown>
+            </div>
+            <div class="p-col-1">
+                <div style="float: right;" class="label">
+                    Ngày: 
+                </div>
+            </div>
+            <div class="p-col-3">
+                <span class="ui-float-label">
+                    <!-- <p-calendar [(ngModel)]="linhThuocNgay" [showIcon]="true"
+                        dateFormat="dd/mm/yy"
+                        name="linhThuocNgay"
+                    ></p-calendar> -->
+                    <p-calendar [(ngModel)]="linhThuocNgay" [showIcon]="true"
+                    name="linhThuocNgay"
+                    dateFormat="dd/mm/yy"
+                    >
+                    </p-calendar>
+                </span>
+            </div>
+            <div class="p-col-1">
+                <span style="float: right;">
+                    <button type="button" pButton icon="fa fa-check" 
+                    (click)="xemLinhThuocHangNgay()" label="Xem"></button>
+                </span>
+            </div>
+        </div>
+        <p-table #dt [columns]="tkLinhThuocHangNgayCols" 
+            [loading]="searching"
+            [autoLayout]="true" [resizableColumns]="true"
+            [value]="tkLinhThuocHangNgayRows" selectionMode="single" [(selection)]="phieuModelTB"
+            (onRowSelect)="onRowSelect()" [paginator]="true" [rows]="25">
+            <ng-template pTemplate="caption">
+                <!-- <div style="float: left;">
+                    <p-inputSwitch [(ngModel)]="showMaBN"></p-inputSwitch> Hiển thị Mã Bệnh nhân
+                </div> -->
+                <div *ngIf="tkLinhThuocHangNgayRows.length > 0">
+                    {{tkLinhThuocHangNgayRows.length - 1}} bệnh nhân/{{tkLinhThuocHangNgayCols.length - 4 }} loại thuốc
+                </div>
+                <div class="ui-helper-clearfix" style="text-align: left">
+                    <button type="button" pButton icon="pi pi-file-excel" iconPos="left" label="EXCEL"
+                     (click)="exportLinhThuoc1DateThuoc()" style="margin-right: 0.5em; float:right" class="ui-button-success" ></button>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header" let-columns>
+                <tr>
+                    <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                        {{col.header}}
+                        <p-sortIcon [field]="col.field"></p-sortIcon>
+                    </th>
+                </tr>
+                <tr>
+                    <th *ngFor="let col of columns" [ngSwitch]="col.field">
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData let-columns="columns">
+                <tr [pSelectableRow]="rowData">
+                    <!-- <div  *ngIf="col.field=='ngaykham'">
+                        {{formatDate(rowData[col.field])}}
+                      </div> -->
+                    <td *ngFor="let col of columns">
+
+                        {{rowData[col.field]}}
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage" let-columns>
+                <tr>
+                    <td [attr.colspan]="columns.length" style="text-align: center; height: 150px; font-weight: bold;">
+                        Không có dữ liệu ngày {{linhThuocNgay | date: 'dd/MM'}}
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </p-tabPanel>
+    <p-tabPanel header="PHIẾU LÃNH THUỐC" >
+        <!-- Form -->
+        <div class="p-grid">
+            <div class="p-col-3">
+                Khu:
+                <p-dropdown [options]="khukbs" optionLabel="name" [(ngModel)]="lanhthuocKhu" name="lanhthuocKhu">
+                </p-dropdown>
+            </div>
+            <div class="p-col-3">
+                Loại:
+                <p-dropdown [options]="types" [(ngModel)]="selectedType" 
+                    (onChange)="changeType()"
+                    aria-placeholder="Loại" name="type" #SelectedType="ngModel"
+                    (onChange)="changeType()"> </p-dropdown>
+            </div>
+            <div class="p-col-3">
+                Ngày:
+                    <p-calendar [(ngModel)]="lanhthuocFrom" [showIcon]="true"
+                        dateFormat="dd/mm/yy"
+                        name="lanhthuocFrom"
+                    ></p-calendar>
+            </div>
+            <div class="p-col-3">
+                <!-- <p-calendar [(ngModel)]="lanhthuocTo" [showIcon]="true"
+                    dateFormat="dd/mm/yyyy">
+                </p-calendar> -->
+                <span style="float: right;">
+                    <button type="button" pButton icon="fa fa-check" 
+                    (click)="xemDS(true)" label="Xem"></button>
+                </span>
+            </div>
+        </div>
+        <!-- Table -->
+        <p-table #dtLTT [columns]="listYCcols"
+            [loading]="searching"
+            [autoLayout]="true" [resizableColumns]="true"
+            [value]="listYCRow">
+            <ng-template pTemplate="caption">
+                <div *ngIf="listYCRow.length > 0">
+                    {{listYCRow.length}} loại thuốc
+                </div>
+                <div class="ui-helper-clearfix" style="text-align: left">
+                    <button type="button" pButton icon="pi pi-file-excel" iconPos="left" label="EXCEL" (click)="exportYCThuoc()" style="margin-right: 0.5em; float: right" class="ui-button-success"></button>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header" let-columns>
+                <tr>
+                    <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                      {{col.header}}
+                    </th>
+                </tr>
+                <tr>
+                    <th *ngFor="let col of columns" [ngSwitch]="col.field">
+                    </th>
+                </tr>
+                <tr>
+                    <th *ngFor="let col of columns" [ngSwitch]="col.field">
+                      <!-- <div *ngSwitchCase="'ngayhh'"> ngày/tháng/năm</div> -->
+                      <input *ngSwitchCase="'tenthuoc'" pInputText type="text"
+                        (input)="dtLTT.filter($event.target.value, col.field, 'contains')">
+                      <!-- <input *ngSwitchCase="'tenthuoc'" pInputText type="text"
+                      (input)="dtPhatCC.filter($event.target.value, col.field, 'contains')">
+                      <input *ngSwitchCase="'kho_name'" pInputText type="text"
+                        (input)="dtPhatCC.filter($event.target.value, col.field, 'contains')">
+                        <input *ngSwitchCase="'khu_name'" pInputText type="text"
+                        (input)="dtPhatCC.filter($event.target.value, col.field, 'contains')"> -->
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData let-columns="columns">
+                <tr [pSelectableRow]="rowData">
+                    <!-- <div  *ngIf="col.field=='checkboxXuat'; else #normal">
+                        {{formatDate(rowData[col.field])}}
+                      </div> -->
+                    <td *ngFor="let col of columns">
+                      {{rowData[col.field]}}
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage" let-columns>
+                <tr>
+                    <td [attr.colspan]="columns.length" style="text-align: center; height: 150px; font-weight: bold;">
+                        Không có dữ liệu ngày {{lanhthuocFrom | date: 'dd/MM'}}
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+        <br>
+        <div class="p-grid">
+            <div class="p-col-9">
+            </div>
+            <div class="p-col-1"><b>Tổng tiền:</b></div>
+            <div class="p-col-2">
+                <b>{{totalTien | number}}</b>
+            </div>
+        </div>
+    </p-tabPanel>
+    <p-tabPanel header="THỐNG KÊ THEO BỆNH NHÂN" >
+        <!-- Benh nhan -->
+        <div class="ui-g-12">
+            <div class="ui-g-2" style="text-align: right;">
+                <i class="fa fa-user-circle" aria-hidden="true"></i>Bệnh nhân:
+            </div>
+            <div class="ui-g-3">
+                <p-dropdown [options]="patients" 
+                    optionLabel="fullname"
+                    (onFocus)="focusPatient()"
+                    [autoDisplayFirst]="false"
+                    placeholder="tenNamSinh"
+                    [filter]="true" (onChange)="changePatient()"
+                    [(ngModel)]="selectedPatient"
+                    name="patientFullname">
+               </p-dropdown>
+                <p-dropdown [options]="patients" 
+                    placeholder="Mã"
+                    (onFocus)="focusPatient()"
+                    optionLabel="patientId" [autoDisplayFirst]="false"
+                    [filter]="true" (onChange)="changePatient()" 
+                    [(ngModel)]="selectedPatient"
+                    name="patientId">
+                </p-dropdown>
+
+            </div>
+            <div class="ui-g-1" style="text-align: right;">
+                Tên:
+            </div>
+            <div class="ui-g-3">
+                <p-dropdown [options]="patients" 
+                    placeholder="Tên"
+                    optionLabel="patientName" 
+                    (onFocus)="focusPatient()"
+                    [(ngModel)]="selectedPatient" 
+                    (onChange)="changePatient()" name="patientName"
+                    [filter]="true" [autoDisplayFirst]="false">
+                </p-dropdown>
+            </div>
+            <div class="ui-g-3">
+                Năm sinh: <b>{{selectedPatient.birthYear}}</b>
+                <!-- <br> Khu: <b>{{selectedPatient.khu}}</b> -->
+                <br> Mã BN: <b>{{selectedPatient.patientId}}</b>
+                <br> Địa chỉ: <b>{{selectedPatient.address}}</b>
+            </div>
+        </div>
+        <div class="p-grid">
+            <!-- <div class="p-col-2">
+            </div> -->
+            <div class="p-col-2">
+                <div style="float: right;" class="label">
+                    Từ ngày: </div>
+            </div>
+            <div class="p-col-3">
+                <span class="ui-float-label">
+                    <p-calendar [(ngModel)]="theodoiFrom" [showIcon]="true"
+                        dateFormat="dd/mm/yy" name="theodoiFrom"
+                    ></p-calendar>
+                </span>
+            </div>
+            <div class="p-col-1">
+                <div style="float: right;" class="label">
+                    Đến ngày: 
+                </div>
+            </div>
+            <div class="p-col-6" style="float: right;">
+                <!-- <span class="ui-float-label"> -->
+                <p-calendar [(ngModel)]="theodoiTo" [showIcon]="true"
+                    dateFormat="dd/mm/yy" name="theodoiTo"
+                    [minDate]="theodoiFrom"
+                    >
+                </p-calendar>
+                <!-- </span> -->
+                <span style="float: right;">
+                    <button type="button" pButton icon="fa fa-check" 
+                    (click)="xemSotheodoi()" 
+                    [disabled]="selectedPatient.patientName==undefined" 
+                    label="Xem"></button>
+                </span>
+            </div>
+        </div>
+        <p-tabView>
+            <p-tabPanel header="Liều dùng" >
+                <p-table #dt [columns]="tkTheoDoiCols" [value]="tkTheoDoiRows"
+                [loading]="searching" 
+                [autoLayout]="true" [resizableColumns]="true"
+            >
+                <ng-template pTemplate="caption">
+                    <div class="ui-helper-clearfix" style="text-align: left">
+                        <button type="button" pButton icon="pi pi-file-excel" iconPos="left" label="EXCEL" (click)="exportSotheidoi()" style="margin-right: 0.5em; float:right" class="ui-button-success"></button>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header" let-columns>
+                    <tr>
+                        <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                          {{col.header}}
+                        </th>
+                    </tr>
+                    <tr>
+                        <th *ngFor="let col of columns" [ngSwitch]="col.field">
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-rowData let-columns="columns">
+                    <tr [pSelectableRow]="rowData">
+                        <!--  -->
+                        <td *ngFor="let col of columns">
+                            <!-- <div  *ngIf="col.field=='date'">
+                                {{formatDate(rowData[col.field])}}
+                              </div> -->
+                            <div>
+                                {{rowData[col.field]}}
+                            </div>
+                        </td>
+                      </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage" let-columns>
+                    <tr>
+                        <td [attr.colspan]="columns.length" style="text-align: center; height: 150px; font-weight: bold;">
+                            Không có dữ liệu ngày {{theodoiFrom | date: 'dd/MM'}} tới ngày {{theodoiTo | date: 'dd/MM/yyyy'}}
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+            </p-tabPanel>
+            <p-tabPanel header="Thống kê" >
+                <p-table #dt [columns]="tkTheoDoiTTCols" [value]="tkTheoDoiTTRows"
+                [loading]="searching" 
+                [autoLayout]="true" [resizableColumns]="true"
+            >
+                <ng-template pTemplate="caption">
+                    <div class="ui-helper-clearfix" style="text-align: left">
+                        <button type="button" pButton icon="pi pi-file-excel" iconPos="left" label="EXCEL" (click)="exportSotheidoi()" style="margin-right: 0.5em; float:right" class="ui-button-success"></button>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header" let-columns>
+                    <tr>
+                        <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                          {{col.header}}
+                        </th>
+                    </tr>
+                    <tr>
+                        <th *ngFor="let col of columns" [ngSwitch]="col.field">
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-rowData let-columns="columns">
+                    <tr [pSelectableRow]="rowData">
+                        <!--  -->
+                        <td *ngFor="let col of columns">
+                            <!-- <div  *ngIf="col.field=='date'">
+                                {{formatDate(rowData[col.field])}}
+                              </div> -->
+                            <div>
+                                {{rowData[col.field]}}
+                            </div>
+                        </td>
+                      </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage" let-columns>
+                    <tr>
+                        <td [attr.colspan]="columns.length" style="text-align: center; height: 150px; font-weight: bold;">
+                            Không có dữ liệu ngày {{theodoiFrom | date: 'dd/MM'}} tới ngày {{theodoiTo | date: 'dd/MM/yyyy'}}
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+            </p-tabPanel>
+        </p-tabView>
+    </p-tabPanel>
+    <p-tabPanel header="THỐNG KÊ THEO THUỐC" >
+        <!-- thuốc -->
+        <div class="ui-g-12">
+            <div class="ui-g-2" style="text-align: right;">
+                <i class="fa fa-user-circle" aria-hidden="true"></i>
+                Chọn thuốc:
+            </div>
+            <div class="ui-g-10">
+                <p-dropdown [options]="thuocs" optionLabel="maThuoc" 
+                    [filter]="true"
+                    [autoDisplayFirst]="false"
+                    (onChange)="changeThuoc()"
+                    [(ngModel)]="selectedThuoc"
+                    name="mathuoc">
+                </p-dropdown>
+                <p-dropdown [options]="thuocs" optionLabel="tenThuoc" 
+                    (onChange)="changeThuoc()"
+                    [autoDisplayFirst]="false" [filter]="true"
+                    [(ngModel)]="selectedThuoc" 
+                    name="tenThuoc">
+                </p-dropdown>
+            </div>
+            
+        </div>
+        <div class="p-grid">
+            <!-- <div class="p-col-2">
+            </div> -->
+            <div class="p-col-2">
+                <div style="float: right;" class="label">
+                    Từ: </div>
+            </div>
+            <div class="p-col-3">
+                <span class="ui-float-label">
+                    <p-calendar [(ngModel)]="theodoiFrom" [showIcon]="true"
+                        dateFormat="dd/mm/yy" name="theodoiFrom"
+                    ></p-calendar>
+                </span>
+            </div>
+            <div class="p-col-1">
+                <div style="float: right;" class="label">
+                    Đến: 
+                </div>
+            </div>
+            <div class="p-col-6" style="float: right;">
+                <!-- <span class="ui-float-label"> -->
+                <p-calendar [(ngModel)]="theodoiTo" [showIcon]="true"
+                    dateFormat="dd/mm/yy" name="theodoiTo"
+                    [minDate]="theodoiFrom"
+                    >
+                </p-calendar>
+                <!-- </span> -->
+                <span style="float: right;">
+                    <button type="button" pButton icon="fa fa-check" 
+                    (click)="xemTKThuoc()" 
+                    [disabled]="selectedThuoc==undefined" 
+                    label="Xem"></button>
+                </span>
+            </div>
+        </div>
+        <p-tabView>
+            <p-tabPanel header="Liều dùng" >
+                <p-table #dt [columns]="tkTheoDoiCols" [value]="tkTheoDoiRows"
+                [loading]="searching" 
+                [autoLayout]="true" [resizableColumns]="true"
+            >
+                <ng-template pTemplate="caption">
+                    <div class="ui-helper-clearfix" style="text-align: left">
+                        <button type="button" pButton icon="pi pi-file-excel" iconPos="left" label="EXCEL" (click)="exportSotheidoi()" style="margin-right: 0.5em; float:right" class="ui-button-success"></button>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header" let-columns>
+                    <tr>
+                        <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                          {{col.header}}
+                        </th>
+                    </tr>
+                    <tr>
+                        <th *ngFor="let col of columns" [ngSwitch]="col.field">
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-rowData let-columns="columns">
+                    <tr [pSelectableRow]="rowData">
+                        <!--  -->
+                        <td *ngFor="let col of columns">
+                            <!-- <div  *ngIf="col.field=='date'">
+                                {{formatDate(rowData[col.field])}}
+                              </div> -->
+                            <div>
+                                {{rowData[col.field]}}
+                            </div>
+                        </td>
+                      </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage" let-columns>
+                    <tr>
+                        <td [attr.colspan]="columns.length" style="text-align: center; height: 150px; font-weight: bold;">
+                            Không có dữ liệu ngày {{theodoiFrom | date: 'dd/MM'}} tới ngày {{theodoiTo | date: 'dd/MM/yyyy'}}
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+            </p-tabPanel>
+            <p-tabPanel header="Thống kê" >
+                <p-table #dt [columns]="tkTheoDoiTTCols" [value]="tkTheoDoiTTRows"
+                [loading]="searching" 
+                [autoLayout]="true" [resizableColumns]="true"
+            >
+                <ng-template pTemplate="caption">
+                    <div class="ui-helper-clearfix" style="text-align: left">
+                        <button type="button" pButton icon="pi pi-file-excel" iconPos="left" label="EXCEL" (click)="exportSotheidoi()" style="margin-right: 0.5em; float:right" class="ui-button-success"></button>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header" let-columns>
+                    <tr>
+                        <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                          {{col.header}}
+                        </th>
+                    </tr>
+                    <tr>
+                        <th *ngFor="let col of columns" [ngSwitch]="col.field">
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-rowData let-columns="columns">
+                    <tr [pSelectableRow]="rowData">
+                        <!--  -->
+                        <td *ngFor="let col of columns">
+                            <!-- <div  *ngIf="col.field=='date'">
+                                {{formatDate(rowData[col.field])}}
+                              </div> -->
+                            <div>
+                                {{rowData[col.field]}}
+                            </div>
+                        </td>
+                      </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage" let-columns>
+                    <tr>
+                        <td [attr.colspan]="columns.length" style="text-align: center; height: 150px; font-weight: bold;">
+                            Không có dữ liệu ngày {{theodoiFrom | date: 'dd/MM'}} tới ngày {{theodoiTo | date: 'dd/MM/yyyy'}}
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+            </p-tabPanel>
+        </p-tabView>
+    </p-tabPanel>
+</p-tabView>

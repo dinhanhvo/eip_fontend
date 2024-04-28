@@ -1,0 +1,9 @@
+{
+  "main": {
+    "delete": "Delete",
+    "home": "Home",
+    "listOfWbs": "List of dashboards",
+    "openWb": "Open dashboard",
+    "sharing": "Sharing..."
+  }
+}

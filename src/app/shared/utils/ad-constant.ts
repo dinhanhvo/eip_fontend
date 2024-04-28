@@ -1,0 +1,383 @@
+export class AdConstant {
+  public static DATATYPE_UNDEFINED: number = 0;
+  public static DATATYPE_VARCHAR: number = 1;
+  public static DATATYPE_NUMBER: number = 2;
+  public static DATATYPE_LONG_CLOB: number = 3;
+  public static DATATYPE_DATETIME: number = 4;
+  public static DATATYPE_RAW: number = 5;
+  public static DATATYPE_BLOB: number = 6;
+  public static DATATYPE_ROWID: number = 7;
+  public static DATATYPE_CHAR: number = 8;
+  public static DATATYPE_MLSLABEL: number = 9;
+  public static DATATYPE_BOOLEAN: number = 10;
+
+  //Expression types
+  public static EXPT_COLUMN_ITEM = 'CO';
+  public static EXPT_CALCULATED_ITEM = 'CI';
+  public static EXPT_UNION_ITEM = 'UI';
+  public static EXPT_CALCULATION = 'CA';
+  public static EXPT_JOIN = 'JP';
+  public static EXPT_CONDITION = 'FIL';
+  public static EXPT_USER_CONDITION = 'UFIL';
+  public static EXPT_TOTAL = 'TO';
+  //is generated from widget SQL wizard
+  public static EXPT_COLUMN_ITEM_SQL = 'CS';
+
+  public static FID_DETAILS: number = 110;
+
+  public static JS_DATE_FORMAT_DEFAULT = '%Y/%m/%d %H:%M:%S';
+}
+const BUSINESS_OBJECT_TYPE = {
+  BUSINESS_AREA: 0,
+  FOLDER: 1,
+  ITEM: 2,
+  DB_USER: 3,
+  DB_TABLE: 4,
+  JOIN: 5,
+  FUNCTION: 6,
+  ITEM_CLASS: 7,
+  HIERARCHY: 8,
+  ITEM_HIERARCHY_NODE: 9,
+  DATE_HIERARCHY_NODE: 10,
+  WORKBOOK: 11,
+  DB_COLUMN: 12,
+  MP_DOCUMENT: 13,
+  MP_SCHEDULING: 14,
+  FOLDER_FO: 100,
+  ITEM_FO: 101,
+  INTERNAL_ITEM: 102,
+  FOLDER_UNION_FO: 103,
+  ITEM_UNION_FO: 104
+};
+
+export { BUSINESS_OBJECT_TYPE };
+export class ScheduleConst {
+  public static CAT_DAILY: string = 'A';
+  public static CAT_REALTIME: string = 'I';
+  public static CAT_EXPIRED: string = 'E';
+  public static CAT_UNSCHEDULED: string = 'U';
+
+  public static PERIODIC_ONCE: string = 'A';
+  public static PERIODIC_DAILY: string = 'J';
+  public static PERIODIC_WEEKLY: string = 'H';
+  public static PERIODIC_MONTHLY: string = 'M';
+
+  public static PERIODIC_QUARTERLY: string = 'T';
+  public static PERIODIC_BIANNUALLY: string = 'S';
+  public static PERIODIC_ANNUALLY: string = 'N';
+}
+
+const CANCELED: string = 'CANCELED';
+const COMPLETED: string = 'COMPLETED';
+const COMPLETED_WITH_NO_DATA: string = 'COMPLETED_WITH_NO_DATA';
+const COMPLETED_WITH_WARNINGS: string = 'COMPLETED_WITH_WARNINGS';
+
+const CORRUPTED: string = 'CORRUPTED';
+const DELETED_BY_USER: string = 'DELETED_BY_USER';
+const EXPIRED: string = 'EXPIRED';
+const FAULT: string = 'FAULT';
+
+const FINISHED: string = 'FINISHED';
+const FINISHED_WITH_NODATA: string = 'FINISHED_WITH_NODATA';
+const FINISHED_WITH_WARNING: string = 'FINISHED_WITH_WARNING';
+const GENERATOR_STOPPED: string = 'GENERATOR_STOPPED';
+
+const GLOBAL_TIMEOUT: string = 'GLOBAL_TIMEOUT';
+const PAUSED: string = 'PAUSED';
+const PENDING: string = 'PENDING';
+const PENDING_WITH_NODATA: string = 'PENDING_WITH_NODATA';
+
+const PENDING_WITH_WARNING: string = 'PENDING_WITH_WARNING';
+const RUNNING_DATA_ACQUISITION: string = 'RUNNING_DATA_ACQUISITION';
+const RUNNING_FILE_GENERATION: string = 'RUNNING_FILE_GENERATION';
+const RUNNING_MAIL: string = 'RUNNING_MAIL';
+
+const RUNNING_PUBLICATION: string = 'RUNNING_PUBLICATION';
+const SCHEDULED: string = 'SCHEDULED';
+const STARTED: string = 'STARTED';
+const TIMEOUT: string = 'TIMEOUT';
+
+const WAITING_FOR_ETL: string = 'WATING_FOR_ETL';
+const WAITING_FOR_IMX: string = 'WAITING_FOR_IMX';
+const WAITING_IN_QUEUE: string = 'WAITING_IN_QUEUE';
+const UNSCHEDULED: string = 'UNSCHEDULED';
+
+const ScheduleStat = {
+  CANCELED,
+  COMPLETED,
+  COMPLETED_WITH_NO_DATA,
+  COMPLETED_WITH_WARNINGS,
+
+  CORRUPTED,
+  DELETED_BY_USER,
+  EXPIRED,
+  FAULT,
+
+  FINISHED,
+  FINISHED_WITH_NODATA,
+  FINISHED_WITH_WARNING,
+  GENERATOR_STOPPED,
+
+  GLOBAL_TIMEOUT,
+  PAUSED,
+  PENDING,
+  PENDING_WITH_NODATA,
+
+  PENDING_WITH_WARNING,
+  RUNNING_DATA_ACQUISITION,
+  RUNNING_FILE_GENERATION,
+  RUNNING_MAIL,
+
+  RUNNING_PUBLICATION,
+  SCHEDULED,
+  STARTED,
+  TIMEOUT,
+
+  WAITING_FOR_ETL,
+  WAITING_FOR_IMX,
+  WAITING_IN_QUEUE,
+  UNSCHEDULED
+};
+export { ScheduleStat };
+
+//Mass publication statuses
+const MP_CANCELED = 'CANCELED';
+const MP_COMPLETED = 'COMPLETED';
+const MP_COMPLETED_ERROR = 'COMPLETED_ERROR';
+const MP_COMPLETED_NODATA = 'COMPLETED_NODATA';
+
+const MP_COMPLETED_TIMEOUT_WARNING = 'COMPLETED_TIMEOUT_WARNING';
+const MP_COMPLETED_WARNING = 'COMPLETED_WARNING';
+const MP_CORRUPTED = 'CORRUPTED';
+const MP_DELETED_BY_USER = 'DELETED_BY_USER';
+
+const MP_FAULT = 'FAULT';
+const MP_GENERATING_CHILD = 'GENERATING_CHILD';
+const MP_GENERATOR_STOPPED = 'GENERATOR_STOPPED';
+const MP_PAUSED = 'PAUSED';
+
+const MP_PENDING = 'PENDING';
+const MP_PENDING_ERROR = 'PENDING_ERROR';
+const MP_PENDING_NODATA = 'PENDING_NODATA';
+const MP_PENDING_TIMEOUT_WARNING = 'PENDING_TIMEOUT_WARNING';
+
+const MP_PENDING_WARNING = 'PENDING_WARNING';
+const MP_RESUMED = 'RESUMED';
+const MP_RUNNING = 'RUNNING';
+const MP_SCHEDULED = 'SCHEDULED';
+
+const MP_TIMEOUT = 'TIMEOUT';
+const MP_TIMEOUT_NOTI = 'TIMEOUT_NOTI';
+const MP_UNSCHEDULED = 'UNSCHEDULED';
+const MP_WAITING = 'WAITING';
+
+const MP_WAITING_ETL = 'WAITING_ETL';
+const MP_WAITING_IMX_SERVER = 'WAITING_IMX_SERVER';
+const MP_WAITING_1ST_CHILD = 'WAITING_1ST_CHILD';
+
+const MpStat = {
+  MP_CANCELED,
+  MP_COMPLETED,
+  MP_COMPLETED_ERROR,
+  MP_COMPLETED_NODATA,
+
+  MP_COMPLETED_TIMEOUT_WARNING,
+  MP_COMPLETED_WARNING,
+  MP_CORRUPTED,
+  MP_DELETED_BY_USER,
+
+  MP_FAULT,
+  MP_GENERATING_CHILD,
+  MP_GENERATOR_STOPPED,
+  MP_PAUSED,
+
+  MP_PENDING,
+  MP_PENDING_ERROR,
+  MP_PENDING_NODATA,
+  MP_PENDING_TIMEOUT_WARNING,
+
+  MP_PENDING_WARNING,
+  MP_RESUMED,
+  MP_RUNNING,
+  MP_SCHEDULED,
+
+  MP_TIMEOUT,
+  MP_TIMEOUT_NOTI,
+  MP_UNSCHEDULED,
+  MP_WAITING,
+
+  MP_WAITING_ETL,
+  MP_WAITING_IMX_SERVER,
+  MP_WAITING_1ST_CHILD
+};
+export { MpStat };
+
+//Aggregation types
+const AGG_COUNT = 'COUNT';
+const AGG_COUNT_DISTINCT = 'COUNT_DISTINCT';
+const AGG_MIN = 'MIN';
+const AGG_MAX = 'MAX';
+
+const AGG_AVG = 'AVG';
+const AGG_SUM = 'SUM';
+const AGG_SUM_DISTINCT = 'SUM_DISTINCT';
+const AGG_CELL_SUM = 'CELL_SUM';
+
+const AGG_CELL_SUM_DISTINCT = 'CELL_SUM_DISTINCT';
+const AGG_PERCENTAGE_OF_GRAND = 'PERCENTAGE_OF_GRAND';
+const AGG_PERCENTAGE_OF_GRAND_DISTINCT = 'PERCENTAGE_OF_GRAND_DISTINCT';
+
+const AggType = {
+  AGG_COUNT,
+  AGG_COUNT_DISTINCT,
+  AGG_MIN,
+  AGG_MAX,
+
+  AGG_AVG,
+  AGG_SUM,
+  AGG_SUM_DISTINCT,
+  AGG_CELL_SUM,
+
+  AGG_CELL_SUM_DISTINCT,
+  AGG_PERCENTAGE_OF_GRAND,
+  AGG_PERCENTAGE_OF_GRAND_DISTINCT
+};
+export { AggType };
+
+//Total types
+const GRAND_TOTAL: string = 'GRAND_TOTAL';
+const GRAND_TOTAL_FULL: string = 'GRAND_TOTAL_FULL';
+const SUBTOTAL_SINGLE: string = 'SUBTOTAL_SINGLE';
+const SUBTOTAL_MULTI: string = 'SUBTOTAL_MULTI';
+
+const TotalType = {
+  GRAND_TOTAL,
+  GRAND_TOTAL_FULL,
+  SUBTOTAL_SINGLE,
+  SUBTOTAL_MULTI
+};
+export { TotalType };
+
+//Total positions
+const TOP: string = 'TOP';
+const BOTTOM: string = 'BOTTOM';
+const LEFT: string = 'LEFT';
+const RIGHT: string = 'RIGHT';
+
+const TOP_OR_LEFT: string = 'TOP_OR_LEFT';
+const BOTTOM_OR_RIGHT: string = 'BOTTOM_OR_RIGHT';
+
+const TotalPosition = {
+  TOP,
+  BOTTOM,
+  LEFT,
+  RIGHT,
+  TOP_OR_LEFT,
+  BOTTOM_OR_RIGHT
+};
+export { TotalPosition };
+
+const SCOPE_DASHBOARD = 'DASHBOARD';
+const SCOPE_SCHEDULE = 'SCHEDULE';
+const SCOPE = {
+  SCOPE_DASHBOARD,
+  SCOPE_SCHEDULE
+};
+export { SCOPE };
+
+const RESOURCE_TYPE = {
+  CPU: 'CPU',
+  MEMORY: 'MEMORY',
+  STORAGE: 'STORAGE'
+};
+export { RESOURCE_TYPE };
+
+const RESOURCE_SCOPE = {
+  SYSTEM: 'SYSTEM',
+  WEB_SERVER: 'WEB_SERVER',
+  SCHEDULER: 'SCHEDULER'
+};
+export { RESOURCE_SCOPE };
+
+const RESOURCE_NAME = {
+  CPU_USG_PERCENT: 'CPU_USG_PERCENT',
+  MEM_USG_PERCENT: 'MEM_USG_PERCENT',
+  MEM_CFG_MIN: 'MEM_CFG_MIN',
+  MEM_CFG_MAX: 'MEM_CFG_MAX',
+  CPU_CORES: 'CPU_CORES',
+  FS_AD_TRACE_SIZE: 'FS_AD_TRACE_SIZE',
+  FS_AD_TMP_SIZE: 'FS_AD_TMP_SIZE',
+  FS_AD_REPORT_SIZE: 'FS_AD_REPORT_SIZE',
+  FS_DOMAIN_HOME_LOGS_SIZE: 'FS_DOMAIN_HOME_LOGS_SIZE',
+  FS_AD_TRACE_USG_PERCENT: 'FS_AD_TRACE_USG_PERCENT',
+  FS_AD_TMP_USG_PERCENT: 'FS_AD_TMP_USG_PERCENT',
+  FS_AD_REPORT_USG_PERCENT: 'FS_AD_REPORT_USG_PERCENT',
+  FS_DOMAIN_HOME_LOGS_USG_PERCENT: 'FS_DOMAIN_HOME_LOGS_USG_PERCENT'
+};
+export { RESOURCE_NAME };
+const DEPENDENCY_TYPE = {
+  WIDGET: 1,
+  WORKSHEET: 2,
+  CALCULATION: 3,
+  FILTER: 4,
+  PARAMETER: 5,
+  FOLDERFO: 6,
+  SCHEDULE: 7,
+  USER_SHARING: 8,
+  GROUP_SHARING: 9
+};
+export { DEPENDENCY_TYPE };
+
+const TRANS_OBJ_TYPE = {
+  WORKBOOK: 1,
+  SHEET: 2,
+  WIDGET: 3,
+  BA: 4,
+  FOLDER: 5,
+  ITEM: 6,
+  PARAM: 7,
+  TOTAL: 8,
+  JOIN: 9,
+  ITEM_CLASS: 10,
+  CONDITION: 11
+};
+
+const TRANS_KEY = {
+  WORKBOOK_NAME: 'wb.name',
+  WORKBOOK_DESC: 'wb.description',
+  PARAM_PROMPT: 'param.prompt',
+  PARAM_DESC: 'param.desc',
+  SHEET_NAME: 'sh.name',
+  SHEET_DESC: 'sh.description',
+  WIDGET_NAME: 'widget.name',
+  WIDGET_COL_HEADER: 'col_header.',
+  WIDGET_NULL_VALUE: 'widget.nullvalue',
+  TOTAL_LABEL: 'total.label.',
+  GRAPH_TITLE: 'g.title',
+  GRAPH_TITLE_O1: 'g.title.o1',
+  GRAPH_TITLE_X1: 'g.title.x1',
+  GRAPH_TITLE_Y1: 'g.title.y1',
+  GRAPH_TITLE_Y2: 'g.title.y2',
+  BA_NAME: 'ba.name',
+  BA_DESC: 'ba.description',
+  FOLDER_NAME: 'fd.name',
+  FOLDER_DESC: 'fd.description',
+  ITEM_NAME: 'i.name',
+  ITEM_DESC: 'i.expDescription',
+  ITEM_CLASS_NAME: 'ic.name',
+  ITEM_CLASS_DESC: 'ic.expDescription',
+  JOIN_NAME: 'join.name',
+  JOIN_DESC: 'join.desc'
+};
+const TransConst = {
+  OBJ_TYPE: TRANS_OBJ_TYPE,
+  KEY: TRANS_KEY
+};
+
+export { TransConst };
+
+const CUSTOM_FOLDER_TYPE = {
+  JOIN: 'join',
+  UNION: 'union'
+};
+export { CUSTOM_FOLDER_TYPE };

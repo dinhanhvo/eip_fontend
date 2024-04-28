@@ -1,0 +1,20 @@
+{
+  "cancel": "Stornieren",
+  "disabled": "Deaktiviert",
+  "enabled": "aktiviert",
+  "lang": "Sprache",
+  "minutes": "Protokoll",
+  "ok": "okay",
+  "save": "sparen",
+  "fmtStrategy": {
+    "title": "Wählen Sie eine Datums- und Zahlenformatstrategie"
+  },
+  "resStatus": {
+    "title": "Einstellungen für die Erfassung des Ressourcenstatus",
+    "lblColRes": "Sammeln Sie den Ressourcenstatus",
+    "lblColPeriod": "Sammle Ressourcenstatus alle",
+    "lblCleanUp": "Bereinigen Sie die Statusdaten",
+    "lblClJobInt": "Jobintervall bereinigen",
+    "lblCleanAfter": "Bereinigen Sie die Statusdaten nach"
+  }
+}

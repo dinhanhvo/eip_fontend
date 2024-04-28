@@ -1,0 +1,27 @@
+// $leftColor: #fff;
+.routerOutlet {
+    top: 160px;
+    position: relative;
+    // height: 2000px;
+}
+.leftside,.rightside {
+    // background-color: $leftColor;
+}
+// #rightside {
+//     background-color: #519872;
+// }
+
+@media only screen and (max-width: 800px) {
+    #cokhibody {
+        width: 100%;
+    }
+    .leftside,.rightside {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .rightside,.rightside {
+        display: none;
+    }
+}

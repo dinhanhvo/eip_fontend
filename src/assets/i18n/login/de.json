@@ -1,0 +1,58 @@
+{
+  "lang": {
+    "en": "Englisch",
+    "fr": "Französisch",
+    "es": "Spanisch",
+    "de": "Deutsche"
+  },
+  "login": {
+    "language": "Sprache",
+    "login": "Anmeldung",
+    "password": "Passwort eingeben",
+    "server": "Server",
+    "username": "Benutzernamen eingeben"
+  },
+  "etlInfo": {
+    "status": {
+      "completedSuccess": "Erfolgreich beendet",
+      "completedWarning": "Abgeschlossen mit Warnungen",
+      "connectError": "Datenbankverbindungsfehler",
+      "error": "Beim Versuch, den ETL-Status abzurufen, tritt ein Fehler auf.",
+      "failure": "Fehler",
+      "latency": "Latenz:",
+      "notAvailable": "Nicht verfügbar",
+      "onGoing": "Fortlaufend",
+      "packageError": "Nicht verfügbar",
+      "schema.completedErrors": "Daten mit Fehlern geladen. Überprüfen Sie SYS1 oder wenden Sie sich an CODIX.",
+      "schema.completedSuccess": "Daten erfolgreich geladen am: Datum",
+      "schema.completedWarning": "Daten mit Warnungen geladen. Überprüfen Sie SYS1 auf Details.",
+      "schema.failure": "Fehler. Überprüfen Sie SYS1 oder wenden Sie sich an CODIX.",
+      "schema.load": "Laden:: Laden; Geladen: Geladen -: fehlgeschlagen",
+      "startDate": "Anfangsdatum:",
+      "statusFor": "Status für: Name:",
+      "statusFor3NF": "Status für 3NF:",
+      "statusForAllStarSchema": "Status für alle STAR SCHEMA:"
+    }
+  },
+  "pubStatus": {
+    "error": "Publikationsstatistiken sind aufgrund eines Fehlers nicht verfügbar.",
+    "globalStat.adGeneratorStopped": "AD Generator wurde gestoppt",
+    "globalStat.error": "Statusfehler",
+    "globalStat.noOngoingPublications": "Keine laufenden Veröffentlichungen",
+    "globalStat.ongoingPublications": "Laufende Veröffentlichungen:",
+    "statMember.extranet": "Veröffentlicht im Extranet:",
+    "statMember.failed": "Terminierung fehlgeschlagen:",
+    "statMember.genFiles": "Generierte Dateien:",
+    "statMember.intranet": "Veröffentlicht im Intranet:",
+    "statMember.mail": "Per Mail veröffentlicht:",
+    "statMember.success": "Terminierung erfolgreich abgeschlossen:",
+    "statMember.timeOut": "Zeitüberschreitung:",
+    "activity": {
+      "complete": "Aktivität",
+      "error": "Aktivitätsfehler",
+      "last24Hours": "Aktivität in den letzten 24 Stunden",
+      "lastMonth": "Aktivität im letzten Monat",
+      "lastWeek": "Aktivität in der letzten Woche"
+    }
+  }
+}

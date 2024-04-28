@@ -1,0 +1,39 @@
+{
+  "bu": "Universul de afaceri",
+  "dashboard": "Tablou de bord",
+  "download": "Descarca",
+  "help": "Ajutor",
+  "language": "Limba",
+  "logOut": "Deconectare",
+  "open": "Deschis",
+  "save": "Salvați",
+  "saveAs": "Salvează ca..",
+  "saveAsFile": "Salvați ca fișier",
+  "share": "Acțiune",
+  "version": "Versiune",
+  "hdrMnu": {
+    "changePwd": "Schimbați parola",
+    "downPdf": "Descarcă PDF",
+    "helpC": "Conținut de ajutor",
+    "newWb": "Panou de bord nou",
+    "tools": "Unelte"
+  },
+  "lang": {
+    "en": "Engleză",
+    "fr": "limba franceza",
+    "es": "Spaniolă",
+    "de": "limba germana"
+  },
+  "sideBar": {
+    "adgConf": "Setări AD Generator",
+    "dateNumFmt": "Format data și număr",
+    "home": "Acasă",
+    "massPub": "Publicare în masă",
+    "pub": "Publicare",
+    "pubMng": "Director de publicare",
+    "resStatus": "Starea resurselor",
+    "searchPub": "Lista tablourilor de bord AD",
+    "startStopAdg": "Start / Stop AD Generator",
+    "settings": "Setări"
+  }
+}

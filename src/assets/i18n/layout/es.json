@@ -1,0 +1,39 @@
+{
+  "bu": "Universo empresarial",
+  "dashboard": "Tablero",
+  "download": "Descargar",
+  "help": "Ayuda",
+  "language": "Idioma",
+  "logOut": "Cerrar sesión",
+  "open": "Abierto",
+  "save": "Salvar",
+  "saveAs": "Guardar como..",
+  "saveAsFile": "Guardar como archivo",
+  "share": "Compartir",
+  "version": "Versión",
+  "hdrMnu": {
+    "changePwd": "Cambia la contraseña",
+    "downPdf": "Descargar PDF",
+    "helpC": "Contenidos de ayuda",
+    "newWb": "Nuevo tablero de instrumentos",
+    "tools": "Herramientas"
+  },
+  "lang": {
+    "en": "Inglés",
+    "fr": "francés",
+    "es": "Español",
+    "de": "alemán"
+  },
+  "sideBar": {
+    "adgConf": "Configuración del generador de AD",
+    "dateNumFmt": "Formato de fecha y número",
+    "home": "Casa",
+    "massPub": "Publicación masiva",
+    "pub": "Publicación",
+    "pubMng": "Gerente de publicaciones",
+    "resStatus": "Estado de los recursos",
+    "searchPub": "Lista de paneles de AD",
+    "startStopAdg": "Iniciar / detener generador de AD",
+    "settings": "Configuraciones"
+  }
+}

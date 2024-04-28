@@ -1,0 +1,32 @@
+<!-- <p>products works!</p> -->
+<div class="bodypd">
+    <div class="title">
+        <h3> Sản Phẩm Cùng Danh Mục:</h3>
+    </div>
+    <div class="containerpd">
+        <div class="products" *ngFor="let pr of products">
+            <div class="card">
+                <div class="des">
+                    <p>
+                        {{pr.name}}
+                    </p>
+                </div>
+                <div class="bodyCard">
+                    <div class="zoom">
+                        <img  src="{{pr.imagepath}}" />
+                    </div>
+                    
+                    <div class="price">
+                            {{pr.price}}đ
+                        </div>
+                </div>
+                <div class="footer">
+                    <Button class="bt" (click)="gotoChiTiet(pr)">
+                        Chi Tiết
+                    </Button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

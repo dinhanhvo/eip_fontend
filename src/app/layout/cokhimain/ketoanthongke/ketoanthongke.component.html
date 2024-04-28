@@ -1,0 +1,204 @@
+<br>
+<div class="p-grid">
+    <div class="p-col-3 ui-g">
+      <!-- <div>
+         <p-inputSwitch [(ngModel)]="isKhu" (onChange)="changeKhoKhu()"></p-inputSwitch>
+      </div> -->
+      <div >
+        Kho:
+        <p-dropdown [options]="khoNhaps" optionLabel="name"
+          (onChange)="changeKho()"
+           [(ngModel)]="kho"
+            name="kho">
+        </p-dropdown>
+      </div>
+      <!-- <div *ngIf="isKhu">
+        Khu:
+        <p-dropdown [options]="khukbs" optionLabel="name" [(ngModel)]="khu" name="khu">
+        </p-dropdown>
+      </div> -->
+    </div>
+    
+    <div class="p-col-1">
+        <div style="float: right;" class="label">
+            Từ ngày: </div>
+    </div>
+    <div class="p-col-3">
+        <span class="ui-float-label">
+            <p-calendar [(ngModel)]="tkFrom" [showIcon]="true"
+            dateFormat="dd/mm/yy"
+            [maxDate]="tkTo"
+            ></p-calendar>
+        </span>
+    </div>
+    <div class="p-col-1">
+        <div style="float: right;" class="label">
+            Đến ngày: </div>
+    </div>
+    <div class="p-col-4">
+        <!-- <span class="ui-float-label"> -->
+        <p-calendar [(ngModel)]="tkTo" [showIcon]="true"
+        name="thuocphatTo"
+        [minDate]="tkFrom"
+        dateFormat="dd/mm/yy"
+        >
+        </p-calendar>
+        <!-- </span> -->
+        <span style="float: right;">
+            <button type="button" pButton icon="fa fa-check" 
+            (click)="xemDS()" label="Xem"></button>
+        </span>
+    </div>
+</div>
+<p-table #dtkho [columns]="colsKho" [value]="reportDataKho" 
+selectionMode="single" [(selection)]="reportRow"
+(onRowSelect)="onRowSelect($event)" [paginator]="true" [rows]="25">
+<ng-template pTemplate="caption">
+  Thống kê theo kho
+  <!-- <div style="text-align: right">
+    <i class="pi pi-search" style="margin:4px 4px 0 0"></i>
+    <input type="text" pInputText size="50" placeholder="Tìm tt chung"
+      (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+  </div> -->
+</ng-template>
+<ng-template pTemplate="header" let-columns>
+  <tr>
+    <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+      {{col.header}}
+      <p-sortIcon [field]="col.field"></p-sortIcon>
+    </th>
+  </tr>
+  <tr>
+    <th *ngFor="let col of columns" [ngSwitch]="col.field">
+      <!-- <input *ngSwitchCase="'mabenhnhan'" pInputText type="text"
+        (input)="dt.filter($event.target.value, col.field, 'contains')">
+      <input *ngSwitchCase="'fullname'" pInputText type="text"
+      (input)="dt.filter($event.target.value, col.field, 'contains')"> -->
+    </th>
+  </tr>
+  <!-- <tr>
+    <th *ngFor="let col of columns" [ngSwitch]="col.field">
+    </th>
+  </tr> -->
+</ng-template>
+<ng-template pTemplate="body" let-rowData let-columns="columns">
+  <tr [pSelectableRow]="rowData">
+    <td *ngFor="let col of columns">
+      <div *ngIf="col.field == 'kho'; else other_content">
+        <div>
+            {{rowData[col.field]}}
+        </div>
+      </div>
+      <ng-template #other_content>
+          <div>
+              {{rowData[col.field] | number}}
+          </div>
+      </ng-template>
+    </td>
+    <!-- <td *ngFor="let col of columns">
+    </td> -->
+  </tr>
+</ng-template>
+</p-table>
+<br>
+<p-table #dt [columns]="cols" [value]="reportData" 
+selectionMode="single" [(selection)]="reportRow"
+(onRowSelect)="onRowSelect($event)" [paginator]="true" [rows]="25">
+<ng-template pTemplate="caption">
+  Chi tiết khu
+  <!-- <div style="text-align: right">
+    <i class="pi pi-search" style="margin:4px 4px 0 0"></i>
+    <input type="text" pInputText size="50" placeholder="Tìm tt chung"
+      (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+  </div> -->
+</ng-template>
+<ng-template pTemplate="header" let-columns>
+  <tr>
+    <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+      {{col.header}}
+      <p-sortIcon [field]="col.field"></p-sortIcon>
+    </th>
+  </tr>
+  <tr>
+    <th *ngFor="let col of columns" [ngSwitch]="col.field">
+      <!-- <input *ngSwitchCase="'mabenhnhan'" pInputText type="text"
+        (input)="dt.filter($event.target.value, col.field, 'contains')">
+      <input *ngSwitchCase="'fullname'" pInputText type="text"
+      (input)="dt.filter($event.target.value, col.field, 'contains')"> -->
+    </th>
+  </tr>
+  <!-- <tr>
+    <th *ngFor="let col of columns" [ngSwitch]="col.field">
+    </th>
+  </tr> -->
+</ng-template>
+<ng-template pTemplate="body" let-rowData let-columns="columns">
+  <tr [pSelectableRow]="rowData">
+    <td *ngFor="let col of columns">
+      <div *ngIf="col.field == 'khu_name' || col.field == 'kho'
+        ; else other_content">
+        <div>
+            {{rowData[col.field]}}
+        </div>
+      </div>
+      <ng-template #other_content>
+          <div>
+              {{rowData[col.field] | number}}
+          </div>
+      </ng-template>
+    </td>
+  </tr>
+</ng-template>
+</p-table>
+
+<br>
+<p-table #dtTM [columns]="colsTM" [value]="reportData" 
+selectionMode="single" [(selection)]="reportRowTM"
+(onRowSelect)="onRowSelectTM($event)" [paginator]="true" [rows]="25">
+<ng-template pTemplate="caption">
+  {{titleTM}}
+  <button type="button" pButton icon="pi pi-file-excel" iconPos="left"
+     label="EXCEL" (click)="exportTMTTExcel()"
+    style="margin-right: 0.5em; float:right" class="ui-button-success">
+  </button>
+
+  <!-- <div style="text-align: right">
+    <i class="pi pi-search" style="margin:4px 4px 0 0"></i>
+    <input type="text" pInputText size="50" placeholder="Tìm tt chung"
+      (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+  </div> -->
+</ng-template>
+<ng-template pTemplate="header" let-columns>
+  <tr>
+    <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+      {{col.header}}
+      <p-sortIcon [field]="col.field"></p-sortIcon>
+    </th>
+  </tr>
+  <tr>
+    <th *ngFor="let col of columns" [ngSwitch]="col.field">
+      <!-- <input *ngSwitchCase="'mabenhnhan'" pInputText type="text"
+        (input)="dt.filter($event.target.value, col.field, 'contains')">
+      <input *ngSwitchCase="'fullname'" pInputText type="text"
+      (input)="dt.filter($event.target.value, col.field, 'contains')"> -->
+    </th>
+  </tr>
+</ng-template>
+<ng-template pTemplate="body" let-rowData let-columns="columns">
+  <tr [pSelectableRow]="rowData">
+    <td *ngFor="let col of columns">
+      <div *ngIf="col.field == 'khu_name' || col.field == 'kho'
+        ; else other_content">
+        <div>
+            {{rowData[col.field]}}
+        </div>
+      </div>
+      <ng-template #other_content>
+          <div>
+              {{rowData[col.field] | number}}
+          </div>
+      </ng-template>
+    </td>
+  </tr>
+</ng-template>
+</p-table>

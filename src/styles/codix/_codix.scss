@@ -1,0 +1,379 @@
+@import 'icons';
+@import 'tables';
+
+html {
+  font-size: 15px;
+}
+
+body {
+  .ui-accordion {
+    .ui-accordion-header {
+      a {
+        padding: 0.2em 0.3em;
+
+        &:hover {
+          text-decoration: none;
+        }
+      }
+    }
+  }
+
+  .ui-button {
+    height: 2em;
+
+    &.ui-spinner-button {
+      height: 50%;
+    }
+
+    &.ui-button-icon-only {
+      width: 2em;
+
+      &.cui-button {
+        width: 2em;
+      }
+    }
+
+    &.ui-button-text-icon-left {
+      .ui-button-text {
+        padding-top: 0.23em;
+      }
+    }
+
+    &.ui-button-text-only {
+      .ui-button-text {
+        padding: 0.25em 0.75em;
+      }
+    }
+
+    &.cui-button {
+      background-color: inherit;
+      border: none;
+
+      &:enabled:focus {
+        background-color: inherit;
+        border: none;
+      }
+
+      &:hover {
+        background-color: inherit;
+        border: none;
+      }
+
+      &.cui-fa {
+        color: #404040;
+
+        &.ui-button-icon-only {
+          .ui-button-icon-left {
+            margin-top: -0.5em;
+            font-size: 1.5rem;
+            font-weight: 700;
+          }
+        }
+      }
+    }
+  }
+
+  .ui-dialog {
+    .ui-dialog-titlebar {
+      padding: 0.3em 1em;
+    }
+  }
+
+  .ui-g {
+    margin-left: -0.5em;
+    margin-right: -0.5em;
+  }
+
+  .ui-menubar {
+    border: none;
+    background-color: inherit;
+
+    .ui-menubar-root-list > .ui-menuitem > .ui-menuitem-link {
+      padding: 0.2em 0.5em;
+    }
+  }
+
+  .ui-menubar .ui-menuitem-link,
+  .ui-tieredmenu .ui-menuitem-link,
+  .ui-contextmenu .ui-menuitem-link,
+  .ui-megamenu .ui-menuitem-link,
+  .ui-slidemenu .ui-menuitem-link {
+    padding: 0.2em 0.5em;
+  }
+
+  .ui-multiselect {
+    .ui-multiselect-label {
+      padding-top: 0.2em;
+      padding-bottom: 0.2em;
+      min-height: 26px;
+    }
+  }
+
+  .ui-table {
+    .ui-table-tbody {
+      & > tr {
+        & > td {
+          padding: 0.2em 0.3em;
+        }
+      }
+    }
+
+    .ui-table-thead {
+      & > tr {
+        & > th {
+          padding: 0.2em 0.3em;
+        }
+      }
+    }
+
+    .list-group-item {
+      padding: 0.3em 0.5em;
+    }
+  }
+
+  .ui-tabview.ui-tabview-top .ui-tabview-nav li a,
+  .ui-tabview.ui-tabview-bottom .ui-tabview-nav li a,
+  .ui-tabview.ui-tabview-left .ui-tabview-nav li a,
+  .ui-tabview.ui-tabview-right .ui-tabview-nav li a {
+    padding: 0.2em 0.5em;
+  }
+}
+
+.dropdown-sm .ui-dropdown {
+  min-width: 80px;
+}
+
+.form-control {
+  padding: 0.2rem 0.5rem;
+
+  &.w-auto {
+    width: auto;
+  }
+
+  &.sm {
+    width: 100px;
+  }
+}
+
+label {
+  margin-bottom: 0.3rem;
+}
+
+.card-header {
+  padding: 0.4rem 0.6rem;
+}
+
+.card-body {
+  padding: 0.5rem;
+}
+
+.cd-wb-toolbar .ui-toolbar {
+  padding: 0.2em 0.5em;
+}
+
+.cd-wb-toolbar .ui-inputtext.paging-inp {
+  padding: 2px;
+  width: 50px;
+  text-align: center;
+}
+
+.cd-panel-toolbar .ui-toolbar {
+  border: none;
+  padding: 0 0.3em;
+}
+
+.cdx-tree .ui-tree {
+  border: none;
+  width: 100%;
+  padding: 0 0;
+}
+
+// .ad-wg-show .ui-panel .ui-panel-titlebar {
+//     padding: 0;
+//     display: flex;
+// }
+// .ad-wg-show .ui-panel .ui-panel-titlebar> :first-child {
+//     flex: 1 1 auto;
+// }
+// .ad-wg-show .ui-panel .ui-panel-titlebar>a {
+//     flex: 0 0 auto;
+// }
+// .ad-wg-show .ui-panel .ui-panel-content {
+//     padding: .5em;
+// }
+.ad-panel {
+  overflow: visible;
+
+  .ui-panel {
+    overflow: visible;
+
+    .ui-panel-titlebar {
+      padding: 0;
+      display: flex;
+    }
+
+    .ui-panel-titlebar > :first-child {
+      flex: 1 1 auto;
+    }
+
+    .ui-panel-titlebar > a {
+      flex: 0 0 auto;
+    }
+
+    .ui-panel-content {
+      overflow: visible;
+      padding: 0.5em;
+    }
+  }
+}
+
+.cd-flex-row {
+  display: flex;
+
+  .cd-stretch {
+    flex: 1 1 auto;
+  }
+}
+
+.cd-form {
+  .ui-button {
+    &.ui-button-icon-only {
+      .ui-button-text {
+        padding: 0.21rem;
+      }
+    }
+  }
+
+  // .ui-calendar {
+  //   .ui-calendar-button {
+  //     height: auto;
+  //   }
+  // }
+
+  .ui-inputtext {
+    padding: 0.2em 0.4em;
+
+    &.sm {
+      width: 60px;
+    }
+  }
+
+  // .ui-spinner-input.ui-inputtext {
+  //   padding: 0.429em;
+  // }
+
+  .ui-spinner {
+    .ui-spinner-input.sm {
+      width: 80px;
+    }
+
+    .ui-spinner-input.md {
+      width: 150px;
+    }
+
+    .ui-spinner-button.ui-button {
+      height: 50%;
+    }
+  }
+
+  .col-form-label {
+    padding-top: calc(0.2em + 1px);
+    padding-bottom: calc(0.2em + 1px);
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .form-check-input {
+    margin-top: 0.25rem;
+  }
+
+  .form-group {
+    margin-bottom: 0.7rem;
+  }
+}
+
+body {
+  .fz-sm {
+    font-size: 0.75rem;
+  }
+
+  .full-w {
+    width: 100%;
+  }
+
+  .block {
+    display: block;
+  }
+
+  .bold {
+    font-weight: bold;
+  }
+
+  .red {
+    color: red;
+  }
+
+  .green {
+    color: green;
+  }
+
+  .blue {
+    color: blue;
+  }
+
+  $aligns: left right center;
+
+  @each $align in $aligns {
+    .align-#{$align} {
+      text-align: #{$align};
+    }
+  }
+
+  .nopadding {
+    padding: 0;
+  }
+
+  @for $i from 1 through 8 {
+    .pad-top-#{$i*5} {
+      padding-top: #{$i * 5}px;
+    }
+
+    .pad-left-#{$i*5} {
+      padding-left: #{$i * 5}px;
+    }
+
+    .pad-right-#{$i*5} {
+      padding-right: #{$i * 5}px;
+    }
+
+    .pad-bottom-#{$i*5} {
+      padding-bottom: #{$i * 5}px;
+    }
+
+    .pad-tl-#{$i*5} {
+      padding-top: #{$i * 5}px;
+      padding-left: #{$i * 5}px;
+    }
+
+    .pad-tr-#{$i*5} {
+      padding-top: #{$i * 5}px;
+      padding-right: #{$i * 5}px;
+    }
+
+    .pad-#{$i*5} {
+      padding: #{$i * 5}px;
+    }
+
+    .mar-top-#{$i*5} {
+      margin-top: #{$i * 5}px;
+    }
+
+    .mar-left-#{$i*5} {
+      margin-left: #{$i * 5}px;
+    }
+  }
+
+  .clearBoth {
+    clear: both;
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "langs": [
+    "en",
+    "fr",
+    "es",
+    "de"
+  ],
+  "profiles": [
+    {
+      "name": "LOCAL SERVER",
+      "api": "http://localhost:8089/api",
+      "default": true
+    },
+    {
+      "name": "PRODUCT SERVER",
+      "api": "http://128.199.74.135:8089/api",
+      "default": false
+    },
+
+    {
+      "name": "Docker SERVER",
+      "api": "http://nx-backend-service:8089/api",
+      "default": true
+    }
+  ]
+}

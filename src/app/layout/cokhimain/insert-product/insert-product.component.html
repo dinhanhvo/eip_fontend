@@ -1,0 +1,111 @@
+<p-messages [(value)]="msgs"></p-messages>
+<p-toast [style]="{marginTop: '80px'}"></p-toast>
+<div class="p-grid par">
+    <div class="p-col-3">
+    </div>
+    <div class="col-6 step">
+        <p-panel >
+            <p-header>
+                Nhập thông tin sản phẩm:
+            </p-header>
+            <div class="ui-g">
+                <div class="ui-g-12 ui-md-4 ui-lg-4">Tên:</div>
+                <div class="ui-g-12 ui-md-8 ui-lg-8">
+                    <input type="text" pInputText [(ngModel)]="name"/>
+                </div>
+            </div>
+            <div class="ui-g">
+                <div class="ui-g-12 ui-md-4 ui-lg-4">Mô tả:</div>
+                <div class="ui-g-12 ui-md-8 ui-lg-8">
+                    <input type="text" pInputText [(ngModel)]="description"/>
+                </div>
+            </div>
+            <div class="ui-g">
+                <div class="ui-g-12 ui-md-4 ui-lg-4">Hình ảnh:</div>
+                <div class="ui-g-12 ui-md-8 ui-lg-8">
+                    <!-- <form class="cd-form"> -->
+                    <p-fileUpload name="files" 
+                        multiple="multiple"
+                        accept="image/*"
+                        (onUpload)="onBasicUpload($event)"
+                        url="http://smartevn.com:8089/api/upload"
+                    >
+                        <ng-template pTemplate="content">
+                            <ul *ngIf="uploadedFiles.length">
+                                <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
+                            </ul>
+                        </ng-template>
+                    </p-fileUpload>
+                    <!-- </form> -->
+                </div>
+            </div>
+            <div class="ui-g">
+                <div class="ui-g-12 ui-md-4 ui-lg-4">Đơn giá:</div>
+                <div class="ui-g-12 ui-md-8 ui-lg-8">
+                    <input type="text" pInputText [(ngModel)]="price"/>
+                </div>
+            </div>
+            <div class="ui-g">
+                <div class="ui-g-12 ui-md-4 ui-lg-4">Ghi chú:</div>
+                <div class="ui-g-12 ui-md-8 ui-lg-8">
+                    <input type="text" pInputText [(ngModel)]="note"/>
+                </div>
+            </div>
+            <div class="ui-g">
+                <div class="ui-g-12 ui-md-4 ui-lg-4">Xuất xứ:</div>
+                <div class="ui-g-12 ui-md-8 ui-lg-8">
+                    <input type="text" pInputText [(ngModel)]="from"/>
+                </div>
+            </div>
+            <div class="ui-g">
+                <div class="ui-g-12 ui-md-4 ui-lg-4">Trạng thái:</div>
+                <div class="ui-g-12 ui-md-8 ui-lg-8">
+                    <input type="text" pInputText [(ngModel)]="status"/>
+                </div>
+            </div>
+            <div class="ui-g">
+                <div class="ui-g-12 ui-md-4 ui-lg-4">Đơn vị:</div>
+                <div class="ui-g-12 ui-md-8 ui-lg-8">
+                    <p-dropdown [options]="units" [(ngModel)]="unit"> </p-dropdown>
+                </div>
+            </div>           
+            <div class="ui-g">
+                <div class="ui-g-12 ui-md-4 ui-lg-4">Loại:</div>
+                <div class="ui-g-12 ui-md-8 ui-lg-8">
+                    <p-dropdown [options]="types" [(ngModel)]="type"
+                        aria-placeholder="Loại"
+                    > </p-dropdown>
+                </div>
+            </div>
+            <div class="ui-g">
+                <div class="ui-g-12 ui-md-6 ui-lg-4">Mục:</div>
+                <div class="ui-g-12 ui-md-6 ui-lg-8">
+                    <p-dropdown [options]="categories" [(ngModel)]="categoryId"
+                        placeholder="Chọn mục" >
+                    </p-dropdown>
+                </div>
+            </div>           
+            <div class="ui-g">
+                <div class="ui-g-12 ui-md-6 ui-lg-4">Tiền tệ:</div>
+                <div class="ui-g-12 ui-md-6 ui-lg-8">
+                    <p-dropdown [options]="currencies" [(ngModel)]="currencyId"
+                        placeholder="VND" >
+                    </p-dropdown>
+                </div>
+            </div>
+
+            <p-footer >
+                <p-button label="Quay Lại" (onClick)="handleRoute($event)"></p-button>
+                <p-button style="float: right;" label="Thêm" (onClick)="addProduct($event)" class="ui-button-rounded"></p-button>
+            </p-footer>
+        </p-panel>
+    </div>
+</div>
+
+<!-- <p>admin works!</p> -->
+<!-- <app-carousel></app-carousel>
+<form class="cd-form">
+<p-fileUpload name="file" url="http://localhost:8089/api/upload"
+    accept="application/pdf"
+></p-fileUpload>
+</form> -->

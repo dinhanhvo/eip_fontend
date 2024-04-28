@@ -1,0 +1,42 @@
+<nav class="shadow-sm navbar navbar-default navbar-expand-lg fixed-top">
+  <a class="navbar-brand" href="#"> 
+    <img class="logo" src="{{ logo }}" /> 
+  </a>
+  <button class="navbar-toggler" type="button" (click)="toggleSidebar()">
+    <!-- <span class="navbar-toggler-icon"></span> -->
+    <i class="fa fa-bars text-muted" aria-hidden="false"></i>
+  </button>
+  <button class="sidebar-toggler" (click)="toggleSidebar()">
+    <i class="fa fa-bars text-muted" aria-hidden="false"></i>
+  </button>
+  <div  style="font-weight: bold; color: '#027E3'; font-size: 25px; text-align: center; 
+   width: 60%;">
+     HỆ THỐNG QUẢN LÝ CÂN CÔNG NGHIỆP - EIP
+  </div>
+  <div class="collapse navbar-collapse" style="font-weight: bold; color: '#027E3';">
+    <div class="mr-auto">{{ dashboardName }}</div>
+    <ul class="navbar-nav">
+      <p-menubar [model]="mainMenuItems"></p-menubar>
+    </ul>
+  </div>
+</nav>
+<!-- <p-dialog header="AD DASHBOARD" [(visible)]="showDialog" [positionTop]="dlgTop" [positionLeft]="dlgLeft" [modal]="true">
+  <div>About CODIX AD DASHBOARD</div>
+  <table *ngIf="showDialog" class="table table-sm">
+    <tbody>
+      <tr>
+        <td width="80" class="font-italic text-secondary">Version:</td>
+        <td>
+          <div>{{ appVersion.version }}</div>
+          <div *ngIf="appVersion.buildDate" class="font-italic">({{ appVersion.buildDate }})</div>
+        </td>
+      </tr>
+      <tr>
+        <td width="100" class="font-italic text-secondary">API:</td>
+        <td>
+          <div *ngIf="apiVersion.version">{{ apiVersion.version }}</div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</p-dialog> -->

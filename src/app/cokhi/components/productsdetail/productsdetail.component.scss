@@ -1,0 +1,35 @@
+.containerpd {
+    // padding: 30px 60px 30px 60px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.bodypd {
+    width: 100%;
+    // background-color: aqua;
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    border: 2px solid #FD1507;
+    .title {
+        line-height: 30px;
+        display: block;
+        background-color: #FD1507;
+        padding: 10px;
+        font-size: 2rem;
+        color: #fff;
+    }
+    .label {
+        font-weight: bold;
+        text-align: right;
+    }
+    .labelName {
+        // background-color: turquoise;
+        padding: 0px;
+        text-align: center; 
+        color: tomato; 
+        font-size: 20px; 
+        font-weight: bold;
+    }
+
+}

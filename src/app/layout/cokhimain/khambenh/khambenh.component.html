@@ -1,0 +1,761 @@
+<!-- <p-messages [(value)]="msgs"></p-messages> -->
+<p-toast [style]="{marginTop: '80px'}"></p-toast>
+<p-accordion [multiple]="true">
+  <p-accordionTab header="Chọn Khu Khám Bệnh" [selected]="true">
+    <!-- Khu -->
+    <div class="ui-g container-fluid">
+      <div class="ui-g-3">
+        Khu: <p-dropdown [options]="khukbs"
+          optionLabel="name" 
+          placeholder="Khu"
+          [(ngModel)]="phieukhambenh.phieukhu"
+          (onChange)="changeKhu()"
+            name="phieuKhu">
+        </p-dropdown>
+        {{kho}}
+      </div>
+    </div>
+  </p-accordionTab>
+  <p-accordionTab header="Khám bệnh" [selected]="true">
+    <div class="container-fluid">
+      <form #phieukhambenhForm="ngForm">
+        <div class="row">
+          <div class="col-md-10">
+            <div class="shadow-lg card" style="width: 100%;">
+              <div class="card-body" style="width: 100%;">
+                <h4 class="card-title d-flex align-items-center">
+                  <i class="fa fa-heartbeat" aria-hidden="true"></i>
+                  {{modeText}}</h4>
+                  <div class="ui-g">
+                    <div class="ui-g-8">
+                      <div class="ui-g">
+                        <div class="ui-g-3"  style="text-align: right;">
+                            <i class="fa fa-user-circle" aria-hidden="true"></i>
+                            Bệnh nhân:
+                        </div>
+                        <div class="ui-g-9">
+                          <!-- {{phieukhambenh.selectedPatient | json}} -->
+                          <p-dropdown [options]="patients" optionLabel="fullname"
+                          [autoDisplayFirst]="false"
+                          placeholder="tenNamSinh"
+                           [filter]="true" (onChange)="changePatient()"
+                           [(ngModel)]="phieukhambenh.selectedPatient"
+                           (onFocus)="focusPatient()"
+                           name="patientFullname">
+                         </p-dropdown>
+                        </div>
+                      </div>
+                      <div class="ui-g">
+                        <div class="ui-g-3">
+                        </div>
+                        <div class="ui-g-9">
+                          <p-dropdown [options]="patients"
+                             optionLabel="patientId" [autoDisplayFirst]="false"
+                             placeholder=" Mã "
+                            [filter]="true" (onChange)="changePatient()"
+                            [(ngModel)]="phieukhambenh.selectedPatient"
+                            (onFocus)="focusPatient()"
+                            name="patientId">
+                          </p-dropdown>
+                          <p-dropdown [options]="patients" optionLabel="patientName"
+                            (onFocus)="focusPatient()"
+                            placeholder="Tên"
+                            [(ngModel)]="phieukhambenh.selectedPatient"
+                             (onChange)="changePatient()" name="patientName"
+                            [filter]="true" [autoDisplayFirst]="false">
+                          </p-dropdown>
+                        </div>
+                      </div>
+                      <!-- Hồ sơ -->
+                      <div class="ui-g">
+                        <div class="ui-g-3"  style="text-align: right;">
+                          Số hồ sơ:
+                        </div>
+                        <div class="ui-g-9">
+                          <div *ngIf="phieukhambenh.selectedPatient.patientId" class="ui-g-8" style="padding-left: 20px;">
+                            <div *ngIf="!isNewSotheodoi">
+                              <b>{{phieukhambenh.selectedPatient.sohoso}}</b>
+                            </div>
+                            <div *ngIf="isNewSotheodoi">
+                              <!-- <input type="text" placeholder="Nhập số hồ sơ" pInputText [(ngModel)]="selectedPatient.sohoso"
+                                name="sohoso" /> -->
+                              <p style="color: red; font-weight: bold"> *Bệnh nhân này chưa tạo hồ sơ, hãy cập nhật số hồ sơ tại menu "Sổ theo dõi"</p>
+                            </div>
+                          </div>  
+                        </div>
+                      </div>
+                      <!-- Ngày -->
+                      <div class="ui-g">
+                        <div class="ui-g-3"  style="text-align: right;">
+                          Ngày:
+                        </div>
+                        <div class="ui-g-9">
+                          <span class="ui-float-label">
+                            <p-calendar [(ngModel)]="phieukhambenh.ngaykham"
+                            dateFormat="dd/mm/yy"
+                            name="ngaykham" [showWeek]="true"
+                              (onChange)="changeNgaykham()"
+                              [showIcon]="true">
+                            </p-calendar>
+                          </span>
+                        </div>
+                      </div>
+                      <!-- Khu -->
+                      <!-- <div class="ui-g">
+                        <div class="ui-g-3" style="text-align: right;">
+                          Khu:
+                        </div>
+                        <div class="ui-g-9">
+                          <p-dropdown [options]="khukbs"
+                            optionLabel="name" 
+                            placeholder="Khu"
+                            [(ngModel)]="phieukhambenh.phieukhu"
+                            (onChange)="changeKhu()"
+                              name="phieuKhu">
+                          </p-dropdown>
+                        </div>
+                      </div> -->
+                      <br>
+                    </div>
+                    <!-- confirm patient info -->
+                    <div class="ui-g-4 shadow-lg card" style="background-color: aquamarine;">
+                      <div class="" *ngIf="phieukhambenh.selectedPatient">
+                        <div>
+                          Tên: <b>{{phieukhambenh.selectedPatient.patientName}}</b>
+                        </div>
+                        <div class="" *ngIf="phieukhambenh.selectedPatient">
+                          Mã BN: <b>{{phieukhambenh.selectedPatient.patientId}}</b>
+                        </div>
+                        <div>
+                            Năm sinh: <b>{{phieukhambenh.selectedPatient.birthYear}}</b>
+                        </div>
+                        <div>
+                          Khu: <b>{{phieukhambenh.selectedPatient.khu}}</b>
+                        </div>
+                        <div class="" *ngIf="phieukhambenh.selectedPatient">
+                          <br> Địa chỉ: <b>{{phieukhambenh.selectedPatient.address}}</b>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <br>
+                  <p-accordion [multiple]="true">
+                    <p-accordionTab header="Xem tóm tắt cắt cơn" [selected]="phieukhambenh && phieukhambenh.selectedPatient && phieukhambenh.selectedPatient.sohoso">
+                    <!-- TTCC: -->
+                    <div class="shadow-sm card" *ngIf="phieukhambenh.selectedPatient">
+                      <div class="card-body ">
+                        <div class="row" *ngIf="selectedPatient.weight">
+                          <div class="p-col-3" style="text-align: right;" >
+                            Cân nặng: 
+                          </div>
+                          <div class="p-col-9">
+                            <b>{{selectedPatient.weight}}</b>
+                          </div>
+                        </div>
+                        <div class="row" *ngIf="selectedPatient.huyetap">
+                          <div class="p-col-3" style="text-align: right;">
+                            Huyết áp: 
+                          </div>
+                          <div class="p-col-9">
+                            <b>{{selectedPatient.huyetap}}</b>
+                          </div>
+                        </div>
+                        <div class="row" *ngIf="selectedHoiChung">
+                          <div class="p-col-3" style="text-align: right;">
+                            Hội chứng: 
+                          </div>
+                          <div class="p-col-9">
+                            <b>{{selectedHoiChung}}</b>
+                          </div>
+                        </div>
+                        <div class="row" *ngIf="selectedKetquaCLS">
+                          <div class="p-col-3" style="text-align: right;">
+                            Kết quả CLS: 
+                          </div>
+                          <div class="p-col-9">
+                            <b>{{selectedKetquaCLS}}</b>
+                          </div>
+                        </div>
+                        <div class="row" *ngIf="kqClsKhac">
+                          <div class="p-col-3" style="text-align: right;">
+                            Kết quả CLS khác: 
+                          </div>
+                          <div class="p-col-9">
+                            <b>{{kqClsKhac}}</b>
+                          </div>
+                        </div>
+                        <div class="row" *ngIf="selectedBenhChinh">
+                          <div class="p-col-3" style="text-align: right;">
+                            Bệnh chính: 
+                          </div>
+                          <div class="p-col-9">
+                            <b>{{selectedBenhChinh}}</b>
+                          </div>
+                        </div>
+                        <div class="row" *ngIf="selectedBenhPhu">
+                          <div class="p-col-3" style="text-align: right;">
+                            Bệnh kèm theo: 
+                          </div>
+                          <div class="p-col-9">
+                            <b>{{selectedBenhPhu}}</b>
+                          </div>
+                        </div>
+                        <div class="row" *ngIf="benhKhac">
+                          <div class="p-col-3" style="text-align: right;">
+                            Bệnh khác: 
+                          </div>
+                          <div class="p-col-9">
+                            <b>{{benhKhac}}</b>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <br>
+                    </p-accordionTab>
+                  </p-accordion>
+              </div>
+
+            </div>
+            <br>
+            <p-accordion [multiple]="true">
+              <p-accordionTab header="Chẩn đoán" [selected]="false">
+              <!-- Chẩn đoán: -->
+              <div class="shadow-sm card">
+                <div class="card-body">
+                  <div class="d-flex justify-content-between card-title">
+                    <h4 class="d-flex align-items-center">
+                      <i class="fa fa-heartbeat" aria-hidden="true"></i>
+                      Chẩn đoán:</h4>
+                  </div>
+                  <div class="ui-g-12">
+                    <div class="ui-g-2" style="text-align: right;">
+                      Chọn:
+                    </div>
+                    <div class="ui-g-7">
+                      <p-multiSelect   [options]="chandoans" 
+                          multiple="multiple" checkbox="checkbox" filter="filter" 
+                          [(ngModel)]="phieukhambenh.chandoan"
+                          optionLabel="id"
+                          name="chandoan" 
+                          defaultLabel="- Chọn theo Mã -">
+                      </p-multiSelect >
+                      <p-multiSelect   
+                        [options]="chandoans" 
+                          multiple="multiple" 
+                          checkbox="checkbox" filter="filter" 
+                          [(ngModel)]="phieukhambenh.chandoan"
+                          optionLabel="name"
+                          name="chandoan" 
+                          defaultLabel="--- Chẩn đoán ---">
+                      </p-multiSelect >
+                    </div>
+                    <div class="ui-g-3">
+                      <span class="ui-float-label" width="100%"> 
+                          <textarea  style="width: 100%;" [rows]="3"
+                          [(ngModel)]="phieukhambenh.chandoanKhac" name="chandoanKhac"
+                          pInputTextarea></textarea>
+                        <label for="float-input">{{phieukhambenh.chandoanKhac?'':'Khác'}}</label>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="ui-g">
+                    <div class="ui-g-10">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <br>
+              </p-accordionTab>
+            <!-- Experience -> CLS -->
+            <p-accordionTab header="Cận lâm sàng">
+              <div class="shadow-sm card">
+                <div class="card-body">
+                  <div class="d-flex justify-content-between card-title">
+                    <h4 class="d-flex align-items-center">
+                      <i class="fa fa-heartbeat" aria-hidden="true"></i>
+                      Chỉ định CLS</h4>
+                    <!-- <button class="btn btn-primary" (click)="addCLS()">+</button> -->
+                  </div>
+                  <div class="row">
+                    <div class="col-4">Nhóm siêu âm</div>
+                    <div class="col-4">Nhóm XQuang</div>
+                    <div class="col-4">Nhóm Xét Nghiệm</div>
+                  </div>
+                  <div class="row">
+                    <div class="col-4">
+                      <p-multiSelect   
+                        [options]="sieuams" 
+                        multiple="multiple" 
+                        checkbox="checkbox" filter="filter" 
+                        [(ngModel)]="phieukhambenh.CLSs"
+                        optionLabel="name"
+                        (onChange)="changeCLS()"
+                        name="clsjs" 
+                        [style]="{'width':'100%'}"
+                        selectedItemsLabel="Đã chọn {0}"
+                        defaultLabel="--- Siêu âm ---">
+                      </p-multiSelect >
+                    </div>
+                    <div class="col-4">
+                      <p-multiSelect   
+                        [options]="XQs" 
+                        multiple="multiple" 
+                        checkbox="checkbox" filter="filter" 
+                        [(ngModel)]="phieukhambenh.CLSs"
+                        optionLabel="name"
+                        (onChange)="changeCLS()"
+                        name="clsjs" 
+                        [style]="{'width':'100%'}"
+                        selectedItemsLabel="Đã chọn {0}"
+                        defaultLabel="--- XQuang ---">
+                      </p-multiSelect >               
+                    </div>
+                    <div class="col-4">
+                      <p-multiSelect   
+                        [options]="XNs" 
+                        multiple="multiple" 
+                        checkbox="checkbox" filter="filter" 
+                        [(ngModel)]="phieukhambenh.CLSs"
+                        optionLabel="name"
+                        (onChange)="changeCLS()"
+                        name="clsjs" 
+                        [style]="{'width':'100%'}"
+                        selectedItemsLabel="Đã chọn {0}"
+                        defaultLabel="--- Xét Nghiệm ---">
+                      </p-multiSelect >   
+                    </div>
+                  </div>
+                  <div>
+                    Đã chọn: {{selectedCLS}}
+                  </div>
+                  <div>
+                    <br>
+                    <span class="ui-float-label" width="100%"> 
+                      <textarea  style="width: 100%;" [rows]="3"
+                        [(ngModel)]="phieukhambenh.ketluan" name="ketluan"
+                        pInputTextarea>
+                      </textarea>
+                      <label for="float-input">{{phieukhambenh.ketluan?'':'Kết luận'}}</label>
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+            </p-accordionTab>
+            </p-accordion>
+            <br>
+            <!-- DonThuoc -->
+            <div class="shadow-sm card" style="width: 100%;">
+              <div class="card-body" style="width: 100%;">
+                <div class="d-flex justify-content-between card-title">
+                  <h4 class="d-flex align-items-center">
+                    <i class="fa fa-medkit" aria-hidden="true"></i>
+                    Đơn Thuốc</h4>
+                  <button class="btn btn-primary" (click)="addDonThuoc()">+</button>
+                </div>
+                <div class="row card-title">
+                  <div class="col-md-2" style="padding-left: 40px;">Mã </div>
+                  <div class="col-md-2">Tên Thuốc</div>
+                  <div class="col-md-2">Cách dùng</div>
+                  <div class="col-md-6" style="padding-left: 30px;">
+                    Liều dùng
+                  </div>
+                </div>
+                <!-- <div> {{phieukhambenh.donThuocs | json}}</div> -->
+                <div class=" card-title"  style="width: 100%;"
+                  *ngFor="let ed of phieukhambenh.donThuocs; let i=index">
+                  <div class="row" style="margin-left: 20px;">
+                    <div class="col-md-6 row">
+                      <div class="row">
+                        <!-- chọn thuốc -->
+                        <div class="col-md-2">
+                          <p-dropdown [options]="thuocs" optionLabel="maThuoc" 
+                            [filter]="true"
+                            [autoDisplayFirst]="false" (onChange)="changeThuoc(ed, i)"
+                            [(ngModel)]="ed.selectedThuoc"
+                            name="mathuoc{{i}}">
+                          </p-dropdown>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <!-- {{ed.selectedThuoc}} -->
+                            <p-dropdown [options]="thuocs" optionLabel="tenThuoc" 
+                              (onChange)="changeThuoc(ed, i)"
+                              [style]="{'width':'100%'}"
+                              [autoDisplayFirst]="false" [filter]="true"
+                              [(ngModel)]="ed.selectedThuoc" 
+                              name="tenThuoc{{i}}"></p-dropdown>
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <p-dropdown (onChange)="changeCachdung(ed)" 
+                              [autoDisplayFirst]="false"
+                              [options]="cachDungs" optionLabel="name" name="cachdung{{i}}"
+                              [disabled]="ed.selectedThuoc==undefined"
+                              [(ngModel)]="ed.cachdung"> 
+                            </p-dropdown>
+                          </div>
+                        </div>
+
+                      </div>
+                      <div *ngIf="ed.selectedThuoc" 
+                        style="text-align: center; width: 100%; margin-top: -30px;">
+                        {{ed.selectedThuoc.tenThuoc}}
+                        Hàm lượng: {{ed.selectedThuoc.hamluong?ed.selectedThuoc.hamluong:'---'}}/ còn: <b>{{ed.selectedThuoc.note | number}}</b>
+                      </div>
+                    </div>
+                    <!-- dynamic lieudung -->
+                    <div class="col-md-6 row ">
+                      <div class="shadow-lg card " style="margin-left: 20px; width: 100%; padding-left:0px;">
+                        <!-- cach dung 1&4 UỐng/Bôi ==> sang/chieu/toi-->
+                        <div class="d-flex justify-content-between card-title" style="width: 100%; height: 100%; background-color: aqua;"
+                          *ngIf="phieukhambenh.donThuocs[i].cachdung!=undefined && (phieukhambenh.donThuocs[i].cachdung.type==1 || phieukhambenh.donThuocs[i].cachdung.type==4)">
+                          <div class="col-md-2">
+                            <div class="form-group">
+                              Sáng<input type="number" class="form-control" name="sang{{i}}"
+                                pKeyFilter="number"
+                                [(ngModel)]="phieukhambenh.donThuocs[i].sang" 
+                                placeholder="Sáng" #sang="ngModel"
+                                [ngClass]="{'is-invalid': sang.invalid && (sang.touched || phieukhambenhForm.submitted) }">
+                            </div>
+                          </div>
+                          <div class="col-md-2">
+                            <div class="form-group">
+                              Chiều<input type="number" class="form-control"
+                                 name="chieu{{i}}" [(ngModel)]="ed.chieu"
+                                 pKeyFilter="number"
+                                placeholder="Chiều" #chieu="ngModel"
+                                [ngClass]="{'is-invalid': chieu.invalid && (chieu.touched || phieukhambenhForm.submitted) }">
+                            </div>
+                          </div>
+                          <div class="col-md-2">
+                            Tối<input type="number" class="form-control" name="toi{{i}}" 
+                            [(ngModel)]="ed.toi"
+                              placeholder="Tối" #toi="ngModel"
+                              pKeyFilter="number"
+                              [ngClass]="{'is-invalid': toi.invalid && (toi.touched || phieukhambenhForm.submitted) }">
+                          </div>
+                          <div class="col-md-2">
+                            SNgày<input type="number" class="form-control" name="songay{{i}}"
+                             [(ngModel)]="ed.songay"
+                             pKeyFilter="number"
+                              placeholder="songay" #songay="ngModel"
+                              [ngClass]="{'is-invalid': toi.invalid
+                               && (toi.touched || phieukhambenhForm.submitted) }">
+                            <!-- <input type="number" name="songay" [(ngModel)]="phieukhambenh.donThuocs[i].songay"
+                              placeholder="Số ngày"> -->
+                          </div>
+                          <div class="col-md-2">
+                            Tổng:
+                            <div *ngIf="phieukhambenh.donThuocs[i].cachdung.type==1">
+                              <!-- {{phieukhambenh.donThuocs[i].ton}} -->
+                              {{phieukhambenh.donThuocs[i].songay * (phieukhambenh.donThuocs[i].sang + phieukhambenh.donThuocs[i].chieu + phieukhambenh.donThuocs[i].toi)}}
+                            </div>
+                            <div *ngIf="phieukhambenh.donThuocs[i].cachdung.type==4">
+                              <input type="number" pKeyFilter="number" class="form-control"
+                                [(ngModel)]="phieukhambenh.donThuocs[i].ton" name="ton{{i}}"> 
+                            </div>
+                          </div>
+                          <div class="col-md-2" *ngIf="phieukhambenh.donThuocs[i].selectedThuoc">
+                            <!-- <p-dropdown name="donvidung{{i}}" [style]="{'width':'30px'}" [options]="donviDungs"
+                              optionLabel="name" [(ngModel)]="phieukhambenh.donThuocs[i].donvidung">
+                            </p-dropdown> -->
+                            Đvị<br>{{phieukhambenh.donThuocs[i].selectedThuoc.unit}}
+                          </div>
+                        </div>
+                        <!-- cach dung 2 Tiêm Bắp-->
+                        <div class="row ui-g d-flex justify-content-between" 
+                          style="width: 100%; margin-left: 20px; background-color: aqua;"
+                          *ngIf="phieukhambenh.donThuocs[i].cachdung!=undefined && phieukhambenh.donThuocs[i].cachdung.type==2">
+                          <div class="ui-g-6">
+                            Số giọt 
+                            <input type="number" pKeyFilter="number"
+                             [(ngModel)]="phieukhambenh.donThuocs[i].numb" name="numb{{i}}"> /phút
+                          </div>
+                          <div class="ui-g-4" *ngIf="phieukhambenh.donThuocs[i].cachdung.type==2">
+                            <input type="number" pKeyFilter="number" class="form-control"
+                              [(ngModel)]="phieukhambenh.donThuocs[i].ton" name="ton{{i}}"
+                              placeholder="tốn"> 
+
+                              <!-- <input type="number" class="form-control" name="sang{{i}}"
+                                pKeyFilter="number"
+                                [(ngModel)]="phieukhambenh.donThuocs[i].sang" 
+                                placeholder="Sáng" #sang="ngModel"
+                                [ngClass]="{'is-invalid': sang.invalid && (sang.touched || phieukhambenhForm.submitted) }"> -->
+                            </div>
+                            <div class="ui-g-2">
+                              Đvị<br>{{phieukhambenh.donThuocs[i].selectedThuoc.unit}}
+                          </div>
+                        </div>
+                        <!-- cach dung 3 Thụt trực tràng -->
+                        <div class="row d-flex justify-content-between"
+                          style="width: 100%; margin-left: 20px; background-color: aqua;"
+                          *ngIf="phieukhambenh.donThuocs[i].cachdung!=undefined && phieukhambenh.donThuocs[i].cachdung.type==3">
+                          <div class="ui-g-6">
+                            <textarea type="text" [(ngModel)]="ed.lieudungKhac" name="lieudungKhac"
+                            [rows]="3"
+                              placeholder="Nhập liều dùng"></textarea>
+                              
+                          </div>
+                          <div class="ui-g-4" *ngIf="phieukhambenh.donThuocs[i].cachdung.type==3">
+                            <input type="number" pKeyFilter="number" class="form-control"
+                              [(ngModel)]="phieukhambenh.donThuocs[i].ton" name="ton{{i}}"> 
+                          </div>
+                          <div class="ui-g-2">
+                            Đvị<br>{{phieukhambenh.donThuocs[i].selectedThuoc.unit}}
+                          </div>
+                        </div>
+                      </div>
+                    </div>                  
+                  </div>
+                </div>
+
+                <div style="text-align: right;">
+                  <button class="btn btn-primary" (click)="removeDonThuoc()">-</button>
+                </div>
+              </div>
+            </div>
+            <br>
+            <p-accordionTab header="Ghi Chú:">
+              <div class="shadow-sm card">
+                <span class="ui-float-label" width="100%"> 
+                  <textarea  style="width: 100%;" [rows]="3"
+                    [(ngModel)]="phieukhambenh.note" name="note"
+                    pInputTextarea>
+                  </textarea>
+                </span>
+              </div>
+            </p-accordionTab>
+          </div>
+          <!-- buttons pdf -->
+          <div class="col-md-2">
+            <div class="shadow-lg card " >
+              <br>
+              <button (click)="xemLichSu()"
+                class="btn btn-primary d-flex align-items-center justify-content-center"
+                  [disabled]="pkbs.length == 0"
+                >
+                <i class="fa fa-list-ul" aria-hidden="true"></i>
+                <span>Xem lịch sử</span> 
+              </button>
+              <br>
+              <button (click)="phieukhambenhForm.valid ? savePhieukhambenh(true) : ''"
+                class="btn btn-primary d-flex align-items-center justify-content-center"
+                  [disabled]="invalidBTAdd"
+                >
+                <i class="fa fa-plus" aria-hidden="true"></i>
+                <span>Thêm</span> 
+              </button>
+
+              <br>
+              <button (click)="phieukhambenhForm.valid ? savePhieukhambenh(false) : ''"
+              class="btn btn-primary d-flex align-items-center justify-content-center"
+                [disabled]="invalidBTEdit"
+              >
+              <i class="fa fa-floppy-o" aria-hidden="true"></i>
+              <span>Cập nhật</span> 
+            </button>
+              <!-- <button type="button" pButton icon="fa fa-floppy-o" (click)="savePhieukhambenh(false)"
+               label="Cập nhật"
+                class="ui-button-rounded ui-button-success"
+                 [disabled]="isNewPhieukhambenh"
+              ></button> -->
+              <br>
+              <button (click)="phieukhambenhForm.valid ? generatePdf('open') : ''"
+                [disabled]="invalidBTPdf"
+                class="btn btn-primary d-flex align-items-center justify-content-center">
+                <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+                <span>Xem PDF</span>
+              </button>
+              <!-- <button type="button" pButton icon="fa fa-file-pdf-o" (click)="generatePdf('open')"
+               label="Xem PDF" [disabled]='phieukhambenh.sohoso === undefined'
+                class="ui-button-rounded ui-button-success"
+              ></button> -->
+              <br>
+              <button (click)="phieukhambenhForm.valid ? generatePdf('download') : ''"
+              [disabled]="invalidBTPdf"
+                class="btn btn-primary d-flex align-items-center justify-content-center">
+                <i class="fa fa-download" aria-hidden="true"></i>
+                <span>Tải PDF</span></button>
+                <!-- <button type="button" pButton icon="fa fa-download" (click)="generatePdf('download')"
+                 label="Tải PDF" [disabled]='phieukhambenh.sohoso === undefined'
+                class="ui-button-rounded ui-button-success" 
+              ></button>-->
+              <br>
+              <button (click)="phieukhambenhForm.valid ? generatePdf('print') : ''"
+              [disabled]="invalidBTPdf"
+                class="btn btn-primary d-flex align-items-center justify-content-center">
+                <i class="fa fa-print" aria-hidden="true"></i>
+                <span>In PDF</span></button>
+              <br>
+              <button type='reset' (click)="resetForm()"
+                  [disabled]="invalidBTPdf"
+                class="btn btn-primary d-flex align-items-center justify-content-center">
+                <i class="fa fa-times" aria-hidden="true"></i>
+                <span>Xóa</span></button>
+                <!-- <button type="button" pButton icon="fa fa-times" (click)="resetForm('print')" 
+                label="Xóa"
+                class="ui-button-rounded ui-button-success"
+              ></button> -->
+              <br>
+            </div>
+            <!-- <div class="card p-4">
+                <div class="form-group">
+                  <label class="h4 mb-3" for="">Show your picture in Resume</label>
+                  <input type="file" class="form-control-file" (change)="fileChanged($event)" aria-describedby="fileHelpId">
+                </div>
+                <img *ngIf="phieukhambenh.profilePic" [src]="phieukhambenh.profilePic" class="img-thumbnail">
+            </div> -->
+          </div>
+        </div>
+      </form>
+    </div>
+  </p-accordionTab>
+  <p-accordionTab header="Danh sách Khám bệnh gần đây" [selected]="true">
+    <p-table #dt [columns]="cols"
+       [value]="phieuKBsphieuKBsTB" 
+      [loading]="searching"
+      selectionMode="single"
+       [(selection)]="phieuModelTB"
+      (onRowSelect)="onRowSelect($event)"
+      autoLayout="true"
+       [paginator]="true" [rows]="25">
+      <ng-template pTemplate="caption">
+        Danh sách Khám
+        <p-checkbox label="Tất cả khu" [(ngModel)]="allPkbs" [disabled]="username!='voda'" 
+          (onChange)="changeShowAll()">
+        </p-checkbox>
+        
+        <div *ngIf="phieuKBsphieuKBsTB">{{phieuKBsphieuKBsTB.length}}</div>
+
+        <!-- <div style="text-align: right">
+          <i class="pi pi-search" style="margin:4px 4px 0 0"></i>
+          <input type="text" pInputText size="50" placeholder="Tìm tt chung"
+            (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+        </div> -->
+        <div class="ui-helper-clearfix" style="text-align: left">
+          <button type="button" pButton icon="pi pi-file-excel" iconPos="left" label="EXCEL" 
+          (click)="exportBNExcel()" style="margin-right: 0.5em; float:right" 
+          class="ui-button-success" ></button>
+      </div>
+      </ng-template>
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+            {{col.header}}
+            <p-sortIcon [field]="col.field"></p-sortIcon>
+          </th>
+        </tr>
+        <tr>
+          <th *ngFor="let col of columns" [ngSwitch]="col.field">
+            <!-- <div *ngSwitchCase="'ngaykham'"> ngày/tháng/năm</div> -->
+            <input *ngSwitchCase="'ngaykham'" pInputText type="text"
+              (input)="dt.filter($event.target.value, col.field, 'contains')">
+            <input *ngSwitchCase="'mabenhnhan'" pInputText type="text"
+              (input)="dt.filter($event.target.value, col.field, 'contains')">
+            <input *ngSwitchCase="'fullname'" pInputText type="text"
+            (input)="dt.filter($event.target.value, col.field, 'contains')">
+          </th>
+        </tr>
+        <tr>
+          <th *ngFor="let col of columns" [ngSwitch]="col.field">
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <tr [pSelectableRow]="rowData">
+          <td *ngFor="let col of columns">
+            <!-- <div >
+              {{rowData[col.field]}}
+            </div> -->
+            <div *ngIf="col.field=='ngaykham'; else notdate">
+              {{rowData[col.field] }}
+            </div>
+            <ng-template #notdate>
+              <div *ngIf="col.field=='tienthuoc' || col.field=='tien_sa'
+               || col.field=='tien_xq' || col.field=='tien_xn'
+               || col.field=='tien_dt' || col.field=='tongtien'; else notnum"> 
+               {{rowData[col.field] | number}}
+              </div>
+            </ng-template>
+            <ng-template #notnum>
+              {{rowData[col.field]}}
+            </ng-template>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-accordionTab>
+</p-accordion>
+
+<p-dialog header="Chọn hành động!!! Xem PDF trước khi xóa!!!" 
+  [(visible)]="displayDialog" [responsive]="true" showEffect="fade"
+  class="ui-dialog-titlebar"
+  [modal]="true" [style]="{width: '700px'}">
+  <form #phieukhambenhForm="ngForm">
+    <div class="ui-g">
+      <div class="ui-g-12 ui-md-4 ui-lg-4" style="text-align: center">Mã:</div>
+      <div class="ui-g-12 ui-md-8 ui-lg-8">
+        <b>{{selectedPhieu.mabenhnhan}}</b>
+      </div>
+    </div>
+
+    <div class="ui-g">
+      <div class="ui-g-12 ui-md-4 ui-lg-4" style="text-align: center">Tên:</div>
+      <div class="ui-g-12 ui-md-8 ui-lg-8">
+        <b>{{selectedPhieu.fullname}}</b>
+      </div>
+    </div>
+    <div class="ui-g">
+      <div class="ui-g-12 ui-md-4 ui-lg-4" style="text-align: center">Ngày:</div>
+      <div class="ui-g-12 ui-md-8 ui-lg-8">
+        <b>{{selectedPhieu.ngaykham | date: 'dd/MM/yyyy'}}</b>
+      </div>
+    </div>
+    <div class="ui-dialog-buttonpane ui-helper-clearfix">
+      <div style="float: right; margin-right: 10px;">
+        <button type="button" pButton icon="fa fa-check" (click)="cancelDel()" label="Đóng"
+        class="ui-button-rounded ui-button-success"></button>
+      </div>
+      <div style="float: right; margin-right: 10px;">
+        <button type="button" pButton icon="fa fa-pen" (click)="updatePhieu()" label="Sửa"
+        class="ui-button-rounded ui-button-success"></button>
+      </div>
+      <div style="float: right; margin-right: 10px;">
+        <button type="button" pButton icon="fa fa-copy" (click)="copyPhieu()" label="Copy"
+        class="ui-button-rounded ui-button-success"
+        ></button>
+      </div>
+      <div style="float: right; margin-right: 10px;">
+        <button type="button" pButton icon="fa fa-copy" (click)="xemPdf()" label="Đơn Thuốc"
+        class="ui-button-rounded ui-button-warning"
+        ></button>
+      </div>
+      <div style="float: right; margin-right: 10px;">
+        <button type="button" pButton icon="fa fa-copy" (click)="xemHoadon()" label="Hóa Đơn"
+        class="ui-button-rounded ui-button-warning"
+        ></button>
+      </div>
+      <div style="float: left; ">
+        <button type="button" pButton icon="fa fa-close" (click)="delete()" 
+        class="ui-button-raised ui-button-danger" label="Xóa"></button>
+      </div>
+    </div>
+  </form>
+</p-dialog>
+<p-dialog header="Chọn Khu" 
+  [(visible)]="displayKhu" [responsive]="true" showEffect="fade"
+  class="ui-dialog-titlebar"
+  [modal]="true" [style]="{width: '400px', height: '500px'}">
+  <div class="ui-g-3" >
+    <p-listbox  [options]="khukbs"
+      optionLabel="name" 
+      placeholder="Khu"
+      [(ngModel)]="phieukhambenh.phieukhu"
+      (onChange)="changeKhu()"
+      [style]="{width: '350px', height: '420px'}"
+        name="phieuKhu">
+    </p-listbox >
+  </div>
+</p-dialog>

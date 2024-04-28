@@ -1,0 +1,60 @@
+{
+  "lang": {
+    "en": "English",
+    "fr": "French",
+    "es": "Spanish",
+    "de": "German"
+  },
+
+  "login": {
+    "language": "Language",
+    "login": "Login",
+    "password": "Enter password",
+    "server": "Server",
+    "username": "Enter username"
+  },
+
+  "etlInfo": {
+    "status": {
+      "completedSuccess": " Completed successfully",
+      "completedWarning": " Completed with warnings",
+      "connectError": " Database connection error",
+      "error": " Error occurs when trying to get ETL status.",
+      "failure": " Failure",
+      "latency": " Latency:",
+      "notAvailable": " Not available",
+      "onGoing": " On-going",
+      "packageError": " Not available",
+      "schema.completedErrors": " Data loaded with errors. Check SYS1 or contact CODIX.",
+      "schema.completedSuccess": " Data successfully loaded at :date",
+      "schema.completedWarning": " Data loaded with warnings. Check SYS1 for details.",
+      "schema.failure": " Failure. Check SYS1 or contact CODIX.",
+      "schema.load": " To load: :load; Loaded :loaded - :failed",
+      "startDate": " Start date:",
+      "statusFor": " Status for :name:",
+      "statusFor3NF": " Status for 3NF:",
+      "statusForAllStarSchema": " Status for all STAR SCHEMA:"
+    }
+  },
+  "pubStatus": {
+    "error": "Publication statistics are not available due to an error.",
+    "globalStat.adGeneratorStopped": "AD Generator stopped",
+    "globalStat.error": "Status error",
+    "globalStat.noOngoingPublications": "No ongoing publications",
+    "globalStat.ongoingPublications": "Ongoing publications:",
+    "statMember.extranet": "Published in Extranet:",
+    "statMember.failed": "Scheduling failed:",
+    "statMember.genFiles": "Generated files:",
+    "statMember.intranet": "Published in Intranet:",
+    "statMember.mail": " Published by mail:",
+    "statMember.success": "Scheduling successfully completed:",
+    "statMember.timeOut": "Timed out:",
+    "activity": {
+      "complete": "Activity",
+      "error": "Activity error",
+      "last24Hours": "Activity in the last 24 hours",
+      "lastMonth": "Activity in the last month",
+      "lastWeek": "Activity in the last week"
+    }
+  }
+}

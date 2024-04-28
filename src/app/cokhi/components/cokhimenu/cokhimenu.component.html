@@ -1,0 +1,60 @@
+<div class="bottom-right2">
+    <div id="menuicon" (click)="toggleNav()">
+        <img src="../../../../assets/images/cokhi/menuicon.jpg" alt="nav icon" style="max-width:70%; height:auto;">
+        <!-- <button
+        pButton
+        type="button"
+        class="cui-button pad-top-5"
+        icon="cdi cdi-add-item"
+        (click)="toggleNav()"
+    ></button> -->
+
+    </div>
+    <div id="nav" *ngIf="showNav">
+        <ul>
+            <li><a href="home">{{'menu.Home' | translate}}</a> </li>
+            <li ><a href="home">Product</a>
+                <ul id="submenu">
+                    <div *ngFor="let mn of menuProduct">
+                        <li> &nbsp;
+                            <a
+                            [attr.href]="mn.link"
+                            > 
+                            {{mn.name}}</a
+                            ></li>
+                    </div>
+                </ul>
+            </li>
+            <li><a href="home">Catalogue</a>
+                <ul id="submenu">
+                    <li>&nbsp;<a href="home">File1 to download</a></li>
+                    <li>&nbsp;<a href="home">File2 to download</a></li>
+                    <li>&nbsp;<a href="home">File3 to download</a></li>
+                    <li>&nbsp;<a href="home">File4 to download</a></li>
+                </ul>
+            </li>
+            <li><a href="home">Quality</a></li>
+            <li><a href="contactus">contact us</a></li>
+        </ul>
+    </div>
+</div>
+
+
+<!-- <div class="">
+    <input type="checkbox" id="chk">
+    <label for="chk" class="show-menu-btn">
+        <i class="fas fa-ellipsis-h"></i>
+    </label>
+    <ul class="menuheader">
+        <a href="#">Home</a>
+        <a href="#">About</a>
+        <a href="#">Services</a>
+        <a href="#">Contact</a>
+        <label for="chk" class="hide-menu-btn">
+            <i class="fas fa-ellipsis-h"></i>
+        </label>
+        <a href="login">
+            Login
+        </a>
+    </ul>
+</div> -->

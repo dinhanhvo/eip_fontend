@@ -1,0 +1,66 @@
+<!-- <p>products works!</p> -->
+<div class="bodypd">
+    <div class="title">
+        <h3> Chi Tiết Sản Phẩm
+            <!-- {{prod | json}} -->
+        </h3>
+    </div>
+    <div class="containerpd">
+        <div class="p-grid" style="width: 100%" *ngIf="prod!=null">
+            <div class="p-col-12 p-md-6 p-lg-6  col">
+                <div >
+                    <!-- {{imgs | json}} -->
+                    <img src="{{prod.imagepath}}" width="500"/>
+                </div>
+                    <!-- Carousel -->
+                <div *ngIf="imgs!=undefined" class="p-col-12"  style="margin-top: 20px; width: 500px; ">
+                    <!-- <p-carousel headerText="Hình ảnh khác" [value]="imgs" 
+                    [style]="{'margin-top':'20px','margin-bottom':'20px'}"
+                    >
+                        <ng-template let-img pTemplate="item">
+                            <div class="ui-g" style="text-align:center">
+                                <div class="ui-g-12"><img src="{{img.imgpath}}" width="100" height="100px"></div>
+                            </div>
+                        </ng-template>
+                    </p-carousel> -->
+                    <div *ngFor="let img of imgs">
+                        <img src="img.imgpath" width="100" onClick="hinh(img)"/>
+                    </div>
+                </div>
+            </div>
+            <div class="p-col-12 p-md-6 p-lg-6">
+                <div class="p-col-12 " >
+                    <div class="p-grid">
+                        <div class="p-col-12 p-md-6 p-lg-12 labelName" >{{prod.name}} </div>
+                        <!-- <div class="p-col-12 p-md-6 p-lg-3" ></div> -->
+                    </div>
+                </div>
+                <div class="p-grid">
+                    <div class="p-col-12 p-md-6 p-lg-6 label" >Giá: </div>
+                    <div class="p-col-12 p-md-6 p-lg-6" >{{prod.price}} d</div>
+                </div>
+                <div class="p-grid">
+                    <div class="p-col-12 p-md-6 p-lg-6 label">Tình trạng hàng: </div>
+                    <div class="p-col-12 p-md-6 p-lg-6">{{prod.status}}</div>
+                </div>
+                <div class="p-grid">
+                    <div class="p-col-12 p-md-6 p-lg-6 label">Đơn vị tính: </div>
+                    <div class="p-col-12 p-md-6 p-lg-6">{{prod.unit}}</div>
+                </div>
+                <div class="p-grid">
+                    <div class="p-col-12 p-md-6 p-lg-6 label">Xuất xứ</div>
+                    <div class="p-col-12 p-md-6 p-lg-6">{{prod.from}}</div>
+                </div>
+                <div class="p-grid">
+                    <div class="p-col-12 p-md-6 p-lg-6 label">Ngày nhập:</div>
+                    <div class="p-col-12 p-md-6 p-lg-6">{{prod.imported_at}}</div>
+                </div>
+                <div class="p-grid">
+                    <div class="p-col-12 p-md-6 p-lg-6 label">Ghi chú:</div>
+                    <div class="p-col-12 p-md-6 p-lg-6">{{prod.note}}</div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

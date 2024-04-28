@@ -1,0 +1,39 @@
+{
+  "bu": "Geschäftsuniversum",
+  "dashboard": "Instrumententafel",
+  "download": "Herunterladen",
+  "help": "Hilfe",
+  "language": "Sprache",
+  "logOut": "Ausloggen",
+  "open": "Öffnen",
+  "save": "sparen",
+  "saveAs": "Speichern als..",
+  "saveAsFile": "Als Datei speichern",
+  "share": "Aktie",
+  "version": "Ausführung",
+  "hdrMnu": {
+    "changePwd": "Passwort ändern",
+    "downPdf": "PDF Herunterladen",
+    "helpC": "Hilfeinhalte",
+    "newWb": "Neues Dashboard",
+    "tools": "Werkzeuge"
+  },
+  "lang": {
+    "en": "Englisch",
+    "fr": "Französisch",
+    "es": "Spanisch",
+    "de": "Deutsche"
+  },
+  "sideBar": {
+    "adgConf": "AD Generator-Einstellungen",
+    "dateNumFmt": "Datums- und Zahlenformat",
+    "home": "Zuhause",
+    "massPub": "Massenpublikation",
+    "pub": "Veröffentlichung",
+    "pubMng": "Publikationsmanager",
+    "resStatus": "Ressourcenstatus",
+    "searchPub": "Liste der AD-Dashboards",
+    "startStopAdg": "Starten / Stoppen Sie den AD Generator",
+    "settings": "die Einstellungen"
+  }
+}

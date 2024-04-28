@@ -1,0 +1,120 @@
+<p-messages [(value)]="msgs"></p-messages>
+<!-- Thông tin hóa đơn -->
+<div class="shadow-sm card" style="width: 100%;">
+    <div class="d-flex justify-content-between card-title">
+        <h4 class="d-flex align-items-center">
+            <i class="fa fa-medkit" aria-hidden="true"></i>
+            Thông tin Hóa Đơn</h4>
+    </div>
+    <div class="card-body" style="width: 100%;">
+        <div class="row card-title">
+            <div class="col-1">Công Ty</div>
+            <div class="col-3">Ngày Nhập</div>
+            <div class="col-2">Số Hóa Đơn</div>
+            <div class="col-2">Số lô</div>
+            <div class="col-1">Thuế</div>
+            <div class="col-2">Kho</div>
+        </div>
+        <div class="row card-title">
+            <div class="col-1">
+                <p-dropdown [options]="listProvider" optionLabel="name" [filter]="true" [autoDisplayFirst]="false"
+                    [(ngModel)]="phieunhapForm.provider" name="name">
+                </p-dropdown>
+            </div>
+            <div class="col-3">
+                <span class="ui-float-label">
+                    <p-calendar [(ngModel)]="phieunhapForm.imported_at" dateFormat="dd/mm/yy" [showIcon]="true">
+                    </p-calendar>
+                </span>
+            </div>
+            <div class="col-2">
+                <input type="text" pInputText [(ngModel)]="phieunhapForm.shd">
+            </div>
+            <div class="col-2">
+                <input type="text" pInputText [(ngModel)]="phieunhapForm.solo">
+            </div>
+            <div class="col-1">
+                <input type="text" pInputText [(ngModel)]="phieunhapForm.tax" pKeyFilter="pnum">
+            </div>
+            <div class="col-2">
+                <p-dropdown [options]="khoNhaps" optionLabel="name" [autoDisplayFirst]="false"
+                    [(ngModel)]="phieunhapForm.kho" name="khoNhap">
+                </p-dropdown>
+            </div>
+        </div>
+    </div>
+    <br>
+</div>
+<div>
+    <br>
+    <label for="myfile">Chọn File:</label>
+    <input id="myfile" type="file" (change)="onFileChange($event)" multiple="false" caption="abc" />
+    <button type="button" pButton icon="fa fa-plus" (click)="getData()" label="Xem danh sách!"></button>
+    <button type="button" pButton icon="fa fa-plus" (click)="saveData()" style="float: right;"
+        [disabled]="dtFilter.length === 0" label="Thêm thuốc"></button>
+    <br>
+    <br>
+</div>
+
+<p-table #dtF [columns]="cols" [value]="dtFilter" autoLayout="true" [paginator]="true" [rows]="50"
+    [resizableColumns]="true">
+    <ng-template pTemplate="caption">
+        Danh sách {{dtFilter.length}} thuốc Sẽ thêm
+        <div class="ui-helper-clearfix" style="text-align: left">
+            <button type="button" pButton icon="pi pi-file-excel" iconPos="left" label="EXCEL" (click)="exportBNExcel()"
+                style="margin-right: 0.5em; float:right" class="ui-button-success"></button>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="header" let-columns>
+        <tr>
+            <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                {{col.header}}
+                <p-sortIcon [field]="col.field"></p-sortIcon>
+            </th>
+        </tr>
+        <tr>
+            <th *ngFor="let col of columns" [ngSwitch]="col.field">
+                <input *ngSwitchCase="'maThuoc'" pInputText type="text"
+                    (input)="dtF.filter($event.target.value, col.field, 'contains')">
+                <input *ngSwitchCase="'type'" pInputText type="text"
+                    (input)="dtF.filter($event.target.value, col.field, 'contains')">
+                <input *ngSwitchCase="'tenThuoc'" pInputText type="text"
+                    (input)="dtF.filter($event.target.value, col.field, 'contains')">
+                <input *ngSwitchCase="'unit'" pInputText type="text"
+                    (input)="dtF.filter($event.target.value, col.field, 'contains')">
+            </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <tr [pSelectableRow]="rowData">
+            <td *ngFor="let col of columns">
+                {{rowData[col.field]}}
+            </td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage" let-columns>
+        <tr>
+            <td [attr.colspan]="columns.length" style="text-align: center; height: 150px; 
+                font-weight: bold; color: #027E3F; font-size: 16px;">
+                Chưa có dữ liệu
+            </td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="summary" let-rowData>
+        <div style="text-align:left">
+            <button type="button" pButton icon="fa fa-plus" (click)="saveData()" label="Thêm thuốc"></button>
+        </div>
+    </ng-template>
+</p-table>
+
+<table class="sjs-table">
+    <tbody>
+        <tr *ngFor="let row of data; let i=index">
+            <td><b>{{i}}</b></td>
+            <td *ngFor="let val of row">
+                {{val}}
+            </td>
+        </tr>
+    </tbody>
+</table>
+<!-- <button (click)="export()">Export!</button> -->

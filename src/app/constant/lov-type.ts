@@ -1,0 +1,9 @@
+const LOV_TYPE_FOLDER = 1;
+const LOV_TYPE_SQL = 2;
+const LOV_TYPE_MANUAL = 3;
+const LOV_TYPES = {
+  LOV_TYPE_MANUAL,
+  LOV_TYPE_FOLDER,
+  LOV_TYPE_SQL
+};
+export { LOV_TYPES };

@@ -1,0 +1,9 @@
+{
+  "main": {
+    "delete": "Effacer",
+    "home": "Accueil",
+    "listOfWbs": "Liste des tableaux de bord",
+    "openWb": "Tableau de bord ouvert",
+    "sharing": "Partage..."
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "lang": {
+    "en": "Anglais",
+    "fr": "français",
+    "es": "Espanol",
+    "de": "allemand"
+  },
+  "menu": {
+    "Home": "Home ROOOO",
+    "Cataloges": "Cataloges",
+    "Quality": "Quality",
+    "Finger": "Finger",
+    "Blades": "Blades",
+    "Grain": "Grain Lifters",
+    "Raspbar": "Raspbar",
+    "CutterBar": "Cutter Bar",
+    "CombineParts": "Combine Parts"
+  }
+
+}

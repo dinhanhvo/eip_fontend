@@ -1,0 +1,276 @@
+<!-- <p-messages [(value)]="msgs"></p-messages> -->
+<p-toast [style]="{marginTop: '80px'}"></p-toast>
+<p-dialog header="Nhập thông tin Cân:" [(visible)]="displayDialog" [responsive]="true" showEffect="fade"
+    [modal]="true" [style]="{width: '700px'}">
+    <form #resumeForm="ngForm">
+        <div  class="ui-g" style="float: right;">
+            <button type="button" pButton icon="fa fa-check" (click)="save()" 
+                [disabled]="patient.patientName===undefined || patient.patientName.trim()===''" label="Save"></button>
+        </div>
+        <br>
+        <div class="ui-g">
+            <div class="ui-g-12 ui-md-4 ui-lg-4">Tên:</div>
+            <div class="ui-g-12 ui-md-8 ui-lg-8">
+                <input type="text" class="form-control" [(ngModel)]="patient.patientName" placeholder="Tên Cân"
+                    name="name" #Name="ngModel" required
+                    [ngClass]="{'is-invalid': Name.invalid && (Name.touched || resumeForm.submitted) }">
+            </div>
+        </div>
+
+<!--        <div class="ui-g">-->
+<!--            <div class="ui-g-12 ui-md-4 ui-lg-4">Mã:</div>-->
+<!--            <div class="ui-g-12 ui-md-8 ui-lg-8">-->
+<!--                <input type="text" class="form-control" [(ngModel)]="patient.patientId" placeholder="Mã Cân"-->
+<!--                    name="patientId" #PatientId="ngModel">-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="ui-g">-->
+<!--            <div class="ui-g-12 ui-md-4 ui-lg-4">Năm sinh:</div>-->
+<!--            <div class="ui-g-12 ui-md-8 ui-lg-8">-->
+<!--                &lt;!&ndash; <p-dropdown [options]="birthYears" [(ngModel)]="selectedYear" -->
+<!--                name="selectedYear" #SelectedYear="ngModel">-->
+<!--                </p-dropdown> &ndash;&gt;-->
+<!--                <input type="number" pInputText [(ngModel)]="patient.birthYear" style="width: 100%;" name="birthYear"-->
+<!--                    #BirthYear="ngModel" />-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        -->
+<!--        <div class="ui-g">-->
+<!--            <div class="ui-g-12 ui-md-4 ui-lg-4">Tên tìm kiếm:</div>-->
+<!--            <div class="ui-g-12 ui-md-8 ui-lg-8 form-group">-->
+<!--                <input type="text" pInputText [(ngModel)]="patient.fullname" style="width: 100%;" name="fullname"-->
+<!--                    placeholder="Nhập tên không dấu và năm sinh viết liền, vd: 'nhan1989'"-->
+<!--                    #Fullname="ngModel" />-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="ui-g">-->
+<!--            <div class="ui-g-12 ui-md-6 ui-lg-4">Địa chỉ:</div>-->
+<!--            <div class="ui-g-12 ui-md-6 ui-lg-8">-->
+<!--                <input type="text" pInputText [(ngModel)]="patient.address" -->
+<!--                style="width: 100%;"-->
+<!--                name="address" #Address="ngModel" />-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="ui-g">-->
+<!--            <div class="ui-g-12 ui-md-4 ui-lg-4">Ngày nhập:</div>-->
+<!--            <div class="ui-g-12 ui-md-8 ui-lg-8">-->
+<!--                &lt;!&ndash; <input type="text" pInputText [(ngModel)]="patient.imported_at" style="width: 100%;" name="imported_at"-->
+<!--                    #Imported_at="ngModel" /> &ndash;&gt;-->
+<!--                <p-calendar [(ngModel)]="patient.imported_at" -->
+<!--                dateFormat="dd/mm/yy"-->
+<!--                name="imported_at" [showIcon]="true">-->
+<!--                </p-calendar>-->
+<!--            </div>-->
+<!--        </div>-->
+        <!-- <div class="ui-g">
+            <div class="ui-g-12 ui-md-4 ui-lg-4">Tên đăng nhập:</div>
+            <div class="ui-g-12 ui-md-8 ui-lg-8 form-group">
+                <input type="text" pInputText [(ngModel)]="patient.username" style="width: 100%;" name="username"
+                    #Username="ngModel" />
+            </div>
+        </div> -->
+
+<!--        <div class="ui-g">-->
+<!--            <div class="ui-g-12 ui-md-4 ui-lg-4">Khu:</div>-->
+<!--            <div class="ui-g-12 ui-md-8 ui-lg-8 form-group">-->
+<!--                <input type="text" pInputText [(ngModel)]="patient.khu" style="width: 100%;" name="khu"-->
+<!--                    #khu="ngModel" />-->
+<!--            </div>-->
+<!--        </div>-->
+
+<!--        <div class="ui-g">-->
+<!--            <div class="ui-g-12 ui-md-4 ui-lg-4">Số hồ sơ:</div>-->
+<!--            <div class="ui-g-12 ui-md-8 ui-lg-8 form-group">-->
+<!--                <input type="text" pInputText [(ngModel)]="patient.sohoso" style="width: 100%;" name="sohoso"-->
+<!--                    #sohoso="ngModel" />-->
+<!--            </div>-->
+<!--        </div>-->
+
+<!--        <div class="ui-g">-->
+<!--            <div class="ui-g-12 ui-md-6 ui-lg-4">CMT/CCCD:</div>-->
+<!--            <div class="ui-g-12 ui-md-6 ui-lg-8">-->
+<!--                <input type="text" pInputText [(ngModel)]="patient.idcard" name="idcard" #Idcard="ngModel" />-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="ui-g">-->
+<!--            <div class="ui-g-12 ui-md-6 ui-lg-4">Di động:</div>-->
+<!--            <div class="ui-g-12 ui-md-6 ui-lg-8">-->
+<!--                <input type="text" pInputText [(ngModel)]="patient.mobile" name="mobile" #Mobile="ngModel" />-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="ui-g">-->
+<!--            <div class="ui-g-12 ui-md-6 ui-lg-4">Giới tính:</div>-->
+<!--            <div class="ui-g-12 ui-md-6 ui-lg-8">-->
+<!--                <p-dropdown [options]="genders" [(ngModel)]="selectedGender" name="selectedGender"-->
+<!--                    #SelectedGender="ngModel"> </p-dropdown>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="ui-g">-->
+<!--            <div class="ui-g-12 ui-md-6 ui-lg-4">ĐT Nhà:</div>-->
+<!--            <div class="ui-g-12 ui-md-6 ui-lg-8">-->
+<!--                <input type="text" pInputText [(ngModel)]="patient.homephone" name="homephone" #Homephone="ngModel" />-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="ui-g">-->
+<!--            <div class="ui-g-12 ui-md-6 ui-lg-4">Cân nặng:</div>-->
+<!--            <div class="ui-g-12 ui-md-6 ui-lg-8">-->
+<!--                <input type="text" pInputText [(ngModel)]="patient.weight" name="weight" #Ưeight="ngModel" />-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="ui-g">-->
+<!--            <div class="ui-g-12 ui-md-6 ui-lg-4">Chiều cao:</div>-->
+<!--            <div class="ui-g-12 ui-md-6 ui-lg-8">-->
+<!--                <input type="text" pInputText [(ngModel)]="patient.height" name="height" #Height="ngModel" />-->
+<!--            </div>-->
+<!--        </div>-->
+
+        <!-- <div class="ui-g">
+            <div class="ui-g-12 ui-md-4 ui-lg-4">Hình ảnh:</div>
+            <div class="ui-g-12 ui-md-8 ui-lg-8">
+                <p-fileUpload name="files" multiple="multiple" accept="image/*" (onUpload)="onBasicUpload($event)"
+                    url="http://smartevn.com:8089/api/upload">
+                    <ng-template pTemplate="content">
+                        <ul *ngIf="uploadedFiles.length">
+                            <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
+                        </ul>
+                    </ng-template>
+                </p-fileUpload>
+            </div>
+        </div> -->
+ 
+<!--        <div class="ui-g">-->
+<!--            <div class="ui-g-12 ui-md-4 ui-lg-4">Nhóm máu:</div>-->
+<!--            <div class="ui-g-12 ui-md-8 ui-lg-8">-->
+<!--                <p-dropdown [options]="bloods" [(ngModel)]="selectedBlood" name="selectedBlood"-->
+<!--                    #SelectedBlood="ngModel">-->
+<!--                </p-dropdown>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="ui-g">-->
+<!--            <div class="ui-g-12 ui-md-4 ui-lg-4">Tiền sử:</div>-->
+<!--            <div class="ui-g-12 ui-md-8 ui-lg-8">-->
+<!--                <input type="text" pInputText [(ngModel)]="patient.history" style="width: 100%;" name="history"-->
+<!--                    #History="ngModel" />-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="ui-g">-->
+<!--            <div class="ui-g-12 ui-md-4 ui-lg-4">Ghi chú:</div>-->
+<!--            <div class="ui-g-12 ui-md-8 ui-lg-8">-->
+<!--                <input type="text" pInputText [(ngModel)]="patient.note" style="width: 100%;" name="note"-->
+<!--                    #Note="ngModel" />-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="ui-g">-->
+<!--            <div class="ui-g-12 ui-md-4 ui-lg-4">TT liên hệ:</div>-->
+<!--            <div class="ui-g-12 ui-md-8 ui-lg-8">-->
+<!--                <input type="text" pInputText [(ngModel)]="patient.refferent" style="width: 100%;" name="refferent"-->
+<!--                    #Refferent="ngModel" />-->
+<!--            </div>-->
+<!--        </div>-->
+
+        <div class="ui-dialog-buttonpane ui-helper-clearfix">
+            <div style="float: left;" *ngIf="!newPatient">
+                <button type="button" pButton icon="fa fa-close" (click)="delete()" label="Delete"></button>
+            </div>
+            <div style="float: right;">
+                <button type="button" pButton icon="fa fa-check" (click)="save()" 
+                [disabled]="patient.patientName===undefined || patient.patientName.trim()===''" label="Save"></button>
+            </div>
+        </div>
+    </form>
+</p-dialog>
+<p-table #dt [columns]="cols" [value]="patients" 
+    [loading]="searching"
+    [(selection)]="selectedPatient"
+    (onRowSelect)="onRowSelect($event)" 
+    [paginator]="true" [rows]="30" 
+    selectionMode="single" 
+    autoLayout="true"
+    [resizableColumns]="true"
+    >
+    <!-- <ng-template pTemplate="caption">
+        Danh sách Cân
+        <div class="ui-helper-clearfix" style="text-align: left">
+            <button type="button" pButton icon="pi pi-file-excel" iconPos="left" label="EXCEL" 
+            (click)="exportBNExcel(false)" style="margin-right: 0.5em; float:right" 
+            class="ui-button-success" ></button>
+        </div>
+    </ng-template> -->
+    <ng-template pTemplate="caption">
+        Danh sách Cân 
+        <div *ngIf="patients">{{patients.length}}</div>
+        <div class="ui-helper-clearfix" style="text-align: left">
+            <button type="button" pButton icon="pi pi-file-excel" iconPos="left" label="EXCEL" 
+            (click)="exportBNExcel()" style="margin-right: 0.5em; float:right" 
+            class="ui-button-success" ></button>
+        </div>
+        <div class="row">
+            <div style="text-align:left">
+                <button type="button" pButton icon="fa fa-plus" (click)="showDialogToAdd()"
+                label="Thêm Cân"></button>
+            </div>
+            <div style="text-align:left">
+                <button type="button" pButton icon="fa fa-plus"
+                label="Thêm từ EXCEL"></button>
+            </div>
+<!--            <div style="text-align: right">-->
+<!--                <i class="fa fa-search" style="margin:4px 4px 0 0"></i>-->
+<!--                <input type="text" pInputText size="50" placeholder="Tìm nhanh"-->
+<!--                    (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">-->
+<!--            </div>-->
+        </div>
+    </ng-template>
+    <ng-template pTemplate="header" let-columns>
+        <tr>
+            <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                {{col.header}}
+                <p-sortIcon [field]="col.field"></p-sortIcon>
+            </th>
+        </tr>
+        <tr>
+            <th *ngFor="let col of columns" [ngSwitch]="col.field">
+              <!-- <div *ngSwitchCase="'ngaykham'"> ngày/tháng/năm</div> -->
+              <!-- <input *ngSwitchCase="'donthuocjs'" pInputText type="text"
+                (input)="dt.filter($event.target.value, col.field, 'contains')"> -->
+<!--              <input *ngSwitchCase="'patientName'" pInputText type="text"-->
+<!--                (input)="dt.filter($event.target.value, col.field, 'contains')">-->
+<!--              <input *ngSwitchCase="'fullname'" pInputText type="text"-->
+<!--              (input)="dt.filter($event.target.value, col.field, 'contains')">-->
+<!--              <input *ngSwitchCase="'patientId'" pInputText type="text"-->
+<!--                (input)="dt.filter($event.target.value, col.field, 'contains')">-->
+<!--                <input *ngSwitchCase="'sohoso'" pInputText type="text"-->
+<!--                (input)="dt.filter($event.target.value, col.field, 'contains')">-->
+<!--                <input *ngSwitchCase="'address'" pInputText type="text"-->
+<!--                (input)="dt.filter($event.target.value, col.field, 'contains')">-->
+<!--                <input *ngSwitchCase="'birthYear'" pInputText type="text"-->
+<!--                (input)="dt.filter($event.target.value, col.field, 'contains')">-->
+            </th>
+          </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <tr [pSelectableRow]="rowData">
+            <td *ngFor="let col of columns">
+                {{rowData[col.field]}}
+            </td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage" let-columns>
+        <tr>
+            <td [attr.colspan]="columns.length" style="text-align: center; height: 150px; 
+            font-weight: bold; color: #027E3F; font-size: 16px;">
+                Click 
+                <!-- <div style="text-align:left"> -->
+                    <button type="button" pButton icon="fa fa-flash" (click)="layDulieu()" 
+                    label="Lấy dữ liệu"></button>
+                     để lấy dữ liệu
+                <!-- </div> -->
+            </td>
+        </tr>
+    </ng-template>
+<!--    <ng-template pTemplate="summary" let-rowData>-->
+<!--        <div style="text-align:left">-->
+<!--            <button type="button" pButton icon="fa fa-plus" (click)="showDialogToAdd()" -->
+<!--            label="Thêm Cân"></button>-->
+<!--        </div>-->
+<!--    </ng-template>-->
+</p-table>

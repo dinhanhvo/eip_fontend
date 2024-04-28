@@ -1,0 +1,99 @@
+<p-table [columns]="cols" [value]="clss" selectionMode="single"
+ [(selection)]="selectedCLS" (onRowSelect)="onRowSelect($event)" 
+ [paginator]="true" [rows]="15">
+    <ng-template pTemplate="caption">
+        Danh mục CLS
+        <div class="row">
+            <div class="p-col-6"  style=" text-align: left">
+                <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+                <input type="text" pInputText size="50" placeholder="Tìm nhanh"
+                    (input)="dt.filterGlobal($event.target.value, 'contains')"
+                     style="width:auto">
+            </div>
+            <div  class="p-col-6 ui-helper-clearfix" style="text-align: right">
+                <button type="button" pButton icon="pi pi-file-excel" iconPos="left" label="EXCEL" 
+                (click)="exportCLSExcel()" style="margin-right: 0.5em; float:right" 
+                class="ui-button-success" ></button>
+            </div>        
+        </div>    
+    </ng-template>
+    <ng-template pTemplate="header" let-columns>
+        <tr>
+            <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                {{col.header}}
+                <p-sortIcon [field]="col.field"></p-sortIcon>
+            </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <tr [pSelectableRow]="rowData">
+            <td *ngFor="let col of columns">
+                {{rowData[col.field]}}
+            </td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="summary" let-rowData>
+        <div style="text-align:left">
+            <button type="button" pButton icon="fa fa-plus" (click)="showDialogToAdd()" label="Add"></button>
+        </div>
+    </ng-template>    
+</p-table>
+
+<p-dialog header="Chi Tiết CLS" [(visible)]="displayDialog" [responsive]="true" 
+    showEffect="fade" [modal]="true"  [style]="{width: '500px'}">
+    <div class="ui-g ui-fluid">
+        <div class="ui-g-12">
+            <div class="ui-g-4">
+                <label for="name">Tên</label>
+            </div>
+            <div class="ui-g-8">
+                <input pInputText id="name" [(ngModel)]="selectedCLS.name" autofocus />
+            </div>
+        </div>
+        <div class="ui-g-12">
+            <div class="ui-g-4">
+                <label for="name">Tên Tìm kiếm</label>
+            </div>
+            <div class="ui-g-8">
+                <input pInputText id="nametk" [(ngModel)]="selectedCLS.tentimkiem" autofocus />
+            </div>
+        </div>
+        <div class="ui-g-12">
+            <div class="ui-g-4">
+                <label for="icon">Đơn giá</label>
+            </div>
+            <div class="ui-g-8">
+                <input pInputText id="icon" [(ngModel)]="selectedCLS.dongia" />
+            </div>
+        </div>
+        <div class="ui-g-12">
+            <div class="ui-g-4">
+                <label for="icon">Loại</label>
+            </div>
+            <div class="ui-g-8">
+                <p-dropdown [options]="loaiCLSs" optionLabel = "name"
+                    [(ngModel)]="selectedCLS.type" 
+                    name="loaiCLS"
+                > </p-dropdown>
+            </div>
+        </div>
+        <div class="ui-g-12">
+            <div class="ui-g-4">
+                <label for="description">Mô tả</label>
+            </div>
+            <div class="ui-g-8">
+                <input pInputText id="description" [(ngModel)]="selectedCLS.description" />
+            </div>
+        </div>
+    </div>
+    <div class="ui-dialog-buttonpane ui-helper-clearfix">
+        <div style="float: left;">
+            <button type="button" pButton icon="fa fa-close" 
+                (click)="delete()" label="Delete"></button>
+        </div>
+        <div style="float: right;">
+            <button type="button" pButton icon="fa fa-check"
+                (click)="save()" label="Save"></button>
+        </div>
+    </div>
+</p-dialog>

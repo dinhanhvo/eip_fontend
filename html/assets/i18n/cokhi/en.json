@@ -1,0 +1,22 @@
+{
+  "lang": {
+    "en": "English",
+    "fr": "French",
+    "es": "Spanish",
+    "de": "German",
+    "language": "Language"
+  },
+
+  "menu": {
+    "Home": "home",
+    "Cataloges": "Cataloges",
+    "Quality": "Quality",
+    "Finger": "Finger",
+    "Blades": "Blades",
+    "Grain": "Grain Lifters",
+    "Raspbar": "Raspbar",
+    "CutterBar": "Cutter Bar",
+    "CombineParts": "Combine Parts"
+  }
+
+}

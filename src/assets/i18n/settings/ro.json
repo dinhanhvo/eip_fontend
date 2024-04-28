@@ -1,0 +1,20 @@
+{
+  "cancel": "Anulare",
+  "disabled": "invalid",
+  "enabled": "Activat",
+  "lang": "Limba",
+  "minutes": "minut",
+  "ok": "O.K",
+  "save": "Salvați",
+  "fmtStrategy": {
+    "title": "Alegeți strategia de formatare a datei și a numărului"
+  },
+  "resStatus": {
+    "title": "Setări de colectare a stării resurselor",
+    "lblColRes": "Colectați starea resurselor",
+    "lblColPeriod": "Colectați starea resurselor",
+    "lblCleanUp": "Curățați datele de stare",
+    "lblClJobInt": "Curățați intervalul de lucru",
+    "lblCleanAfter": "Curățați datele de stare după"
+  }
+}

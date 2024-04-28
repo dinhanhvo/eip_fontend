@@ -1,0 +1,20 @@
+FROM node:14.17.0-alpine as build-step
+RUN mkdir -p /frontend
+WORKDIR /frontend
+COPY package.json  /frontend
+
+COPY ad-dashboard /frontend/ad-dashboard
+COPY nginx.config /frontend/nginx.conf
+
+RUN npm install
+COPY . /frontend
+RUN npm run build --prod
+# COPY dist /frontend/dist
+
+FROM nginx:1.20.1
+COPY --from=build-step /frontend/dist /usr/share/nginx/html
+COPY --from=build-step /frontend/nginx.conf /usr/share/nginx
+COPY --from=build-step /frontend/ad-dashboard /usr/share/nginx/html/ad-dashboard
+RUN ls -l /usr/share/nginx/html/ad-dashboard/assets
+# 
+EXPOSE 80

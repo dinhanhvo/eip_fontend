@@ -1,0 +1,49 @@
+export class FareModel {
+    FlightId: number;
+    Leg: number;
+    Airline: String;
+    StartPoint: String;
+    EndPoint: String;
+    StartPointName: String;
+    EndPointName: String;
+    StartDate: String;
+    EndDate: String;
+    StartDt: String;
+    EndDt: String;
+    FlightNumber: String;
+    StopNum: number;
+    HasDownStop: boolean;
+    Duration: number;
+    NoRefund: boolean;
+    GroupClass: String;
+    FareClass: String;
+    Promo: boolean;
+    FlightValue: String;
+    ListSegment: [{
+            Id: number;
+            Airline: String;
+            StartPoint: String;
+            EndPoint: String;
+            StartTime: String;
+            EndTime: String;
+            StartTm: String;
+            EndTm: String;
+            FlightNumber: String;
+            Duration: number;
+            Class: String;
+            Plane: number;
+            StartTerminal: String;
+            EndTerminal: String;
+            HasStop: boolean;
+            StopPoint: String;
+            StopTime: String;
+            DayChange: boolean;
+            StopOvernight: boolean;
+            ChangeStation: boolean;
+            ChangeAirport: boolean;
+            LastItem: boolean;
+            HandBaggage: String;
+            AllowanceBaggage: number;
+        }
+    ]
+}

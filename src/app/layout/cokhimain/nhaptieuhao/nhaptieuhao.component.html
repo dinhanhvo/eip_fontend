@@ -1,0 +1,268 @@
+<p-toast [style]="{marginTop: '80px'}"></p-toast>
+<p-tabView (onChange)="onTabChange()">
+    <p-tabPanel header="Xuất Tiêu Hao">
+        <div class="shadow-sm card">
+            <div>
+            Dịch vụ<p-inputSwitch [(ngModel)]="formData.isTieuhao"
+                (onChange)="changeTH()"></p-inputSwitch> Tiêu hao
+            </div>
+        </div>
+        <!-- Thông tin hóa đơn -->
+        <div class="shadow-sm card" style="width: 100%;">
+            <div class="d-flex justify-content-between card-title">
+                <h4 class="d-flex align-items-center">
+                    <i class="fa fa-medkit" aria-hidden="true"></i>
+                    Thông tin {{formData.title}}</h4>
+            </div>
+            <div class="card-body" style="width: 100%;">
+                <!-- <div class="row card-title">
+                    <div class="col-3">Kho</div>
+                    <div class="col-3">Ngày Xuất</div>
+                </div> -->
+                <div class="row card-title">
+                    <div class="col-3">
+                        Kho: <p-dropdown [options]="khoNhaps" optionLabel="name"
+                            (onChange)="changKho()"
+                             [autoDisplayFirst]="false"
+                            [(ngModel)]="phieuxuatForm.kho" name="khoNhap">
+                        </p-dropdown>
+                    </div>
+                    <div class="col-4">
+                            <span class="ui-float-label">
+                                Ngày:  <p-calendar [(ngModel)]="phieuxuatForm.exported_at" dateFormat="dd/mm/yy" [showIcon]="true">
+                                </p-calendar>
+                            </span>
+                    </div>
+                </div>
+            </div>
+            <br>
+        </div>
+        <br>
+        <!-- Form list tieuhao -->
+        
+        <div class="shadow-sm card" style="width: 100%;">
+            <div class="card-body" style="width: 100%;">
+                <div class="d-flex justify-content-between card-title">
+                    <h4 class="d-flex align-items-center">
+                        <i class="fa fa-medkit" aria-hidden="true"></i>
+                        Danh sách {{formData.title}}</h4>
+                    <div>
+                        <input type="text" pInputText [(ngModel)]="phieuxuatForm.numThuocs" pKeyFilter="pnum"
+                            (keyup)="changeNumThuoc()" size="3">
+                        <button class="btn btn-primary" (click)="addRecord()">+</button>
+                    </div>
+                </div>
+                <br>
+                <!-- danh sach thuocs -->
+                <!-- <div *ngIf="newExport"> -->
+                    <!-- header -->
+                    <div class="row card-title" style="vertical-align: middle;">
+                        <div class="col-md-2" style="padding-left: 40px; ">Mã </div>
+                        <div class="col-md-2">Tên Thuốc</div>
+                        <div class="col-md-2" style=" text-align: right;">Đvị</div>
+                        <div class="col-md-2">Số lượng</div>
+                    </div>
+                    <div class=" card-title" style="width: 100%; vertical-align: middle;"
+                        *ngFor="let record of phieuxuatForm.listRecordImportExportModel; let i=index">
+                        <div class="row shadow-sm" style="vertical-align: middle;">
+                            <!-- chọn thuốc -->
+                            <div class="col-md-2">
+                                <p-dropdown [options]="thuocs" optionLabel="maThuoc" [filter]="true"
+                                    [autoDisplayFirst]="false" (onChange)="changeThuoc(record.thuoc)"
+                                    [(ngModel)]="record.thuoc" name="mathuoc{{i}}">
+                                </p-dropdown>
+                            </div>
+                            <div class="col-md-2">
+                                <p-dropdown [options]="thuocs" optionLabel="tenThuoc"
+                                    (onChange)="changeThuoc(record.thuoc)" [style]="{'width':'100%'}"
+                                    [autoDisplayFirst]="false" [filter]="true" [(ngModel)]="record.thuoc"
+                                    name="tenThuoc{{i}}"></p-dropdown>
+                                    <div *ngIf="record.thuoc">
+                                        {{record.thuoc.note}}
+                                    </div>
+                            </div>
+                            <div  class="col-md-2" style="text-align: right;">
+                                <div *ngIf="record.thuoc">
+                                    {{record.thuoc.unit}}
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <input type="text" pInputText [(ngModel)]="record.soluong"
+                                     pKeyFilter="pnum" size="12"
+                                   >
+                                <!-- <label class="pipe">{{record.soluong | number}} {{record.selectedThuoc.unit}}</label> -->
+                            </div>
+                        </div>
+                    </div>
+                <!-- </div> -->
+                <br>
+        
+                <div style="text-align: right;">
+                    <input type="text" pInputText [(ngModel)]="phieuxuatForm.numThuocs" pKeyFilter="pnum"
+                        (keyup)="changeNumThuoc()" size="3">
+                    <button class="btn btn-primary" (click)="removeRecord()">-</button>
+                </div>
+            </div>
+        </div>
+        
+        <br>
+        <div class="row" style="align-items: center; width: 100%; justify-content: center;">
+            <button type="button" style="width: 150px; height: 30px;" pButton icon="fa fa-check" (click)="xuat()" label="Xuất">
+            </button>
+        </div>
+        <br>
+        <p-table #dt [columns]="cols" [value]="phieuxuatTable" 
+            selectionMode="single"
+             [(selection)]="rowSelected"
+            (onRowSelect)="onRowSelect($event)" 
+            [autoLayout]="true"
+            [paginator]="true" [rows]="25">
+            <ng-template pTemplate="caption">
+                Danh sách Xuất {{formData.title}}
+                <div style="text-align: right">
+                    <i class="pi pi-search" style="margin:4px 4px 0 0"></i>
+                    <input type="text" pInputText size="50" placeholder="Tìm tt chung"
+                        (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header" let-columns>
+                <tr>
+                    <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                        {{col.header}}
+                        <p-sortIcon [field]="col.field"></p-sortIcon>
+                    </th>
+                </tr>
+                <tr>
+                    <th *ngFor="let col of columns" [ngSwitch]="col.field">
+                        <div *ngSwitchCase="'exported_at'"> ngày/tháng/năm</div>
+                        <input *ngSwitchCase="'kho'" pInputText type="text"
+                            (input)="dt.filter($event.target.value, col.field, 'contains')">
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData let-columns="columns">
+                <tr [pSelectableRow]="rowData">
+                    <td *ngFor="let col of columns">
+                        <div>
+                            {{rowData[col.field]}}
+                        </div>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+        <br>    
+    </p-tabPanel>
+    <p-tabPanel header="Xem DS">
+        <div class="ui-g">
+            <div class="ui-g-3">
+                Kho:
+                <p-dropdown [options]="khoNhaps" optionLabel="name"
+                    (onChange)="changeKho()"
+                    [(ngModel)]="kho" name="kho">
+                </p-dropdown>
+            </div>
+            <div class="ui-g-7">
+                Ngày:
+            <!-- <span class="ui-float-label"> -->
+                <p-calendar [(ngModel)]="tkFrom" [showIcon]="true"
+                dateFormat="dd/mm/yy"
+                [maxDate]="tkTo"
+                >
+              </p-calendar>
+              <p-calendar [(ngModel)]="tkTo" [showIcon]="true"
+                name="thuocphatTo"
+                [minDate]="tkFrom"
+                dateFormat="dd/mm/yy"
+                >
+              </p-calendar>
+              <!-- </span> -->
+              <span style="float: right;">
+                  <button type="button" pButton icon="fa fa-check" 
+                  (click)="xemDS()" label="Xem"></button>
+              </span>
+              </div>
+            <div class="ui-g-2">
+            </div>
+
+        </div>
+        <p-table #dt [columns]="colsHV" [value]="listHV" 
+        selectionMode="single"
+         [(selection)]="rowSelected"
+        (onRowSelect)="onRowSelect($event)" 
+        [autoLayout]="true"
+        [paginator]="true" [rows]="25">
+        <ng-template pTemplate="caption">
+            Danh sách Học viên
+            <div style="text-align: right">
+                <i class="pi pi-search" style="margin:4px 4px 0 0"></i>
+                <input type="text" pInputText size="50" placeholder="Tìm tt chung"
+                    (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                    {{col.header}}
+                    <p-sortIcon [field]="col.field"></p-sortIcon>
+                </th>
+            </tr>
+            <tr>
+                <th *ngFor="let col of columns" [ngSwitch]="col.field">
+                    <div *ngSwitchCase="'exported_at'"> ngày/tháng/năm</div>
+                    <input *ngSwitchCase="'kho'" pInputText type="text"
+                        (input)="dt.filter($event.target.value, col.field, 'contains')">
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+            <tr [pSelectableRow]="rowData">
+                <td *ngFor="let col of columns">
+                    <div>
+                        {{rowData[col.field]}}
+                    </div>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+    </p-tabPanel>
+</p-tabView>
+
+
+<div *ngIf="rowSelected">
+    <p-dialog header="Chọn hành động!" [(visible)]="displayDialog" [responsive]="true" showEffect="fade"
+        class="ui-dialog-titlebar" [modal]="true" [style]="{width: '700px'}">
+        <form #xuatTieuHaoForm="ngForm">
+            <!-- Dialog confirm -->
+            <div>
+                <div class="ui-g">
+                    <div class="ui-g-12 ui-md-4 ui-lg-4" style="text-align: center">Kho:</div>
+                    <div class="ui-g-12 ui-md-8 ui-lg-8">
+                        <b>{{rowSelected.kho}}</b>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <br>
+            <div class="ui-dialog-buttonpane ui-helper-clearfix">
+                <div style="float: right; margin-right: 10px;">
+                    <button type="button" pButton icon="fa fa-check" (click)="cancelDel()" label="Đóng"
+                        class="ui-button-rounded ui-button-success"></button>
+                </div>
+                <div style="float: right; margin-right: 10px;">
+                    <button type="button" pButton icon="fa fa-pen" (click)="editPhieu()" label="Sửa"
+                        class="ui-button-rounded ui-button-success"></button>
+                </div>
+                <div style="float: right; margin-right: 10px;">
+                    <button type="button" pButton icon="fa fa-copy" (click)="xemChiTietPhieu()" label="Xem Chi Tiết"
+                        class="ui-button-rounded ui-button-warning">
+                    </button>
+                </div>
+                <div style="float: left; ">
+                    <button type="button" pButton icon="fa fa-close" (click)="delete()"
+                        class="ui-button-raised ui-button-danger" label="Xóa Xuất TH">
+                    </button>
+                </div>
+            </div>
+        </form>
+    </p-dialog>
+</div>

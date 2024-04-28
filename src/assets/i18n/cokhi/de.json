@@ -1,0 +1,21 @@
+{
+  "lang": {
+    "en": "Anglais",
+    "fr": "français",
+    "es": "Espanol",
+    "de": "allemand",
+    "language": "Language"
+  },
+  "menu": {
+    "home": "Home DEE",
+    "Cataloges": "Cataloges",
+    "Quality": "Quality",
+    "Finger": "Finger",
+    "Blades": "Blades",
+    "Grain": "Grain Lifters",
+    "Raspbar": "Raspbar",
+    "CutterBar": "Cutter Bar",
+    "CombineParts": "Combine Parts"
+  }
+
+}

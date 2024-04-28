@@ -1,0 +1,20 @@
+{
+  "cancel": "Cancel",
+  "disabled": "Disabled",
+  "enabled": "Enabled",
+  "language": "Language",
+  "minutes": "minute(s)",
+  "ok": "OK",
+  "save": "Save",
+  "fmtStrategy": {
+    "title": "Choose date and number format strategy"
+  },
+  "resStatus": {
+    "title": "Resource status collection settings",
+    "lblColRes": "Collect resource status",
+    "lblColPeriod": "Collect resource status every",
+    "lblCleanUp": "Clean up status data",
+    "lblClJobInt": "Clean up job interval",
+    "lblCleanAfter": "Clean status data after"
+  }
+}

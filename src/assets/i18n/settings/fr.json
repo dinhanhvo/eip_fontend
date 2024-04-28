@@ -1,0 +1,20 @@
+{
+  "cancel": "Annuler",
+  "disabled": "désactivé",
+  "enabled": "Activée",
+  "lang": "La langue",
+  "minutes": "minutes",
+  "ok": "D'accord",
+  "save": "sauver",
+  "fmtStrategy": {
+    "title": "Choisir la stratégie de format de date et de nombre"
+  },
+  "resStatus": {
+    "title": "Paramètres de collecte de l'état des ressources",
+    "lblColRes": "Recueillir le statut de la ressource",
+    "lblColPeriod": "Collecter le statut de la ressource chaque",
+    "lblCleanUp": "Nettoyer les données d'état",
+    "lblClJobInt": "Nettoyer l'intervalle de travail",
+    "lblCleanAfter": "Nettoyer les données d'état après"
+  }
+}

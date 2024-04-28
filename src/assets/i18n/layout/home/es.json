@@ -1,0 +1,9 @@
+{
+  "main": {
+    "delete": "Borrar",
+    "home": "Casa",
+    "listOfWbs": "Lista de tableros",
+    "openWb": "Tablero abierto",
+    "sharing": "Compartiendo ..."
+  }
+}

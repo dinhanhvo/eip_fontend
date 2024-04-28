@@ -1,0 +1,960 @@
+<!-- <p-messages [(value)]="msgs"></p-messages> -->
+<p-toast [style]="{marginTop: '80px'}"></p-toast>
+<p-confirmDialog header="Xác nhận xóa Sổ theo dõi" 
+  acceptLabel="Chắc chắn xóa"
+  rejectLabel="Không xóa"
+  icon="pi pi-exclamation-triangle">
+</p-confirmDialog>
+<p-accordion [multiple]="true" (onOpen)="onTabOpen($event)">
+    <p-accordionTab header="Tóm Tắt Cắt Cơn"  >
+        <div class="container-fluid">
+            <form #resumeForm="ngForm">
+                <div class="row">
+                    <div class="col-md-10">
+                        <div class="shadow-sm card">
+                            <!-- bệnh nhân  -->
+                            <div class="card-body">
+                                <h4 class="card-title d-flex align-items-center">
+                                    <i class="fa fa-address-card" aria-hidden="true"></i>
+                                    Thông tin: </h4>
+                            </div>
+                            <div class="row">
+                                <div class="ui-g-2" style="text-align: right;">
+                                    <i class="fa fa-user-circle" aria-hidden="true"></i>
+                                    Bệnh nhân:
+                                </div>
+                                <div class="col-md-6">
+                                    <!-- row 1 searching -->
+                                    <div class="row">
+                                      <div class="col-6">
+                                        <p-dropdown [options]="patients" optionLabel="fullname" [autoDisplayFirst]="false"
+                                          [filter]="true" (onChange)="changePatient()"
+                                          [(ngModel)]="selectedPatient"
+                                          (onFocus)="focusPatient()"
+                                          name="patientFullname">
+                                        </p-dropdown>
+                                      </div>
+                                      <div class="col-6">
+                                        <div class="" *ngIf="selectedPatient">
+                                          Mã BN: <b>{{selectedPatient.patientId}}</b>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <!-- row 2 ma/ten bn -->
+                                    <div>
+                                      <div class="ui-g-4 row">
+                                        <!-- Mã:  -->
+                                        <div>
+                                          <p-dropdown [options]="patients" optionLabel="patientId" [autoDisplayFirst]="false"
+                                            [filter]="true" (onChange)="changePatient()"
+                                             [(ngModel)]="selectedPatient"
+                                             (onFocus)="focusPatient()"
+                                            name="patientId">
+                                          </p-dropdown>
+                                        </div>
+                                      </div>
+                                      <div class="ui-g-2" style="text-align: right;">
+                                        Tên:
+                                      </div>
+                                      <div class="ui-g-6">
+                                        <p-dropdown [options]="patients" optionLabel="patientName"
+                                        (onFocus)="focusPatient()"
+                                          [(ngModel)]="selectedPatient" (onChange)="changePatient()" name="patientName"
+                                          [filter]="true" [autoDisplayFirst]="false">
+                                        </p-dropdown>
+                                      </div>
+                                      <br>
+                                    </div>
+                                  </div>
+                                  <!-- confirm patient info -->
+                                  <div class="col-md-4">
+                                    <div class="" *ngIf="selectedPatient">
+                                      <div class="row">
+                                        <div class="col-6">
+                                          Năm sinh: <b>{{selectedPatient.birthYear}}</b>
+                                        </div>
+                                        <div class="col-6">
+                                          Khu: <b>{{selectedPatient.khu}}</b>
+                                        </div>
+                                      </div>
+                                      <div>
+                                        Tên: <b>{{selectedPatient.patientName}}</b>
+                                        <br> Địa chỉ: <b>{{selectedPatient.address}}</b>
+                                      </div>
+                                    </div>
+                                  </div>
+                            </div>
+                            <!-- Hồ sơ -->
+                            <div class="row">
+                                <div class="ui-g-2" style="text-align: right;">
+                                    Số hồ sơ:
+                                </div>
+                                <div class="ui-g-3">
+                                    <div *ngIf="!formMode">
+                                       <b>{{selectedPatient.sohoso}}</b> 
+                                    </div>
+                                    <div class="ui-g-3" *ngIf="formMode">
+                                        <input type="text" placeholder="Nhập số hồ sơ" pInputText
+                                            [(ngModel)]="selectedPatient.sohoso" name="sohoso" />
+                                    </div>
+
+                                </div>
+                                <div class="ui-g-7" *ngIf="formMode">
+                                    <p style="color: red; font-weight: bold"> *Bệnh nhân này chưa tạo hồ sơ</p>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <!-- Quá trình điều trị -->
+                        <div class="shadow-sm card">
+                            <div class="card-body">
+                                <h4 class="card-title d-flex align-items-center">
+                                    <i class="fa fa-heart" aria-hidden="true"></i>
+                                    Quá trình điều trị:</h4>
+                            </div>
+                            <div class="row">
+                                <div class="ui-g-2"></div>
+                                <div class="ui-g-4">
+                                    <!-- Hội chứng: -->
+                                    <p-dropdown [options]="hoiChungOpts" optionLabel="name"
+                                        [(ngModel)]="selectedHoiChung" name="selectedHoiChung"
+                                        [style]="{'width':'100%'}"></p-dropdown>
+                                </div>
+                                <div class="ui-g-6">
+                                    <!-- Khác: <textarea type="text" style="width: 80%;" 
+                                            [(ngModel)]="qtdtKhac" name="qtdtKhac"></textarea> -->
+                                    <span class="ui-float-label" width="100%"> 
+                                        <textarea  style="width: 80%;" [rows]="3"
+                                        [(ngModel)]="qtdtKhac" name="qtdtKhac"
+                                        pInputTextarea></textarea>
+                                        <label for="float-input">{{qtdtKhac?'':'Khác'}}</label>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="ui-g-2" style="text-align: right">Cân nặng: </div>
+                                <div class="ui-g-4">
+                                    <input type="text" [(ngModel)]="selectedPatient.weight"
+                                     name="weight">
+                                </div>
+                                <div class="ui-g-4">
+                                    Huyết áp: <input type="text" [(ngModel)]="selectedPatient.huyetap" name="huyetap">
+                                </div>
+                            </div>
+                        </div>
+
+                        <br>
+                        <!-- KQ CLS -->
+                        <div class="shadow-sm card">
+                            <div class="card-body">
+                                <h4 class="card-title d-flex align-items-center">
+                                    <i class="fa fa-heartbeat" aria-hidden="true"></i>
+                                    Kết quả CLS:</h4>
+                            </div>
+                            <div class="row">
+                                <div class="ui-g-2"></div>
+                                <div class="ui-g-4">
+                                    <p-dropdown [options]="ketquaCLSs" optionLabel="name"
+                                        [(ngModel)]="selectedKetquaCLS" name="selectedKetquaCLS"
+                                        [style]="{'width':'250px'}"></p-dropdown>
+                                </div>
+                                <div class="ui-g-6">
+                                    <!-- Khác: <textarea type="text" style="width: 80%;" 
+                                    [(ngModel)]="kqClsKhac" name="kqClsKhac"></textarea> -->
+                                    <span class="ui-float-label" width="100%"> 
+                                        <textarea  style="width: 80%;" [rows]="3"
+                                        [(ngModel)]="kqClsKhac" name="kqClsKhac"
+                                        pInputTextarea></textarea>
+                                      <label for="float-input">{{kqClsKhac?'':'Khác'}}</label>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <br>
+                        <!-- Chan doan -->
+                        <div class="shadow-sm card">
+                            <div class="card-body">
+                                <h4 class="card-title d-flex align-items-center">
+                                    <i class="fa fa-stethoscope" aria-hidden="true"></i>
+                                    Chẩn đoán: </h4>
+                            </div>
+                            <div class="row">
+                                <div class="ui-g-2" style="text-align: right">Bệnh chính:</div>
+                                <div class="ui-g-4">
+                                    <p-dropdown [options]="benhChinhs" optionLabel="name"
+                                        [(ngModel)]="selectedBenhChinh" name="selectedBenhChinh"
+                                        [style]="{'width':'250px'}"></p-dropdown>
+                                </div>
+                                <!-- <div class="ui-g-4">
+                                    Khác: <input type="text">
+                                </div> -->
+                            </div>
+                            <div class="row">
+                                <div class="ui-g-2" style="text-align: right">Bệnh kèm theo: </div>
+                                <div class="ui-g-4">
+                                    <!-- <p-dropdown [options]="benhphus" optionLabel="name" [(ngModel)]="selectedBenhPhu"
+                                        name="selectedBenhPhu" [style]="{'width':'250px'}"></p-dropdown> -->
+                                    <p-multiSelect [options]="benhphus" [(ngModel)]="selectedBenhPhu" optionLabel="name"
+                                        name="selectedBenhPhu" #SelectedBenhPhu="ngModel" [style]="{'width':'250px'}"
+                                        defaultLabel="Bệnh"></p-multiSelect>
+                                </div>
+                                <div class="ui-g-6">
+                                    <!-- Khác: <textarea type="text" style="width: 80%;" 
+                                    [(ngModel)]="benhKhac" name="benhKhac"></textarea> -->
+                                    <span class="ui-float-label" width="100%"> 
+                                        <textarea  style="width: 80%;" [rows]="3"
+                                        [(ngModel)]="benhKhac" name="benhKhac"
+                                        pInputTextarea></textarea>
+                                      <label for="float-input">{{benhKhac?'':'Khác'}}</label>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <br>
+                        <!-- PPDtri -->
+                        <div class="shadow-sm card">
+                            <div class="card-body">
+                                <h4 class="card-title d-flex align-items-center">
+                                    <i class="fa fa-medkit" aria-hidden="true"></i>
+                                    Phương pháp điều trị:</h4>
+                            </div>
+                            <div class="row">
+                                <div class="ui-g-2"></div>
+                                <div class="ui-g-4">
+                                    <p-dropdown [options]="ppDieuTris" optionLabel="name"
+                                        [(ngModel)]="selectedPpDieuTri" name="selectedPpDieuTri"
+                                        [style]="{'width':'250px'}"></p-dropdown>
+                                </div>
+                                <div class="ui-g-6">
+                                    <!-- Khác: <textarea type="text" style="width: 80%;" 
+                                    [(ngModel)]="ppDieuTriKhac" name="ppDieuTriKhac"></textarea> -->
+                                    <span class="ui-float-label" width="100%"> 
+                                        <textarea  style="width: 80%;" [rows]="3"
+                                        [(ngModel)]="ppDieuTriKhac" name="ppDieuTriKhac"
+                                        pInputTextarea></textarea>
+                                      <label for="float-input">{{ppDieuTriKhac?'':'Khác'}}</label>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <!-- Kq dieu tri -->
+                        <div class="shadow-sm card">
+                            <div class="card-body">
+                                <h4 class="card-title d-flex align-items-center">
+                                    <i class="fa fa-hospital-o" aria-hidden="true"></i>
+                                    Kết quả điều trị: </h4>
+                            </div>
+                            <div class="row">
+                                <div class="ui-g-2" style="text-align: right">Sức khỏe: </div>
+                                <div class="ui-g-4">
+                                    <p-dropdown [options]="kqDieuTris" optionLabel="name"
+                                        [(ngModel)]="selectedKqDieuTri" name="selectedKqDieuTri"
+                                        [style]="{'width':'250px'}"></p-dropdown>
+                                </div>
+                                <div class="ui-g-6">
+                                    <!-- Khác: <textarea type="text" style="width: 80%;" 
+                                    [(ngModel)]="kqDieuTriKhac" name="kkDieuTriKhac"></textarea> -->
+                                    <span class="ui-float-label" width="100%"> 
+                                        <textarea  style="width: 80%;" [rows]="3"
+                                        [(ngModel)]="kqDieuTriKhac" name="kqDieuTriKhac"
+                                        pInputTextarea></textarea>
+                                      <label for="float-input">{{kqDieuTriKhac?'':'Khác'}}</label>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <!-- Hướng điều trị kế tiếp  -->
+                        <div class="shadow-sm card">
+                            <div class="card-body">
+                                <h4 class="card-title d-flex align-items-center">
+                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                    Hướng điều trị kế tiếp: </h4>
+                            </div>
+                            <div class="row">
+                                <div class="ui-g-2"></div>
+                                <div class="ui-g-4">
+                                    <p-dropdown [options]="huongDieuTris" optionLabel="name"
+                                        [(ngModel)]="selectedHuongDieuTri" name="selectedHuongDieuTri"
+                                        [style]="{'width':'250px'}"></p-dropdown>
+                                </div>
+                                <div class="ui-g-6">
+                                    <!-- Khác: <textarea type="text" style="width: 80%;" 
+                                    [(ngModel)]="huongDieuTriKhac" name="huongDieuTriKhac"></textarea> -->
+                                    <span class="ui-float-label" width="100%"> 
+                                        <textarea  style="width: 80%;" [rows]="3"
+                                        [(ngModel)]="huongDieuTriKhac" name="huongDieuTriKhac"
+                                        pInputTextarea></textarea>
+                                      <label for="float-input">{{huongDieuTriKhac?'':'Khác'}}</label>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="shadow-lg card action-buttons">
+                            <button (click)="resumeForm.valid ? saveTTCCon() : ''"
+                                [disabled] = "isInvalid"
+                                class="btn btn-primary d-flex align-items-center justify-content-center">
+                                <i class="fa fa-floppy-o" aria-hidden="true"></i>
+                                <span>Lưu</span>
+                            </button>
+                            <br>
+                            <button (click)="resumeForm.valid ? xemTTCC('open') : ''"
+                            [disabled] = "isInvalid"    
+                            class="btn btn-primary d-flex align-items-center justify-content-center">
+                                <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+                                <span>Xem TTCC</span>
+                            </button>
+                            <br>
+                            <button (click)="resumeForm.valid ? xemTTCC('download') : ''"
+                            [disabled] = "isInvalid"
+                                class="btn btn-primary d-flex align-items-center justify-content-center">
+                                <i class="fa fa-download" aria-hidden="true"></i>
+                                <span>Tải TTCC</span></button>
+                            <br>
+                            <button (click)="resumeForm.valid ? xemTTCC('print') : ''"
+                            [disabled] = "isInvalid"    
+                            class="btn btn-primary d-flex align-items-center justify-content-center">
+                                <i class="fa fa-print" aria-hidden="true"></i>
+                                <span>In TTCC</span></button>
+                            <br>
+                            <button type='reset' (click)="resetForm()"
+                            [disabled] = "isInvalid"
+                                class="btn btn-primary d-flex align-items-center justify-content-center">
+                                <i class="fa fa-times" aria-hidden="true"></i><span>Xóa</span></button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </p-accordionTab>
+    <p-accordionTab header="Danh sách Tóm tắt cắt cơn" >
+        <p-table #dt [columns]="cols" [value]="patientsTB"
+             selectionMode="single" [(selection)]="selectedPatientTB"
+            (onRowSelect)="onRowSelect($event)" [paginator]="true" [rows]="55">
+            <ng-template pTemplate="caption">
+                Danh sách sổ
+                <div style="text-align: right">
+                    <i class="pi pi-search" style="margin:4px 4px 0 0"></i>
+                    <input type="text" pInputText size="50" placeholder="Tìm hết"
+                        (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header" let-columns>
+                <tr>
+                    <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                        {{col.header}}
+                        <p-sortIcon [field]="col.field"></p-sortIcon>
+                    </th>
+                </tr>
+                <tr>
+                    <th *ngFor="let col of columns" [ngSwitch]="col.field">
+                        <input *ngSwitchCase="'sohoso'" pInputText type="text"
+                            (input)="dt.filter($event.target.value, col.field, 'contains')">
+                        <input *ngSwitchCase="'patientId'" pInputText type="text"
+                            (input)="dt.filter($event.target.value, col.field, 'contains')">
+                        <input *ngSwitchCase="'patientName'" pInputText type="text"
+                            (input)="dt.filter($event.target.value, col.field, 'contains')">
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData let-columns="columns">
+                <tr [pSelectableRow]="rowData">
+                    <td *ngFor="let col of columns">
+                        {{rowData[col.field]}}
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </p-accordionTab>
+    <p-accordionTab header="Tra cứu Sổ theo dõi"  [selected]="true">
+        <div class="container-fluid">
+            <form #theodoiForm="ngForm">
+                <div class="row">
+                    <div class="col-md-10">
+                        <div class="shadow-sm card">
+                            <!-- bệnh nhân  -->
+                            <div class="card-body">
+                                <h4 class="card-title d-flex align-items-center">
+                                    <i class="fa fa-address-card" aria-hidden="true"></i>
+                                    Sổ theo dõi: </h4>
+                            </div>
+                            <div class="row">
+                                <div class="ui-g-2" style="text-align: right;">
+                                    <i class="fa fa-user-circle" aria-hidden="true"></i>
+                                    Bệnh nhân:
+                                </div>
+                                <div class="col-md-6">
+                                    <!-- row 1 searching -->
+                                    <div class="row">
+                                      <div class="col-6">
+                                        <p-dropdown [options]="patients" optionLabel="fullname" [autoDisplayFirst]="false"
+                                          [filter]="true" (onChange)="changePatient()"
+                                          [(ngModel)]="selectedPatient"
+                                          (onFocus)="focusPatient()"
+                                          placeholder="tenNamsinh"
+                                          name="patientFullname">
+                                        </p-dropdown>
+                                      </div>
+                                      <div class="col-6">
+                                        
+                                      </div>
+                                    </div>
+                                    <!-- row 2 ma/ten bn -->
+                                    <div>
+                                      <div class="ui-g-4 row">
+                                        <!-- Mã:  -->
+                                        <div>
+                                          <p-dropdown [options]="patients" optionLabel="patientId" [autoDisplayFirst]="false"
+                                            [filter]="true" 
+                                            (onChange)="changePatient()"
+                                             [(ngModel)]="selectedPatient"
+                                             (onFocus)="focusPatient()"
+                                            name="patientId">
+                                          </p-dropdown>
+                                        </div>
+                                      </div>
+                                      <div class="ui-g-2" style="text-align: right;">
+                                        Tên:
+                                      </div>
+                                      <div class="ui-g-6">
+                                        <p-dropdown [options]="patients" optionLabel="patientName"
+                                        (onFocus)="focusPatient()"
+                                          [(ngModel)]="selectedPatient" (onChange)="changePatient()" name="patientName"
+                                          [filter]="true" [autoDisplayFirst]="false">
+                                        </p-dropdown>
+                                      </div>
+                                      <br>
+                                    </div>
+                                  </div>
+                                  <!-- confirm patient info -->
+                                  <div class="col-md-4">
+                                    <div class="" *ngIf="selectedPatient">
+                                      <div class="row">
+                                        <div class="col-6">
+                                          Năm sinh: <b>{{selectedPatient.birthYear}}</b>
+                                        </div>
+                                        <div class="col-6">
+                                          Khu: <b>{{selectedPatient.khu}}</b>
+                                        </div>
+                                        </div>
+                                        <div>
+                                            Tên: <b>{{selectedPatient.patientName}}</b>
+                                            <br> Địa chỉ: <b>{{selectedPatient.address}}</b>
+                                        </div>
+                                        <div class="" *ngIf="selectedPatient">
+                                            Mã BN: <b>{{selectedPatient.patientId}}</b>
+                                        </div>
+                                    </div>
+                                  </div>
+                            </div>
+                            <!-- Hồ sơ -->
+                            <div class="row">
+                                <div class="ui-g-2" style="text-align: right;">
+                                    Số hồ sơ:
+                                </div>
+                                <div class="ui-g-5">
+                                    <div *ngIf="!formMode">
+                                       <b>{{selectedPatient.sohoso}}</b> 
+                                    </div>
+
+                                    <div *ngIf="formMode">
+                                        <p style="color: red; font-weight: bold"> *Bệnh nhân này chưa tạo hồ sơ</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="shadow-sm card">
+                            <!-- Ngay  -->
+                            <div class="card-body">
+                                <h4 class="card-title d-flex align-items-center">
+                                    <i class="fa fa-address-card" aria-hidden="true"></i>
+                                    Ngày: </h4>
+                            </div>
+                            <div class="row">
+                                <div class="p-col-2"></div>
+                                <div class="p-col-3">
+                                    Từ:
+                                    <p-calendar [(ngModel)]="xemFrom"
+                                     [showIcon]="true" name="xemFrom"
+                                    dateFormat="dd/mm/yy"
+                                    ></p-calendar>
+                                </div>
+                                <div class="p-col-3">
+                                    Đến:
+                                    <p-calendar [(ngModel)]="xemTo" 
+                                    [showIcon]="true" name="xemTo"
+                                    dateFormat="dd/mm/yy"
+                                    [minDate]="xemFrom"
+                                    ></p-calendar>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="shadow-lg card action-buttons">
+                            <button (click)="getPdfPKBsData()"
+                                class="btn btn-primary d-flex align-items-center justify-content-center">
+                                <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+                                <span>Xem Dữ Liệu</span>
+                            </button>
+                            <br>
+                            <button (click)="resumeForm.valid ? xemSotheodoiPdf('open') : ''"
+                                [disabled] = "invalidBTPdf"    
+                                class="btn btn-primary d-flex align-items-center justify-content-center">
+                                <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+                                <span>Xem Sổ Theo Dõi</span>
+                            </button>
+                            <br>
+                            <button (click)="resumeForm.valid ? xemSoTinhTienPdf('open') : ''"
+                                [disabled] = "invalidBTPdf"    
+                                class="btn btn-primary d-flex align-items-center justify-content-center">
+                                <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+                                <span>Sổ Thanh Toán</span>
+                            </button>
+                            <br>
+                            <button (click)="resumeForm.valid ? xemSotheodoiPdf('download') : ''"
+                            [disabled] = "invalidBTPdf"
+                                class="btn btn-primary d-flex align-items-center justify-content-center">
+                                <i class="fa fa-download" aria-hidden="true"></i>
+                                <span>Tải Sổ</span></button>
+                            <br>
+                            <button (click)="resumeForm.valid ? xemSotheodoiPdf('print') : ''"
+                            [disabled] = "invalidBTPdf"    
+                            class="btn btn-primary d-flex align-items-center justify-content-center">
+                                <i class="fa fa-print" aria-hidden="true"></i>
+                                <span>In Sổ</span></button>
+                            <br>
+                            <button type='button' 
+                              (click)="xoaSotheodoi()"
+                              class="btn btn-primary d-flex align-items-center justify-content-center">
+                              <i class="fa fa-times" aria-hidden="true"></i><span>Xóa Sổ</span>
+                            </button>
+                              <br>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div>
+            <p-table #dtCC [columns]="colPKBs" [value]="pkbModels" 
+            selectionMode="single" [(selection)]="phieuModelTB"
+            [loading]="searching"
+            (onRowSelect)=" xem1Pdf('open')" 
+            [paginator]="true" [rows]="25">
+            <ng-template pTemplate="caption">
+              Danh sách Khám
+              <div style="text-align: right">
+                <i class="pi pi-search" style="margin:4px 4px 0 0"></i>
+                <input type="text" pInputText size="50" placeholder="Tìm tt chung"
+                  (input)="dtCC.filterGlobal($event.target.value, 'contains')" style="width:auto">
+              </div>
+            </ng-template>
+            <ng-template pTemplate="header" let-columns>
+              <tr>
+                <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                  {{col.header}}
+                  <p-sortIcon [field]="col.field"></p-sortIcon>
+                </th>
+              </tr>
+              <tr>
+                <th *ngFor="let col of columns" [ngSwitch]="col.field">
+                </th>
+              </tr>
+              <tr>
+                <th *ngFor="let col of columns" [ngSwitch]="col.field">
+                  <div *ngSwitchCase="'ngaykham'"> ngày/tháng/năm</div>
+                  <!-- <input *ngSwitchCase="'donthuocjs'" pInputText type="text"
+                    (input)="dt.filter($event.target.value, col.field, 'contains')"> -->
+                  <input *ngSwitchCase="'mabenhnhan'" pInputText type="text"
+                    (input)="dtCC.filter($event.target.value, col.field, 'contains')">
+                  <input *ngSwitchCase="'fullname'" pInputText type="text"
+                  (input)="dtCC.filter($event.target.value, col.field, 'contains')">
+                  <input *ngSwitchCase="'khu_name'" pInputText type="text"
+                    (input)="dtCC.filter($event.target.value, col.field, 'contains')">
+                  <input *ngSwitchCase="'ketluan'" pInputText type="text"
+                  (input)="dtCC.filter($event.target.value, col.field, 'contains')">
+                  <input *ngSwitchCase="'clsjs'" pInputText type="text"
+                  (input)="dtCC.filter($event.target.value, col.field, 'contains')">
+                </th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData let-columns="columns">
+                <tr [pSelectableRow]="rowData">
+                  <td *ngFor="let col of columns">
+                    <div  *ngIf="col.field=='ngaykham'">
+                      {{rowData[col.field] | date: 'dd/MM/yyyy'}}
+                    </div>
+                    <div  *ngIf="col.field==='clsjs'">
+                      {{getNXOptionsNames(rowData[col.field])}}
+                    </div>
+                    <div  *ngIf="col.field==='ketluan'">
+                      {{rowData[col.field]}}
+                    </div>
+                    <div  *ngIf="col.field==='mabenhnhan' || col.field==='khu_name' || col.field==='fullname'">
+                      {{rowData[col.field]}}
+                    </div> 
+                    <!-- {{rowData[col.field]}} -->
+                  </td>
+                  <!-- <td *ngFor="let col of columns">
+                  </td> -->
+                </tr>
+              </ng-template>
+          </p-table>
+        </div>
+    </p-accordionTab>
+
+    <p-accordionTab header="Phiếu Tóm Tắt Bệnh Án Điều Trị" >
+      <div class="container-fluid">
+        <form #BAForm="ngForm">
+          <div class="row">
+            <div class="col-md-10">
+                <div class="shadow-sm card">
+                    <!-- bệnh nhân  -->
+                    <div class="card-body">
+                        <h4 class="card-title d-flex align-items-center">
+                            <i class="fa fa-address-card" aria-hidden="true"></i>
+                            Thông tin: </h4>
+                    </div>
+                    <!-- Bệnh nhân: -->
+                    <div class="row">
+                        <div class="ui-g-2" style="text-align: right;">
+                            <i class="fa fa-user-circle" aria-hidden="true"></i>
+                            Bệnh nhân:
+                        </div>
+                        <div class="col-md-6">
+                            <!-- row 1 searching -->
+                            <div class="row">
+                              <!-- <div class="col-6"> -->
+                                <p-dropdown [options]="patients" 
+                                  optionLabel="fullname" 
+                                  [autoDisplayFirst]="false"
+                                  [filter]="true" (onChange)="changePatient()"
+                                  [(ngModel)]="selectedPatient"
+                                  (onFocus)="focusPatient()"
+                                  placeholder="tenNamsinh"
+                                  name="patientFullname">
+                                </p-dropdown>
+                              <!-- </div>
+                              <div class="col-6">
+                              </div> -->
+                            </div>
+                            <!-- row 2 ma/ten bn -->
+                            <div>
+                              <div class="ui-g-4 row">
+                                <!-- Mã: 
+                                <div> -->
+                                  <p-dropdown [options]="patients" optionLabel="patientId"
+                                    [autoDisplayFirst]="false"
+                                    [filter]="true" (onChange)="changePatient()"
+                                      [(ngModel)]="selectedPatient"
+                                      (onFocus)="focusPatient()"
+                                      placeholder="Mã"
+                                    name="patientId">
+                                  </p-dropdown>
+                                <!-- </div> -->
+                              </div>
+                              <div class="ui-g-2" style="text-align: right;">
+                                Tên:
+                              </div>
+                              <div class="ui-g-6">
+                                <p-dropdown [options]="patients" optionLabel="patientName"
+                                (onFocus)="focusPatient()"
+                                  [(ngModel)]="selectedPatient"
+                                    (onChange)="changePatient()"
+                                    name="patientName"
+                                  [filter]="true" 
+                                  [autoDisplayFirst]="false">
+                                </p-dropdown>
+                              </div>
+                              <br>
+                            </div>
+                        </div>
+                          <!-- confirm patient info -->
+                          <div class="col-md-4">
+                            <div class="" *ngIf="selectedPatient">
+                              <div class="row">
+                                <div class="col-6">
+                                  Năm sinh: <b>{{selectedPatient.birthYear}}</b>
+                                </div>
+                                <div class="col-6">
+                                  Khu: <b>{{selectedPatient.khu}}</b>
+                                </div>
+                              </div>
+                              <div>
+                                Tên: <b>{{selectedPatient.patientName}}</b>
+                              </div>
+                              <div class="" *ngIf="selectedPatient">
+                                Mã BN: <b>{{selectedPatient.patientId}}</b>
+                                <br>
+                                Giới tính: <b>{{selectedPatient.gender}}</b>
+                              </div>
+                              <div>
+                                <br> Địa chỉ: <b>{{selectedPatient.address}}</b>
+                              </div>
+                            </div>
+                          </div>
+                    </div>
+                    <!-- Hồ sơ -->
+                    <div class="row">
+                        <div class="ui-g-2" style="text-align: right;">
+                            Số hồ sơ:
+                        </div>
+                        <div class="ui-g-3">
+                            <div *ngIf="!formMode">
+                                <b>{{selectedPatient.sohoso}}</b> 
+                            </div>
+                            <div class="ui-g-3" *ngIf="formMode">
+                                <input type="text" placeholder="Nhập số hồ sơ" pInputText
+                                    [(ngModel)]="selectedPatient.sohoso" name="sohoso" />
+                            </div>
+                        </div>
+                        <div class="ui-g-7" *ngIf="formMode">
+                            <p style="color: red; font-weight: bold"> *Bệnh nhân này chưa tạo hồ sơ</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                      <div class="ui-g-2" style="text-align: right;">
+                        Buồng:
+                      </div>
+                      <div class="ui-g-3">
+                          <input type="text" placeholder="Buồng" pInputText
+                          [(ngModel)]="buongBA" name="buongBA" />
+                      </div>
+                      <div class="ui-g-2" style="text-align: right;">
+                        Giường:
+                      </div>
+                      <div class="ui-g-3">
+                          <input type="text" placeholder="Giường" pInputText
+                          [(ngModel)]="giuongBA" name="giuongBA" />
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="ui-g-2" style="text-align: right;">
+                        Từ:
+                      </div>
+                      <div class="p-col-3">
+                          <p-calendar [(ngModel)]="fromBA"
+                            [showIcon]="true" name="fromBA"
+                          dateFormat="dd/mm/yy"
+                          ></p-calendar>
+                      </div>
+                      <div class="ui-g-2" style="text-align: right;">
+                        Đến:
+                      </div>
+                      <div class="p-col-3">
+                          <p-calendar [(ngModel)]="toBA" 
+                          [showIcon]="true" name="toBA"
+                          dateFormat="dd/mm/yy"
+                          [minDate]="fromBA"
+                          ></p-calendar>
+                      </div>
+                  </div>
+                </div>
+                <br>
+                <!-- Chan doan -->
+                <div class="shadow-sm card">
+                  <div class="card-body">
+                      <h4 class="card-title d-flex align-items-center">
+                          <i class="fa fa-heart" aria-hidden="true"></i>
+                          Chẩn đoán:</h4>
+                  </div>
+                  <div class="row">
+                    <div class="col-1">
+                    </div>
+                    <div class="col-11">
+                      <span class="ui-float-label" width="100%"> 
+                          <textarea  style="width: 80%;" [rows]="4"
+                          [(ngModel)]="chandoanBA" name="chandoanBA"
+                          pInputTextarea></textarea>
+                          <label for="float-input">{{chandoanBA?'':'Chẩn đoán'}}</label>
+                      </span>
+                    </div>
+                  </div>
+              </div>                      
+                <!-- <div class="shadow-sm card">
+                  <div class="card-body">
+                      <h4 class="card-title d-flex align-items-center">
+                          <i class="fa fa-stethoscope" aria-hidden="true"></i>
+                          Chẩn đoán: </h4>
+                  </div>
+                  <div class="row">
+                      <div class="ui-g-2" style="text-align: right">Bệnh chính:</div>
+                      <div class="ui-g-4">
+                          <p-dropdown [options]="benhChinhs" optionLabel="name"
+                              [(ngModel)]="selectedBenhChinh" name="selectedBenhChinh"
+                              [style]="{'width':'250px'}"></p-dropdown>
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="ui-g-2" style="text-align: right">Bệnh kèm theo: </div>
+                      <div class="ui-g-4">
+                          <p-multiSelect [options]="benhphus" [(ngModel)]="selectedBenhPhu" optionLabel="name"
+                              name="selectedBenhPhu" #SelectedBenhPhu="ngModel" [style]="{'width':'250px'}"
+                              defaultLabel="Bệnh"></p-multiSelect>
+                      </div>
+                      <div class="ui-g-6">
+                          <span class="ui-float-label" width="100%"> 
+                              <textarea  style="width: 80%;" [rows]="3"
+                              [(ngModel)]="benhKhac" name="benhKhac"
+                              pInputTextarea></textarea>
+                            <label for="float-input">{{benhKhac?'':'Khác'}}</label>
+                          </span>
+                      </div>
+                  </div>
+                </div> -->
+                
+                <!-- Diễn biến Quá trình điều trị -->
+                <div class="shadow-sm card">
+                    <div class="card-body">
+                        <h4 class="card-title d-flex align-items-center">
+                            <i class="fa fa-heart" aria-hidden="true"></i>
+                            Diễn biến lâm sàng trong quá trình điều trị:</h4>
+                    </div>
+                    <div class="row">
+                      <div class="col-1">
+                      </div>
+                      <div class="col-11">
+                        <span class="ui-float-label" width="100%"> 
+                            <textarea  style="width: 80%;" [rows]="4"
+                            [(ngModel)]="dienbienBA" name="dienbienBA"
+                            pInputTextarea></textarea>
+                            <label for="float-input">{{dienbienBA?'':'Diễn biến lâm sàng'}}</label>
+                        </span>
+                      </div>
+                    </div>
+                </div>
+
+                <br>
+                <!-- XN CLS -->
+                <div class="shadow-sm card">
+                    <div class="card-body">
+                        <h4 class="card-title d-flex align-items-center">
+                            <i class="fa fa-heartbeat" aria-hidden="true"></i>
+                            Xét nghiệm cận lâm sàng:</h4>
+                    </div>
+                    <div class="row">
+                      <div class="col-1">
+                      </div>
+                      <div class="col-11">
+                        <span class="ui-float-label" width="100%"> 
+                            <textarea  style="width: 80%;" [rows]="4"
+                            [(ngModel)]="XNClsBA" name="XNClsBA"
+                            pInputTextarea></textarea>
+                          <label for="float-input">{{XNClsBA?'':'Xét nghiệm cận lâm sàng'}}</label>
+                        </span>
+                      </div>
+                    </div>
+                </div>
+
+                <br>
+                <!-- 3. Quá trình điều trị -->
+                <div class="shadow-sm card">
+                    <div class="card-body">
+                        <h4 class="card-title d-flex align-items-center">
+                            <i class="fa fa-stethoscope" aria-hidden="true"></i>
+                            Quá trình điều trị: </h4>
+                    </div>
+                    <div class="row">
+                      <div class="col-1">
+                      </div>
+                      <div class="col-11">
+                        <span class="ui-float-label" width="100%"> 
+                            <textarea  style="width: 80%;" [rows]="4"
+                            [(ngModel)]="qtdtBA" name="qtdtBA"
+                            pInputTextarea></textarea>
+                          <label for="float-input">{{qtdtBA?'':'Quá trình điều trị'}}</label>
+                        </span>
+                      </div>
+                    </div>
+                </div>
+                <br>
+                <!-- 4. Đánh giá kết quả -->
+                <div class="shadow-sm card">
+                  <div class="card-body">
+                      <h4 class="card-title d-flex align-items-center">
+                          <i class="fa fa-stethoscope" aria-hidden="true"></i>
+                          Đánh giá kết quả: </h4>
+                  </div>
+                  <div class="row">
+                    <div class="col-1">
+                    </div>
+                    <div class="col-11">
+                      <span class="ui-float-label" width="100%"> 
+                          <textarea  style="width: 80%;" [rows]="4"
+                          [(ngModel)]="danhgiaBA" name="danhgiaBA"
+                          pInputTextarea></textarea>
+                        <label for="float-input">{{danhgiaBA?'':'Đánh giá kết quả'}}</label>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <br>
+                <!-- 5. Hướng điều trị tiếp và tiên lượng -->
+                <div class="shadow-sm card">
+                  <div class="card-body">
+                      <h4 class="card-title d-flex align-items-center">
+                          <i class="fa fa-stethoscope" aria-hidden="true"></i>
+                          Hướng điều trị tiếp và tiên lượng: </h4>
+                  </div>
+                  <div class="row">
+                    <div class="col-1">
+                    </div>
+                    <div class="col-11">
+                      <span class="ui-float-label" width="100%"> 
+                          <textarea  style="width: 80%;" [rows]="4"
+                          [(ngModel)]="huongdieutriBA" name="huongdieutriBA"
+                          pInputTextarea></textarea>
+                        <label for="float-input">{{huongdieutriBA?'':'Hướng điều trị tiếp và tiên lượng'}}</label>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <br>
+            </div>
+            <div class="col-md-2">
+                <div class="shadow-lg card action-buttons">
+                    <button (click)="BAForm.valid ? saveTTBA() : ''"
+                      [disabled] = "isInvalid"
+                      class="btn btn-primary d-flex align-items-center justify-content-center">
+                      <i class="fa fa-floppy-o" aria-hidden="true"></i>
+                      <span>Lưu</span>
+                    </button>
+                    <br>
+                    <button (click)="BAForm.valid ? xemTTBA('open') : ''"
+                      [disabled] = "isInvalid"    
+                      class="btn btn-primary d-flex align-items-center justify-content-center">
+                      <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+                      <span>Xem Bệnh Án</span>
+                    </button>
+                    <br>
+                    <button (click)="BAForm.valid ? xemTTBA('download') : ''"
+                    [disabled] = "isInvalid"
+                        class="btn btn-primary d-flex align-items-center justify-content-center">
+                        <i class="fa fa-download" aria-hidden="true"></i>
+                        <span>Tải Bệnh Án</span></button>
+                    <br>
+                    <button (click)="BAForm.valid ? xemTTBA('print') : ''"
+                    [disabled] = "isInvalid"    
+                    class="btn btn-primary d-flex align-items-center justify-content-center">
+                        <i class="fa fa-print" aria-hidden="true"></i>
+                        <span>In Bệnh Án</span></button>
+                    <br>
+                    <button type='reset' (click)="initTTBA()"
+                      [disabled] = "isInvalid"
+                        class="btn btn-primary d-flex align-items-center justify-content-center">
+                        <i class="fa fa-times" aria-hidden="true"></i><span>Xóa</span></button>
+                </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </p-accordionTab>
+</p-accordion>

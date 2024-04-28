@@ -1,0 +1,111 @@
+<p-messages [(value)]="msgs"></p-messages>
+
+<label for="myfile">Chọn File:</label>
+<input id="myfile" type="file" (change)="onFileChange($event)" multiple="false" caption="abc"/>
+<button type="button" pButton icon="fa fa-plus"
+     (click)="getData()"
+    label="Xem danh sách!"></button>
+<button type="button" pButton icon="fa fa-plus" 
+    (click)="savePhieus()" 
+    style="float: right;"
+    [disabled]="dtFilter.length === 0"
+    label="Thêm phiếu khám bệnh "></button>
+    <br>
+<p-table #dtF [columns]="cols" [value]="listPkbModel" 
+    autoLayout="true"
+    [paginator]="true" [rows]="50" 
+    [resizableColumns]="true">
+    <ng-template pTemplate="caption">
+        Danh sách {{dtFilter.length}} phiếu khám bệnh Sẽ thêm 
+    </ng-template>
+    <ng-template pTemplate="header" let-columns>
+        <tr>
+            <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                {{col.header}}
+                <p-sortIcon [field]="col.field"></p-sortIcon>
+            </th>
+        </tr>
+        <tr>
+            <th *ngFor="let col of columns" [ngSwitch]="col.field">
+              <!-- <div *ngSwitchCase="'ngaykham'"> ngày/tháng/năm</div> -->
+              <!-- <input *ngSwitchCase="'donthuocjs'" pInputText type="text"
+                (input)="dt.filter($event.target.value, col.field, 'contains')"> -->
+              <input *ngSwitchCase="'patientName'" pInputText type="text"
+                (input)="dtF.filter($event.target.value, col.field, 'contains')">
+              <input *ngSwitchCase="'fullname'" pInputText type="text"
+              (input)="dtF.filter($event.target.value, col.field, 'contains')">
+              <input *ngSwitchCase="'patientId'" pInputText type="text"
+                (input)="dtF.filter($event.target.value, col.field, 'contains')">
+            </th>
+          </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <tr [pSelectableRow]="rowData">
+
+            <td *ngFor="let col of columns">
+                <div  *ngIf="col.field=='imported_at' || col.field=='birthday' ">
+                    {{rowData[col.field] | date: 'dd/MM/yyyy'}}
+                </div>
+                <div *ngIf="col.field!=='imported_at' && col.field!=='birthday' ">
+                    {{rowData[col.field]}}
+                </div>
+            </td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage" let-columns>
+        <tr>
+            <td [attr.colspan]="columns.length" style="text-align: center; height: 150px; 
+                font-weight: bold; color: #027E3F; font-size: 16px;">
+              Chưa có dữ liệu
+            </td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="summary" let-rowData>
+        <div style="text-align:left">
+            <button type="button" pButton icon="fa fa-plus" (click)="savePhieus()" 
+            label="Thêm Phiếu"></button>
+        </div>
+    </ng-template>
+</p-table>
+<!-- <div *ngIf="cols!==undefined">
+    <p-table [columns]="cols" [value]="tbData" selectionMode="single" [paginator]="true" [rows]="15">
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                    {{col.header}}
+                    <p-sortIcon [field]="col.field"></p-sortIcon>
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+            <tr [pSelectableRow]="rowData">
+                <td *ngFor="let col of columns">
+                    {{rowData[col.field]}}
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div> -->
+
+<!-- <table class="sjs-table">
+    <tbody>
+        <tr *ngFor="let row of data; let i=index">
+            <td><b>{{i}}</b></td>
+            <td *ngFor="let val of row">
+                {{val}}
+            </td>
+        </tr>
+    </tbody>
+</table> -->
+
+<table class="sjs-table">
+    <tbody>
+        <tr *ngFor="let row of data; let i=index">
+            <td><b>{{i}}</b></td>
+            <td *ngFor="let val of row">
+                {{val}}
+            </td>
+        </tr>
+    </tbody>
+</table>
+<!-- <button (click)="export()">Export!</button> -->

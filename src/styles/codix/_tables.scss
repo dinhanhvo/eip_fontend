@@ -1,0 +1,94 @@
+.ad-crosstab {
+  $bdc: #e0e0e0;
+  box-sizing: border-box;
+  background-color: #fff;
+  font-size: 0.8rem;
+
+  .ad-crosstab-container {
+    display: flex;
+    flex-wrap: wrap;
+    overflow: hidden;
+
+    .tbl-corner {
+      flex: 0 0;
+      display: flex;
+      box-sizing: border-box;
+      border: 1px solid $bdc;
+
+      .tbl-corner-in {
+        flex: 1 1 auto;
+        border: 1px solid $bdc; //border-left: 1px solid $bdc;
+      }
+    }
+
+    .tbl-col-header {
+      flex: 1 1 auto;
+      overflow: hidden; //background-color: aqua;
+
+      table > thead > tr:first-child {
+        border-top: 1px solid $bdc;
+      }
+    }
+
+    .tbl-row-header {
+      flex: 0 0 auto;
+      overflow: hidden;
+
+      table > thead > tr > th {
+        border-left: 1px solid $bdc;
+      }
+    }
+
+    .tbl-line {
+      height: 0px;
+      width: 100%;
+      flex: 1 1 100%;
+    }
+
+    .tbl-data {
+      flex: 1 1 200px;
+      overflow: hidden;
+    }
+
+    .data-scroller {
+      height: 100%;
+      width: 100%;
+      overflow: auto;
+    }
+  }
+
+  table > thead > tr {
+    border-bottom: 1px solid $bdc;
+  }
+
+  table > thead > tr.ext-row {
+    border: none;
+  }
+
+  table > thead > tr > th {
+    text-align: center;
+    border-right: 1px solid $bdc;
+    padding: 2px;
+  }
+
+  table > thead > tr.ext-row > th {
+    padding: 0;
+  }
+
+  table > tbody > tr {
+    border-bottom: 1px solid $bdc;
+  }
+
+  table > tbody > tr.ext-row {
+    border: none;
+  }
+
+  table > tbody > tr > td {
+    border-right: 1px solid $bdc;
+    padding: 2px;
+  }
+
+  table > tbody > tr.ext-row > td {
+    padding: 0;
+  }
+}

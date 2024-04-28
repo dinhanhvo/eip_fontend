@@ -1,0 +1,251 @@
+<p-tabView>
+    <p-tabPanel header="BC Tổng hợp theo loại thuốc">
+        <!-- Thuoc type -->
+        <div class="ui-g card-body" style="width: 100%;">
+            <div class="ui-g-3">
+                Kho: <p-dropdown [options]="khoNhaps" optionLabel="name"
+                    (onChange)="changKho()"
+                     [autoDisplayFirst]="false"
+                    [(ngModel)]="selectedKho" name="khoNhap">
+                </p-dropdown>
+            </div>
+            <!-- Dates -->
+            <div class="p-grid ui-g-7">
+                <div class="p-col-1">
+                    <div style="float: right;" class="label">
+                        Từ:
+                    </div>
+                </div>
+                <div class="p-col-4">
+                    <span class="ui-float-label">
+                        <p-calendar [(ngModel)]="tkFrom" [showIcon]="true" dateFormat="dd/mm/yy" name="tkFrom">
+                        </p-calendar>
+                    </span>
+                </div>
+                <div class="p-col-1">
+                    <div style="float: right;" class="label">
+                        Đến:
+                    </div>
+                </div>
+                <div class="p-col-6" style="float: right;">
+                    <!-- <span class="ui-float-label"> -->
+                    <p-calendar [(ngModel)]="tkTo" [showIcon]="true" dateFormat="dd/mm/yy" name="tkTo"
+                        [minDate]="tkFrom">
+                    </p-calendar>
+                </div>
+            </div>
+            <div class="ui-g-2">
+                <span style="float: right;">
+                    <button type="button" pButton icon="fa fa-check" (click)="xemDS()" label="Xem"></button>
+                </span>
+            </div>
+        </div>
+        <!-- </div> -->
+        <p-table #dt [columns]="colsByType" [value]="tkTable" [loading]="searching" [autoLayout]="true"
+            [resizableColumns]="true">
+            <ng-template pTemplate="caption">
+                <div class="ui-helper-clearfix" style="text-align: left">
+                    <button type="button" pButton icon="pi pi-file-excel" iconPos="left" label="EXCEL"
+                        (click)="exportSotheidoi()" style="margin-right: 0.5em; float:right"
+                        class="ui-button-success"></button>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header" let-columns>
+                <tr>
+                    <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                        {{col.header}}
+                    </th>
+                </tr>
+                <tr>
+                    <th *ngFor="let col of columns" [ngSwitch]="col.field">
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData let-columns="columns">
+                <tr [pSelectableRow]="rowData">
+                    <td *ngFor="let col of columns">
+                        <div>
+                            {{rowData[col.field]}}
+                        </div>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </p-tabPanel>
+    <p-tabPanel header="BC Thuốc tồn theo kho">
+        <div class="ui-g card-body" style="width: 100%;">
+            <div class="col-3">
+                Kho: <p-dropdown [options]="khoNhaps" optionLabel="name"
+                    (onChange)="changKho()"
+                     [autoDisplayFirst]="false"
+                    [(ngModel)]="selectedKho" name="khoNhap">
+                </p-dropdown>
+            </div>
+            <div class="col-3">
+                Loại: <p-dropdown [options]="thuocTypes" optionLabel="label" [filter]="true" 
+                    [autoDisplayFirst]="false"
+                    (onChange)="changeType()" [(ngModel)]="selectedType" name="selectedType">
+                </p-dropdown>
+            </div>
+            <div class="col-2">
+                <span style="float: right;">
+                    <button type="button" pButton icon="fa fa-check"
+                     (click)="xemTon()" label="Xem"></button>
+                </span>
+            </div>
+        </div>
+        <p-table #dt [columns]="colsByKho" [value]="tkTonTable" [loading]="searching" [autoLayout]="true"
+        [resizableColumns]="true">
+        <ng-template pTemplate="caption">
+            <div class="ui-helper-clearfix" style="text-align: left">
+                <button type="button" pButton icon="pi pi-file-excel" iconPos="left" label="EXCEL"
+                    (click)="exportSotheidoi()" style="margin-right: 0.5em; float:right"
+                    class="ui-button-success"></button>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                    {{col.header}}
+                </th>
+            </tr>
+            <tr>
+                <th *ngFor="let col of columns" [ngSwitch]="col.field">
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+            <tr [pSelectableRow]="rowData">
+                <td *ngFor="let col of columns">
+                    <div>
+                        {{rowData[col.field]}}
+                    </div>
+                </td>
+            </tr>
+        </ng-template>
+        </p-table>
+    </p-tabPanel>
+    <p-tabPanel header="BC HV dùng Thuốc">
+        <div class="ui-g card-body" style="width: 100%;">
+            <div class="col-2">
+                <p-dropdown [options]="khoNhaps" optionLabel="name"
+                    (onChange)="changKho()"
+                     [autoDisplayFirst]="false"
+                     placeholder="Kho"
+                    [(ngModel)]="selectedKho" name="khoNhap">
+                </p-dropdown>
+            </div>
+            <div class="col-4">
+                <!-- Thuốc:  -->
+                <p-dropdown [options]="thuocs" optionLabel="maThuoc" 
+                    [filter]="true"
+                    [autoDisplayFirst]="false" (onChange)="changeThuoc()"
+                    [(ngModel)]="selectedThuoc"
+                    placeholder="Mã thuốc"
+                    name="mathuoc">
+                </p-dropdown>
+                <p-dropdown [options]="thuocs" optionLabel="tenThuoc" 
+                    (onChange)="changeThuoc()"
+                    [autoDisplayFirst]="false" [filter]="true"
+                    [(ngModel)]="selectedThuoc" 
+                    placeholder="Tên thuốc"
+                    name="tenThuoc">
+                </p-dropdown>
+            </div>
+            <!-- Dates -->
+            <div class="p-grid col-5">
+                <div class="p-col-6">
+                    Từ:
+                    <!-- <span class="ui-float-label"> -->
+                        <p-calendar [(ngModel)]="tkFrom" [showIcon]="true" dateFormat="dd/mm/yy" name="tkFrom">
+                        </p-calendar>
+                    <!-- </span> -->
+                </div>
+                <div class="p-col-6" style="float: right;">
+                    <!-- <span class="ui-float-label"> -->
+                    <p-calendar [(ngModel)]="tkTo" [showIcon]="true" dateFormat="dd/mm/yy" name="tkTo"
+                        [minDate]="tkFrom">
+                    </p-calendar>
+                </div>
+            </div>
+            <div class="col-1">
+                <span style="float: right;">
+                    <button type="button" pButton icon="fa fa-check"
+                     (click)="xemPatientThuoc()" label="Xem"></button>
+                </span>
+            </div>
+        </div>
+        <p-table #dt [columns]="colsPatientThuoc" 
+        [value]="tkPatientTable" [loading]="searching" 
+        [autoLayout]="true"
+        [resizableColumns]="true">
+        <ng-template pTemplate="caption">
+            <div class="ui-helper-clearfix" style="text-align: left">
+                <button type="button" pButton icon="pi pi-file-excel" iconPos="left" label="EXCEL"
+                    (click)="exportSotheidoi()" style="margin-right: 0.5em; float:right"
+                    class="ui-button-success"></button>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                    {{col.header}}
+                </th>
+            </tr>
+            <tr>
+                <th *ngFor="let col of columns" [ngSwitch]="col.field">
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+            <tr [pSelectableRow]="rowData">
+                <td *ngFor="let col of columns">
+                    <div>
+                        {{rowData[col.field]}}
+                    </div>
+                </td>
+            </tr>
+        </ng-template>
+        </p-table>
+    </p-tabPanel>
+</p-tabView>
+
+<!-- 
+<p-tabPanel header="Thống kê theo nhóm">
+    <div class="ui-g-12">
+        <div class="ui-g-1" style="text-align: right;">
+            <i class="fa fa-user-circle" aria-hidden="true"></i>
+            Nhóm thuốc:
+        </div>
+        <div class="ui-g-3">
+            <p-dropdown [options]="categorys" optionLabel="name"
+                 [filter]="true" 
+                [autoDisplayFirst]="true"
+                (onChange)="changeGroup()" [(ngModel)]="selectedGroup" name="selectedGroup">
+            </p-dropdown>
+        </div>
+        <div class="p-grid ui-g-8">
+            <div class="p-col-2">
+                <div style="float: right;" class="label">
+                    Từ: </div>
+            </div>
+            <div class="p-col-3">
+                <span class="ui-float-label">
+                    <p-calendar [(ngModel)]="theodoiFrom" [showIcon]="true" dateFormat="dd/mm/yy" name="theodoiFrom">
+                    </p-calendar>
+                </span>
+            </div>
+            <div class="p-col-1">
+                <div style="float: right;" class="label">
+                    Đến:
+                </div>
+            </div>
+            <div class="p-col-6" style="float: right;">
+                <p-calendar [(ngModel)]="theodoiTo" [showIcon]="true" dateFormat="dd/mm/yy" name="theodoiTo"
+                    [minDate]="theodoiFrom">
+                </p-calendar>
+            </div>
+        </div>
+    </div>
+
+</p-tabPanel> -->

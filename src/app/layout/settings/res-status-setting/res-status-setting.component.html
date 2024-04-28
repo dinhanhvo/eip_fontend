@@ -1,0 +1,64 @@
+<p-panel class="ad-panel">
+  <p-header>
+    <div class="p-2">{{ 'resStatus.title' | translate }}</div>
+  </p-header>
+  <div class="px-3 pt-2">
+    <form class="cd-form">
+      <div *ngIf="sysResSettings" class="form-group form-row">
+        <label class="col-sm-2 text-right">{{ 'resStatus.lblColRes' | translate }}</label>
+        <div class="col-sm-10">
+          <div class="d-flex flex-row">
+            <p-radioButton name="colResEnabled" [(ngModel)]="colRes.txtEnabled" value="true"></p-radioButton><span
+              class="ml-1 mr-3">{{ 'Enabled' | translate }}</span>
+            <p-radioButton name="colResEnabled" [(ngModel)]="colRes.txtEnabled" value="false"></p-radioButton><span
+              class="ml-1">{{ 'Disabled' | translate }}</span>
+          </div>
+          <div class="d-flex flex-row pt-2">
+            <div>
+              <label class="mr-1">{{ 'resStatus.lblColPeriod' | translate }}</label>
+            </div>
+            <p-spinner name="colPeriod" inputStyleClass="sm" [(ngModel)]="colRes.collectStatusPeriod"></p-spinner>
+            <div class="pl-1">{{ 'minutes' | translate }}</div>
+          </div>
+        </div>
+      </div>
+      <hr />
+      <div class="form-group form-row">
+        <label class="col-sm-2 text-right">{{ 'resStatus.lblCleanUp' | translate }}</label>
+        <div class="col-sm-10">
+          <div class="d-flex flex-row">
+            <p-radioButton name="clResourcesEnabled" [(ngModel)]="clRes.txtEnabled" value="true"></p-radioButton><span
+              class="ml-1 mr-3">{{ 'Enabled' | translate }}</span>
+            <p-radioButton name="clResourcesEnabled" [(ngModel)]="clRes.txtEnabled" value="false"></p-radioButton><span
+              class="ml-1">{{ 'Disabled' | translate }}</span>
+          </div>
+          <div class="d-flex flex-row pt-2">
+            <div>
+              <label class="mr-1">{{ 'resStatus.lblCleanAfter' | translate }}</label>
+            </div>
+            <p-spinner name="clRtPeriod" inputStyleClass="sm" [(ngModel)]="clRes.clResourcesRtPeriod"></p-spinner>
+            <div class="pl-1">{{ 'days' | translate }}</div>
+          </div>
+          <div class="d-flex flex-row pt-2">
+            <div class="mr-2">
+              <label>{{ 'resStatus.lblClJobInt' | translate }}</label>
+            </div>
+            <!-- <div class="px-2" [style.color]="'#ff0000'">0 0 5 ? * SAT</div> -->
+            <button pButton type="button" icon="fa fa-edit" label="{{ clRes.clResourcesInterval }}"
+              (click)="onEditClInterval($event)"></button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <p-footer>
+    <div class="text-right">
+      <button type="button" pButton icon="fa fa-save" label="{{ 'save' | translate }}" (click)="onBtnSave()"></button>
+      <button type="button" class="ml-2" pButton icon="fa fa-undo" label="{{ 'cancel' | translate }}"
+        (click)="onBtnCancel()"></button>
+    </div>
+  </p-footer>
+</p-panel>
+<p-dialog header="Clean-up job interval" [(visible)]="showDlgCronExpr" [contentStyle]="{ width: '600px' }">
+  <!-- <ad-cron-expr [curExpr]="editExpr" (ok)="onCronEditOK($event)" (cancel)="onCronEditCancel($event)"></ad-cron-expr> -->
+</p-dialog>

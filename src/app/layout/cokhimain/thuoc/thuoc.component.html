@@ -1,0 +1,172 @@
+<!-- <p-messages [(value)]="msgs"></p-messages> -->
+<p-toast [style]="{marginTop: '80px'}"></p-toast>
+<p-dialog header="Nhập thông tin thuốc:" [(visible)]="displayDialog" [responsive]="true" showEffect="fade"
+    [modal]="true" [style]="{width: '700px'}">
+    <form #resumeForm="ngForm">
+        <div class="ui-g">
+            <div class="ui-g-12 ui-md-4 ui-lg-4">Tên:</div>
+            <div class="ui-g-12 ui-md-8 ui-lg-8">
+                <input type="text" class="form-control" [(ngModel)]="thuoc.tenThuoc" placeholder="Tên thuốc" name="name"
+                    #Name="ngModel" required
+                    [ngClass]="{'is-invalid': Name.invalid && (Name.touched || resumeForm.submitted) }">
+            </div>
+        </div>
+        <div class="ui-g">
+            <div class="ui-g-12 ui-md-4 ui-lg-4">Mã:</div>
+            <div class="ui-g-12 ui-md-8 ui-lg-8">
+                <input type="text" class="form-control" [(ngModel)]="thuoc.maThuoc" placeholder="Mã thuốc"
+                    name="maThuoc" #Mathuoc="ngModel">
+            </div>
+        </div>
+        <div class="ui-g">
+            <div class="ui-g-12 ui-md-4 ui-lg-4">Tên thương mại:</div>
+            <div class="ui-g-12 ui-md-8 ui-lg-8 form-group">
+                <input type="text" pInputText [(ngModel)]="thuoc.description" style="width: 100%;" name="description"
+                    #Description="ngModel" />
+            </div>
+        </div>
+        <div class="ui-g">
+            <div class="ui-g-12 ui-md-6 ui-lg-4">Hàm lượng:</div>
+            <div class="ui-g-12 ui-md-6 ui-lg-8">
+                <input type="text" pInputText [(ngModel)]="thuoc.hamluong" name="hamluong" #Hamluong="ngModel" />
+            </div>
+        </div>
+        <div class="ui-g">
+            <div class="ui-g-12 ui-md-6 ui-lg-4">Đường dùng:</div>
+            <div class="ui-g-12 ui-md-6 ui-lg-8">
+                <!-- <input type="text" pInputText [(ngModel)]="thuoc.method" 
+            name="method" #Method="ngModel"
+            /> -->
+                <p-dropdown [options]="methods" [(ngModel)]="selectedMethod" 
+                    optionLabel = "name"
+                    name="selectedMethod"
+                    #SelectedMethod="ngModel"> </p-dropdown>
+            </div>
+        </div>
+        <div class="ui-g">
+            <div class="ui-g-12 ui-md-6 ui-lg-4">Dạng bào chế:</div>
+            <div class="ui-g-12 ui-md-6 ui-lg-8">
+                <!-- <input type="text" pInputText [(ngModel)]="thuoc.baoche" 
+                name="baoche" #Baoche="ngModel"
+            /> -->
+                <p-dropdown [options]="baoches" [(ngModel)]="selectedBaoche" 
+                    name="selectedBaoche"
+                    #SelectedBaoche="ngModel"> </p-dropdown>
+            </div>
+        </div>
+        <!-- <div class="ui-g">
+        <div class="ui-g-12 ui-md-6 ui-lg-4">Dạng trình bày:</div>
+        <div class="ui-g-12 ui-md-6 ui-lg-8">
+            <input type="text" pInputText [(ngModel)]="thuoc.trinhbay" 
+            name="trinhbay" #Trinhbay="ngModel"
+            />
+        </div>
+    </div> -->
+        <div class="ui-g">
+            <div class="ui-g-12 ui-md-6 ui-lg-4">Mục:</div>
+            <div class="ui-g-12 ui-md-6 ui-lg-8">
+                <p-multiSelect [options]="categories" [(ngModel)]="categoriesSelected" name="categories"
+                    #Categories="ngModel" [style]="{'width':'100%'}" defaultLabel="Nhóm"></p-multiSelect>
+            </div>
+        </div>
+
+        <div class="ui-g">
+            <div class="ui-g-12 ui-md-6 ui-lg-4">Trọng lượng:</div>
+            <div class="ui-g-12 ui-md-6 ui-lg-8">
+                <input type="text" pInputText [(ngModel)]="thuoc.weight" name="weight" #Weight="ngModel" />
+            </div>
+        </div>
+
+        <div class="ui-g">
+            <div class="ui-g-12 ui-md-4 ui-lg-4">Đơn vị:</div>
+            <div class="ui-g-12 ui-md-8 ui-lg-8">
+                <!-- <p-dropdown [options]="units" [(ngModel)]="selectedUnit" 
+                    name="selectedUnit" 
+                    #SelectedUnit="ngModel">
+                </p-dropdown> -->
+
+                
+                <input type="text" pInputText 
+                    [(ngModel)]="thuoc.unit" name="unit" />
+            </div>
+        </div>
+        <div class="ui-g">
+            <div class="ui-g-12 ui-md-4 ui-lg-4">Loại:</div>
+            <div class="ui-g-12 ui-md-8 ui-lg-8">
+                <p-dropdown [options]="types" [(ngModel)]="selectedType" 
+                    (onChange)="changeType()"
+                    aria-placeholder="Loại" name="type" #SelectedType="ngModel"
+                    (onChange)="changeType()"> </p-dropdown>
+            </div>
+        </div>
+        <!-- <br> -->
+        <div class="ui-dialog-buttonpane ui-helper-clearfix">
+            <div style="float: left;" *ngIf="!newThuoc">
+                <button type="button" pButton icon="fa fa-close" (click)="delete()" label="Delete"></button>
+            </div>
+            <div style="float: right;">
+                <button type="button" pButton icon="fa fa-check" (click)="save()" label="Save"></button>
+            </div>
+        </div>
+    </form>
+</p-dialog>
+
+<p-table #dt [columns]="cols" [value]="thuocsTable" 
+    selectionMode="single" [(selection)]="selectedThuoc"
+    [loading]="searching"
+    (onRowSelect)="onRowSelect($event)" 
+    [paginator]="true" [rows]="25" 
+    [autoLayout]="true"
+    [resizableColumns]="true">
+    <!-- <ng-template pTemplate="caption">
+        Danh mục thuốc
+    </ng-template> -->
+    <ng-template pTemplate="caption">
+        Danh mục thuốc                                      
+        <p-dropdown [options]="types" optionLabel="label" [filter]="true" 
+            [autoDisplayFirst]="false"
+            (onChange)="changeType()" [(ngModel)]="selectedType" name="selectedType">
+        </p-dropdown> {{thuocsTable.length}}      
+        <div class="row">
+            <div class="p-col-6"  style=" text-align: left">
+                <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+                <input type="text" pInputText size="50" placeholder="Tìm nhanh"
+                    (input)="dt.filterGlobal($event.target.value, 'contains')"
+                     style="width:auto">
+            </div>
+            <div  class="p-col-6 ui-helper-clearfix" style="text-align: right">
+                <button type="button" pButton icon="pi pi-file-excel" iconPos="left" label="EXCEL" 
+                (click)="exportThuocExcel()" style="margin-right: 0.5em; float:right" 
+                class="ui-button-success" ></button>
+            </div>        
+        </div>    
+    </ng-template>
+    <ng-template pTemplate="header" let-columns>
+        <tr>
+            <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                {{col.header}}
+                <p-sortIcon [field]="col.field"></p-sortIcon>
+            </th>
+        </tr>
+        <tr>
+            <th *ngFor="let col of columns" [ngSwitch]="col.field">
+              <input *ngSwitchCase="'maThuoc'" pInputText type="text"
+              (input)="dt.filter($event.target.value, col.field, 'contains')">
+              <input *ngSwitchCase="'tenThuoc'" pInputText type="text"
+                (input)="dt.filter($event.target.value, col.field, 'contains')">
+            </th>
+          </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <tr [pSelectableRow]="rowData">
+            <td *ngFor="let col of columns">
+                {{rowData[col.field]}}
+            </td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="summary" let-rowData>
+        <div style="text-align:left">
+            <button type="button" pButton icon="fa fa-plus" (click)="showDialogToAdd()" label="Add"></button>
+        </div>
+    </ng-template>
+</p-table>

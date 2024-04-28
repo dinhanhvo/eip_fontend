@@ -1,0 +1,191 @@
+#menuicon {
+  display: none;
+}
+#submenu{ 
+  z-index:1000; 
+  position:absolute; 
+  margin-top:0px; 
+  margin-left:13px; 
+  min-width:210px;  
+  min-height:100px; 
+  line-height: 25px;
+  background-color:#fff; 
+  box-shadow:0px 0px 4px #000000;
+  display:none; 
+}
+#nav{float:right;  }
+#nav ul{
+  list-style: none;
+  margin:0px;
+  padding:0px; 
+}
+#nav ul li{ 
+  float:left; 
+  list-style:none;  
+  height:25px; 
+  line-height: 25px;
+  margin:1px;
+}
+#nav ul li a {  
+  color:#333; 
+  font-size:14px; 
+  padding: 15px;
+  text-transform:uppercase; 
+  text-decoration:none; 
+  font-family: 'Open Sans', sans-serif; 
+  font-weight:400;
+}
+#nav ul li ul{ padding:0px;}
+#nav ul li ul li{
+  clear:both; 
+  margin:0px; 
+  // padding-top:5px; 
+  text-transform: uppercase; 
+  margin-left:10px; 
+  margin-top:5px; 
+  color:#333; 
+  font-size:13px; 
+  padding-bottom:5px;
+}
+#nav ul li:hover >a{color: #ffffff; font-weight: bold; line-height: 25px;}
+#nav ul li:hover  {background-color:green;}
+#nav ul li:hover >#submenu{display:block;}
+// #nav:hover {
+//   background-color: aquamarine;
+// }
+
+$fontcolor: #004D47;
+$headerHeight: 150px;
+*{
+    margin: 0;
+    padding: 0;
+    font-family: "montserrat",sans-serif;
+  }
+  
+  .logo{
+    line-height: $headerHeight;
+    float: left;
+    text-transform: uppercase;
+  }
+  
+  .menuheader{
+    float: right;
+    // line-height: $headerHeight;
+    font-size: 1rem;
+    font-weight: bolder;
+  }
+  .menuheader a{
+    color: $fontcolor;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 0 10px;
+    transition: 0.4s;
+  }
+  .show-menu-btn,.hide-menu-btn{
+    transition: 0.4s;
+    font-size: 30px;
+    cursor: pointer;
+    display: none;
+  }
+  .show-menu-btn{
+    float: right;
+  }
+  .show-menu-btn i{
+    line-height: $headerHeight;
+  }
+  .menuheader a:hover,
+  .show-menu-btn:hover,
+  .hide-menu-btn:hover{
+    color: #3498db;
+  }
+  
+  #chk{
+    position: absolute;
+    visibility: hidden;
+    z-index: -1111;
+  }
+  
+  @media screen and (max-width:800px) {
+    #menuicon{
+      display: block;
+    }
+
+    .bottom-right2{
+      position:fixed;
+      margin-top:-35px; 
+      z-index: 5000;  
+      width: 100%;
+      background-color: aquamarine;
+      // justify-content: end;
+    }
+    #submenu{min-height:110px; margin-left:50px; box-shadow: 1px 1px 2px #ccc; }
+    #nav{  background-color:#000; z-index: 5000; 
+      top: 0px; 
+      right: 55px; 
+      position: fixed;
+    }
+    #nav ul li{ clear:both; height:100%;  }
+    #nav ul li a{color:#fff;}
+    #nav ul li ul{ background-color:#333; margin:0px; padding:0px; position:relative; width:auto; }
+    #nav ul li ul li {  padding:1px; margin:0px; margin-left:30px; }
+    #menuicon{
+      display:block; 
+      float:right; 
+      right: 10px;
+      position: fixed;
+      top: 100px;
+      cursor:pointer;
+    }
+    
+    .leftside,.rightside {
+        display: none;
+    }
+    .show-menu-btn,.hide-menu-btn{
+      display: block;
+    }
+    .menuheader{
+      position: fixed;
+      width: 100%;
+      height: 100vh;
+      background: #E6E6E6;
+      right: -100%;
+      top: 0;
+      text-align: center;
+      padding: 80px 0;
+      line-height: normal;
+      transition: 0.7s;
+    }
+    .menuheader a{
+      display: block;
+      padding: 20px;
+    }
+    .hide-menu-btn{
+      position: absolute;
+      top: 40px;
+      right: 40px;
+    }
+    #chk:checked ~ .menuheader{
+      right: 0;
+    }
+  }
+
+  @media screen and (max-width:480px){
+    #submenu{min-height:110px; margin-left:50px; box-shadow: 1px 1px 2px #ccc; }
+    #nav{  
+      background-color:#000; 
+      z-index: 5000; 
+      top: 135px; 
+      right: 25px; 
+      position: fixed;}
+    #nav ul li{ clear:both; height:100%;  }
+    #nav ul li a{color:#fff;}
+    #nav ul li ul{ background-color:#333; margin:0px; padding:0px; position:relative; width:auto; }
+    #nav ul li ul li {  padding:1px; margin:0px; margin-left:30px; }
+    #menuicon{display:block; float:right; 
+      right: 10px;
+      position: fixed;
+      top: 100px;
+      cursor:pointer;
+    }
+  }
+  

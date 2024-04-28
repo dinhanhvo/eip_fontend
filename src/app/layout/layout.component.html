@@ -1,0 +1,7 @@
+<div class="app-layout" [class.expanded]="!showSidebar">
+  <app-header [onToggleSidebar]="onToggleSidebar"></app-header>
+  <app-sidebar *ngIf="showSidebar"></app-sidebar>
+  <section class="main-container p-2" [ngClass]="{ 'no-sidebar': !showSidebar }">
+    <router-outlet></router-outlet>
+  </section>
+</div>

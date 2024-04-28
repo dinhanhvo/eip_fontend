@@ -1,0 +1,27 @@
+/* You can add global styles to this file, and also import other style files */
+@import "bootstrap/bootstrap";
+@import "spinner";
+@import "utils";
+@import "rtl";
+@import "responsive";
+@import "codix/codix";
+
+.ui-table .ui-table-thead > tr > th, 
+.ui-table .ui-table-tbody > tr > td, 
+.ui-table .ui-table-tfoot > tr > td {
+    font-size: .85rem;
+}
+
+.ui-table .ui-table-thead > tr > th {
+    font-weight: 600;
+}
+
+body .ui-menu .ui-menuitem-link {
+    padding: 5px 10px;
+}
+
+@media print {
+    .breadcrumb {
+        display: none !important;
+    }
+}

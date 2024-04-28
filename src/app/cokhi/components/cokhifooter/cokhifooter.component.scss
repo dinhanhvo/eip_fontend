@@ -1,0 +1,33 @@
+$footerH: 300px;
+* {
+    padding: 0;
+    margin: 0;
+
+    .cokhifooter {
+        background-color: chartreuse;
+        height: $footerH;
+        width: 100%;
+    }
+    .footercenter {
+        padding-top: 40px;
+        background-color: #000000;
+
+        // height: $footerH;
+        // box-sizing: content-x;
+    }
+    .leftside {
+        // background-color: burlywood;
+        // height: 200px;
+        display: block;
+        height: 100%;
+    }
+}
+@media screen and(max-width:800px) {
+    .leftside {
+        display: none;
+        background-color: chocolate;
+    }
+    .rightside {
+        display: none;
+    }
+}
