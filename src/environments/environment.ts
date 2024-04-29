@@ -5,5 +5,13 @@
 
 export const environment = {
   production: false,
-  contextPath: ''
+  contextPath: '',
+  http: {
+    apiUrl: '<https://api.myweb.com>',
+  },
+  mqtt: {
+    server: 'tcp://broker.emqx.io',
+    protocol: 'wss',
+    port: 1883
+  }
 };

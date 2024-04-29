@@ -7,7 +7,28 @@ import { FilterUtils } from '../../../shared/utils/filterutils';
 
 import { ProductsService } from '../../../shared/services/products.service';
 import { ProductModel } from '../../../shared/model/product.model';
-import { trigger,state,style,transition,animate } from '@angular/animations';
+import { trigger, state, style, transition, animate } from '@angular/animations';
+import {
+  IMqttMessage,
+  IMqttServiceOptions,
+  MqttService,
+  IPublishOptions,
+  MqttModule
+} from 'ngx-mqtt';
+
+import { environment as env } from '../../../../environments/environment';
+
+const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
+  hostname: env.mqtt.server,
+  port: env.mqtt.port,
+  protocol: (env.mqtt.protocol === 'wss') ? 'wss' : 'ws',
+  path: '',
+};
+
+import { IClientSubscribeOptions } from 'mqtt-browser';
+import { Subscription } from 'rxjs';
+import { error } from 'protractor';
+import { MilkCollect } from '../../../shared/model/MilkCollect';
 
 @Component({
   selector: 'app-main',
@@ -38,55 +59,146 @@ export class MainComponent implements OnInit {
   // products2: any[] = [];
   clonedProducts: { [s: string]: ProductModel; } = {};
 
-  imagepath: string = '';
+  imagepath = '';
   ims: any[][] = [
      [1, 2, 3],
     [4, 5, 6]
   ];
 
+
+  private curSubscription: Subscription | undefined;
+  connection = {
+    hostname: 'broker.emqx.io',
+    port: 8083,
+    path: '/mqtt',
+    clean: true, // Retain session
+    connectTimeout: 4000, // Timeout period
+    reconnectPeriod: 4000, // Reconnect period
+    // Authentication information
+    clientId: 'mqttx_527046f4',
+    // username: 'emqx_test',
+    // password: 'emqx_test',
+    protocol: 'ws',
+  };
+
+  subscription = {
+    topic: 'test',
+    qos: 2,
+  };
+
+  publish = {
+    topic: 'topic/browser',
+    qos: 0,
+    payload: '{ "msg": "Hello, I am browser." }',
+  };
+  receiveNews = '';
+  qosList = [
+    { label: 0, value: 0 },
+    { label: 1, value: 1 },
+    { label: 2, value: 2 },
+  ];
+  // client: MqttService | undefined;
+  isConnection = false;
+  subscribeSuccess = false;
+
+  message: MilkCollect = null;
+  messages: MilkCollect[] = [];
+
   constructor(
     private prodService: ProductsService,
     private messageService: MessageService,
-    private router: Router
-  ) { 
-    
+    private router: Router,
+    private client: MqttService
+  ) {
+    // this.client = this._mqttService;
   }
 
   ngOnInit() {
 
-    this.prodService.getAllproducts().subscribe(res => {
-      console.log(res);
-      
-      this.products = res.data;
-      // this.products2 = this.products;
-      console.log('======main products: ', this.products);
-    });
+    // this.prodService.getAllproducts().subscribe(res => {
+    //   console.log(res);
+    //
+    //   this.products = res.data;
+    //   // this.products2 = this.products;
+    //   console.log('======main products: ', this.products);
+    // });
 
     this.cols = [
-      { field: 'name', header: 'Serial_Weigher' },
-      { field: 'description', header: 'Code_Seller' },
-      { field: 'imagepath', header: 'Name_Seller' },
+      { field: 'id', header: 'Serial_Weigher' },
+      { field: 'serialWeigher', header: 'Serial_Weigher' },
+      { field: 'codeSeller', header: 'Code_Seller' },
+      { field: 'nameSeller', header: 'Name_Seller' },
       // { field: 'imported_at', header: 'imported_at' },
-      { field: 'price', header: 'Code_Tank_Seller' },
-      { field: 'note', header: 'Tank_Tare_Weight' },
-      { field: 'from', header: 'Tank_Gross_Weight' },
-      { field: 'status', header: 'Tank_Net_Weight' },
-      { field: 'unit', header: 'Mqtt_Status' },
+      { field: 'codeTankSeller', header: 'Code_Tank_Seller' },
+      { field: 'tankTareWeight', header: 'Tank_Tare_Weight' },
+      { field: 'tankGrossWeight', header: 'Tank_Gross_Weight' },
+      { field: 'tankNetWeght', header: 'Tank_Net_Weight' },
+      { field: 'mqttStatus', header: 'Mqtt_Status' },
       // { field: 'type', header: 'created' },
-      { field: 'currencyId', header: 'created' }
+      { field: 'createdAt', header: 'createdAt' }
     ];
 
-    FilterUtils['custom'] = (value, filter): boolean => {
-        if (filter === undefined || filter === null || filter.trim() === '') {
-            return true;
-        }
+    // FilterUtils['custom'] = (value, filter): boolean => {
+    //     if (filter === undefined || filter === null || filter.trim() === '') {
+    //         return true;
+    //     }
+    //
+    //     if (value === undefined || value === null) {
+    //         return false;
+    //     }
+    //
+    //     return parseInt(filter) > value;
+    // };
 
-        if (value === undefined || value === null) {
-            return false;
-        }
-        
-        return parseInt(filter) > value;
+    this.createConnection();
+
+  }
+
+  // Create a connection
+  createConnection() {
+    // Connection string, which allows the protocol to specify the connection method to be used
+    // ws Unencrypted WebSocket connection
+    // wss Encrypted WebSocket connection
+    // mqtt Unencrypted TCP connection
+    // mqtts Encrypted TCP connection
+    try {
+      this.client.connect(this.connection as IMqttServiceOptions);
+    } catch (error) {
+      console.log('mqtt.connect error', error);
     }
+
+    this.client.onConnect.subscribe(() => {
+      this.isConnection = true;
+      console.log('Connection succeeded!');
+      // this.doSubscribe();
+    });
+
+    this.client.onError.subscribe((error: any) => {
+      this.isConnection = false;
+      console.log('Connection failed', error);
+    });
+
+    this.client.onMessage.subscribe((packet: any) => {
+      this.receiveNews = this.receiveNews.concat(packet.payload.toString());
+      console.log(`Received message ${packet.payload.toString()} from topic ${packet.topic}`);
+      try {
+        this.message = JSON.parse(packet.payload.toString());
+        this.messages.push(this.message);
+      } catch (e) {
+        console.log(' parse error');
+      }
+    });
+  }
+
+  doSubscribe() {
+    const { topic, qos } = this.subscription;
+    console.log('-------------- subscribing to ' + topic);
+    this.curSubscription = this.client.observe(topic, { qos } as IClientSubscribeOptions).subscribe(
+      (message: IMqttMessage) => {
+      this.subscribeSuccess = true;
+      console.log('Subscribe to topics res', message.payload.toString());
+    })
+    ;
   }
 
   onRowEditInit(pr: ProductModel) {
@@ -97,16 +209,16 @@ export class MainComponent implements OnInit {
     console.log('pr  will be edit: ', index);
     pr.imagepath = this.imagepath;
     console.log('imgpath update: ', this.imagepath);
-    
+
     console.log(pr);
-    
+
     this.prodService.editProduct(pr).subscribe(res => {
       console.log(res);
       console.log('======main products: ', this.products);
     },
       err => {
         console.log(err);
-        
+
       }
     );
   }

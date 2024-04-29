@@ -1,4 +1,4 @@
-<p-table #dt [columns]="cols" [value]="products" dataKey="id"
+<p-table #dt [columns]="cols" [value]="messages" dataKey="id"
     resizableColumns="true"  columnResizeMode="fit" 
     autoLayout="true"
     editMode="row"
@@ -84,4 +84,7 @@
         </tr>
     </ng-template>
 </p-table>
-<!--<p-button label="Add" (onClick)="handleRoute($event)"></p-button>-->
+
+<br>
+<p-button label="Subscribe" (onClick)="doSubscribe()"></p-button>
+<!--<label> {{message | json}} </label>-->
