@@ -83,7 +83,7 @@ export class MainComponent implements OnInit {
   };
 
   subscription = {
-    topic: 'thumuasua',
+    topic: 'ThuMuaSua',
     qos: 2,
   };
 

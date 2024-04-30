@@ -31,10 +31,10 @@ export class LayoutComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.onToggleSidebar = this.toggleSidebar.bind(this);
-    this.validateSession();
-    this.timer = setInterval(() => {
-      this.validateSession();
-    }, 60 * 1000);
+    // this.validateSession();
+    // this.timer = setInterval(() => {
+    //   this.validateSession();
+    // }, 60 * 1000);
     let sub = this.appStore.getObservable(AppStore.MENU).subscribe(menu => {
       this.showSidebar = menu.showSidebar;
     });
