@@ -51,17 +51,17 @@ const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
 };
 
 export const connection: IMqttServiceOptions = {
-  hostname: 'broker.emqx.io',
-  port: 8083,
+  hostname: 'w795de7b.ala.us-east-1.emqxsl.com',
+  port: 8084,
   path: '/mqtt',
   clean: true, // 保留会话
   connectTimeout: 4000, // 超时时间
   reconnectPeriod: 4000, // 重连时间间隔
   // 认证信息
-  clientId: 'mqttx_517046f4',
-  username: 'emqx_test',
-  password: 'emqx_test',
-  protocol: 'ws',
+  clientId: 'eip-dashboard',
+  username: 'voda',
+  password: 'voda2610',
+  protocol: 'wss',
   connectOnCreate: false,
 }
 

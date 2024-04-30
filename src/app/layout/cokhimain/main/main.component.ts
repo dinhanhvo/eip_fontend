@@ -68,21 +68,22 @@ export class MainComponent implements OnInit {
 
   private curSubscription: Subscription | undefined;
   connection = {
-    hostname: 'broker.emqx.io',
-    port: 8083,
+    hostname: 'w795de7b.ala.us-east-1.emqxsl.com',
+    port: 8084,
     path: '/mqtt',
-    clean: true, // Retain session
-    connectTimeout: 4000, // Timeout period
-    reconnectPeriod: 4000, // Reconnect period
-    // Authentication information
-    clientId: 'mqttx_527046f4',
-    // username: 'emqx_test',
-    // password: 'emqx_test',
-    protocol: 'ws',
+    clean: true, // 保留会话
+    connectTimeout: 4000, // 超时时间
+    reconnectPeriod: 4000, // 重连时间间隔
+    // 认证信息
+    clientId: 'eip-dashboard',
+    username: 'voda',
+    password: 'voda2610',
+    protocol: 'wss',
+    connectOnCreate: false,
   };
 
   subscription = {
-    topic: 'test',
+    topic: 'thumuasua',
     qos: 2,
   };
 
@@ -124,7 +125,7 @@ export class MainComponent implements OnInit {
     // });
 
     this.cols = [
-      { field: 'id', header: 'Serial_Weigher' },
+      { field: 'id', header: 'id' },
       { field: 'serialWeigher', header: 'Serial_Weigher' },
       { field: 'codeSeller', header: 'Code_Seller' },
       { field: 'nameSeller', header: 'Name_Seller' },
@@ -170,7 +171,7 @@ export class MainComponent implements OnInit {
     this.client.onConnect.subscribe(() => {
       this.isConnection = true;
       console.log('Connection succeeded!');
-      // this.doSubscribe();
+      this.doSubscribe();
     });
 
     this.client.onError.subscribe((error: any) => {

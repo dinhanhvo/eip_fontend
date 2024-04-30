@@ -9,17 +9,17 @@
     {
       "name": "LOCAL SERVER",
       "api": "http://localhost:9093/api",
-      "default": true
+      "default": false
     },
     {
       "name": "LOCAL SERVER",
       "api": "http://nx-backend-service:8089/api",
-      "default": true
+      "default": false
     },
     {
       "name": "PRODUCT SERVER",
-      "api": "http://128.199.74.135:8089/api",
-      "default": false
+      "api": "http://68.183.176.58:9093/api",
+      "default": true
     }
 
   ]
