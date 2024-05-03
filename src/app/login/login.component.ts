@@ -21,8 +21,11 @@ export class LoginComponent implements OnInit {
   @Input() username = '';
   @Input() password = '';
 
-  logo: string = env.contextPath + '/assets/images/eip-logo.png';
+  logo: string = env.contextPath + '/assets/images/logo.jpg';
   bgImg: string = env.contextPath + '/assets/images/bg.jpg';
+  socialLogin: string = env.contextPath + '/assets/images/social.jpg';
+  can: string = env.contextPath + '/assets/images/can.jpg';
+  func: string = env.contextPath + '/assets/images/func.jpg';
   processing = false;
   errors = [];
 

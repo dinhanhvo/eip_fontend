@@ -1,113 +1,150 @@
-<div class="login-page" [@routerTransition] style="background-image: url('../../assets/images/bg.jpg'); background-size: cover;
-background-repeat: no-repeat; height: 100%;">
-  <div class="login-page" [@routerTransition] style="background-color: #1a237e;  height: 100%;">
-  <div class="row" >
-    <div class="col-md-12" 
+<!--<div class="login-page" [@routerTransition] style="background-image: url('../../assets/images/bg.jpg'); background-size: cover;-->
+<!--background-repeat: no-repeat; height: 100%;">-->
+
+<div class="login-page row" [@routerTransition] style="background-image: url('../../assets/images/blue-gradient.png') ;
+  background-size: cover;
+  background-repeat: no-repeat; height: 100%; width: 100%;
+">
+    <div class="col-md-12"
     >
     <div class="row"  >
-        <div class="col-md-7"></div>
-        <div class="col-md-5">
-          <div class="col-md-8">
-          <div class="align-center" style="height: 100%; background-color: white">
-<!--            <div style="height: 150px;"></div>-->
-            <img src="{{ logo }}" style="width: 100%; height: 100%;" />
-            <!-- <h1>NP DASHBOARD</h1> -->
-            <form role="form" name="login" (ngSubmit)="onSubmitLogin()">
-              <div *ngIf="errors.length > 0" class="error">
-<!--                <div *ngFor="let error of errors" class="error">-->
-<!--                  {{ error }}-->
-<!--                </div>-->
-                Login failed
-              </div>
-              <div class="form-content">
-                <div class="form-group" *ngIf="!isLogin">
-                  <input type="text" [(ngModel)]="name" name="name"
-                         class="form-control input-underline input-lg" id="name" autocomplete="new-username"
-                         placeholder="Tên" />
-                </div>
-                <div class="form-group" *ngIf="!isLogin">
-                  <input type="text" [(ngModel)]="email" name="email"
-                         class="form-control input-underline input-lg" id="email" autocomplete="new-username"
-                         placeholder="email" />
-                </div>
-                <div class="form-group">
-                  <input type="text" [(ngModel)]="username" name="username"
-                    class="form-control input-underline input-lg" id="username" autocomplete="new-username"
-                    placeholder="Tên đăng nhập" />
-                </div>
-                <div class="form-group">
-                  <input type="password" [(ngModel)]="password" name="password"
-                    class="form-control input-underline input-lg" id="password" autocomplete="new-password"
-                    placeholder="Mật khẩu" />
-                </div>
-                <!-- <div class="form-group">
-                  <div class="form-row ui-fluid" style="text-align: left">
-                    <div class="col-sm-4">
-                      <label>{{ 'login.language' | translate }}</label>
-                    </div>
-                    <div class="col-sm-8">
-                      <p-dropdown
-                        name="lang"
-                        [options]="siLangs"
-                        [(ngModel)]="selLang"
-                        (onChange)="onLangChanged($event)"
-                      >
-                      </p-dropdown>
-                    </div>
-                  </div>
-                </div>
-                -->
-                <!-- <div class="form-group">
-                  <div class="form-row ui-fluid" style="text-align: left">
-                    <div class="col-sm-4">
-                      <label>{{ 'login.server' | translate }}</label>
-                    </div>
-                    <div class="col-sm-8">
-                      <p-dropdown
-                        name="profile"
-                        [options]="profiles"
-                        optionLabel="name"
-                        [(ngModel)]="selProfile"
-                        (onChange)="onChangeProfile()"
-                      ></p-dropdown>
-                    </div>
-                  </div>
-                </div>  -->
-              </div>
-              <!-- <button class="btn rounded-btn" ng-disabled="processing" type="submit">
-                {{ 'login.login' | translate }}
-              </button> -->
-              <div>
-                <button pButton type="button" class="ui-button-rounded ui-button-success"  *ngIf="isLogin"
-                        label="Đăng Nhập" (click)="onSubmitLogin()">
+      <div class="col-md-4">
+<!--        <img src="{{ can }}" style="width: 100%;  " />-->
+      </div>
+<!--      <div class="col-md-4">-->
+<!--        <img src="{{ func }}" style="width: 100%; " />-->
+<!--      </div>-->
+      <div class="col-md-4">
+          <div class="align-center" style="height: 100%; background-color: white; box-shadow: 5px 10px #03a9f4">
+                <img src="{{ logo }}" style="width: 140px; height: 150px; " />
 
-                </button>
-                <button pButton type="button" class="ui-button-rounded ui-button-success"  *ngIf="!isLogin"
-                        label="Đăng Ký" (click)="onSubmitSignup()">
-
-                </button>
-              </div>
-
-
-<!--              swap-->
-              <div>
+    <!--            <div style="width: 150px; height: 150px; justify-content: center" >-->
+                  <!--              <div class="p-col-4"></div>-->
                 <br>
-                <div *ngIf="isLogin">
+                <br>
+                <div class="row">
+                  <div class="col-md-1">
+                  </div>
+                  <div class="col-md-10">
+                    <form role="form" name="login" (ngSubmit)="onSubmitLogin()">
+                      <div *ngIf="errors.length > 0" class="error" style="text-align: right">
+                        Đăng nhập lỗi
+                      </div>
+                      <div class="form-content align-center" >
+                        <div class="form-group" *ngIf="!isLogin">
+                          <!--                  <input type="text" [(ngModel)]="name" name="name"-->
+                          <!--                         class="form-control input-underline input-lg" id="name" autocomplete="new-username"-->
+                          <!--                         placeholder="Tên" />-->
+                          <div class="ui-inputgroup " style="margin-left: 1em; ">
+                            <span class="ui-inputgroup-addon"><i class="pi pi-mobile" style="line-height: 1.25; background-color: saddlebrown"></i></span>
+                            <input style="width: 320em" type="text" pInputText [(ngModel)]="name"  placeholder="Tên" name="name">
+                          </div>
 
-                  <label>Chưa có tài khoản?</label>
-                  <button pButton type="button" label="Đăng Ký" (click)="swapTab()"
-                          class="ui-button-rounded ui-button-warning"></button>
+                        </div>
+                        <div class="form-group" *ngIf="!isLogin">
+                          <!--                  <input type="text" [(ngModel)]="email" name="email"-->
+                          <!--                         class="form-control input-underline input-lg" id="email" autocomplete="new-username"-->
+                          <!--                         placeholder="email" />-->
+
+                          <div class="ui-inputgroup " style="margin-left: 1em; ">
+                            <span class="ui-inputgroup-addon"><i class="pi pi-briefcase" style="line-height: 1.25; background-color: saddlebrown"></i></span>
+                            <input style="width: 320em" type="text" pInputText [(ngModel)]="email"  placeholder="email" name="email">
+                          </div>
+                        </div>
+                        <div  class="form-group">
+                          <!--                  <input type="text" [(ngModel)]="username" name="username"-->
+                          <!--                    class="form-control input-underline input-lg" id="username" autocomplete="new-username"-->
+                          <!--                    placeholder="Tên đăng nhập" />-->
+
+                          <div class="ui-inputgroup " style="margin-left: 1em; ">
+                            <span class="ui-inputgroup-addon"><i class="pi pi-user" style="line-height: 1.25; background-color: saddlebrown"></i></span>
+                            <input style="width: 320em" type="text" pInputText [(ngModel)]="username"  placeholder="Tên đăng nhập" name="username">
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <!--                  <input type="password" [(ngModel)]="password" name="password"-->
+                          <!--                    class="form-control input-underline input-lg" id="password" autocomplete="new-password"-->
+                          <!--                    placeholder="Mật khẩu" />-->
+
+                          <div class="ui-inputgroup" style="margin-left: 1em; ">
+                            <span class="ui-inputgroup-addon"><i class="pi pi-key" style="line-height: 1.25; background-color: saddlebrown"></i></span>
+                            <input style="width: 320em" type="text" pInputText [(ngModel)]="password"  placeholder="Mật khẩu" name="password">
+                          </div>
+                        </div>
+                        <!-- <div class="form-group">
+                          <div class="form-row ui-fluid" style="text-align: left">
+                            <div class="col-sm-4">
+                              <label>{{ 'login.language' | translate }}</label>
+                            </div>
+                            <div class="col-sm-8">
+                              <p-dropdown
+                                name="lang"
+                                [options]="siLangs"
+                                [(ngModel)]="selLang"
+                                (onChange)="onLangChanged($event)"
+                              >
+                              </p-dropdown>
+                            </div>
+                          </div>
+                        </div>
+                        -->
+                        <!-- <div class="form-group">
+                          <div class="form-row ui-fluid" style="text-align: left">
+                            <div class="col-sm-4">
+                              <label>{{ 'login.server' | translate }}</label>
+                            </div>
+                            <div class="col-sm-8">
+                              <p-dropdown
+                                name="profile"
+                                [options]="profiles"
+                                optionLabel="name"
+                                [(ngModel)]="selProfile"
+                                (onChange)="onChangeProfile()"
+                              ></p-dropdown>
+                            </div>
+                          </div>
+                        </div>  -->
+                      </div>
+                      <div>
+                        <button pButton type="button" class="ui-button-rounded ui-button-success"  *ngIf="isLogin"
+                                label="Đăng Nhập" (click)="onSubmitLogin()">
+
+                        </button>
+                        <button pButton type="button" class="ui-button-rounded ui-button-success"  *ngIf="!isLogin"
+                                label="Đăng Ký" (click)="onSubmitSignup()">
+
+                        </button>
+                      </div>
+
+                      <div>
+                        <br>
+                        <label>
+                          Hoặc đăng nhập với
+                        </label>
+                        <br>
+                        <img src="{{ socialLogin }}" style=" height: 30px;" />
+                      </div>
+                      <!--              swap-->
+                      <div>
+                        <br>
+                        <div *ngIf="isLogin">
+
+                          <label>Chưa có tài khoản?</label>
+                          <button pButton type="button" label="Đăng Ký" (click)="swapTab()"
+                                  class="ui-button-rounded ui-button-warning"></button>
+                        </div>
+                        <div  *ngIf="!isLogin">
+                          <label>Đã có tài khoản?</label>
+                          <button pButton type="button" label="Đăng Nhập" (click)="swapTab()"
+                                  class="ui-button-rounded ui-button-warning"></button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
                 </div>
-                <div  *ngIf="!isLogin">
-                  <label>Đã có tài khoản?</label>
-                  <button pButton type="button" label="Đăng Nhập" (click)="swapTab()"
-                          class="ui-button-rounded ui-button-warning"></button>
-                </div>
-              </div>
-            </form>
           </div>
       </div>
-    </div>
+  </div>
     <!-- <div class="col-md-4" *ngIf="!reload">
       <p-scrollPanel [style]="{ width: '100%', height: height + 'px' }">
         <app-etl-info></app-etl-info>
@@ -116,5 +153,5 @@ background-repeat: no-repeat; height: 100%;">
       </p-scrollPanel>
     </div> -->
     <!-- <div class="col-md-1"></div> -->
-  </div>
 </div>
+
