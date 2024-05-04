@@ -13,58 +13,89 @@
 
     <ng-template pTemplate="header" let-columns>
         <tr>
-            <th style="width: 3em"></th>
+<!--            <th style="width: 3em"></th>-->
             <th *ngFor="let col of columns">
                 {{col.header}}
+                <p-sortIcon [field]="col.field"></p-sortIcon>
+            </th>
+        </tr>
+        <tr>
+            <th *ngFor="let col of columns" [ngSwitch]="col.field">
+                <!-- <div *ngSwitchCase="'ngaykham'"> ngày/tháng/năm</div> -->
+                <!-- <input *ngSwitchCase="'donthuocjs'" pInputText type="text"
+                  (input)="dt.filter($event.target.value, col.field, 'contains')"> -->
+                <input *ngSwitchCase="'serialWeigher'" pInputText type="text"
+                       (input)="dt.filter($event.target.value, col.field, 'contains')">
+                <input *ngSwitchCase="'codeSeller'" pInputText type="text"
+                       (input)="dt.filter($event.target.value, col.field, 'contains')">
+                <input *ngSwitchCase="'nameSeller'" pInputText type="text"
+                       (input)="dt.filter($event.target.value, col.field, 'contains')">
+                <input *ngSwitchCase="'codeTankSeller'" pInputText type="text"
+                       (input)="dt.filter($event.target.value, col.field, 'contains')">
             </th>
         </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-rowData let-editing="editing" let-ri="rowIndex" 
-        let-expanded="expanded" let-columns="columns"
-    >
-        <tr [pEditableRow]="rowData">
-            <td>
-                <a href="#" [pRowToggler]="rowData">
-                    <i [ngClass]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></i>
-                </a>
+
+    <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <tr [pSelectableRow]="rowData">
+
+            <td *ngFor="let col of columns">
+                <div  *ngIf="col.field=='createdAt' ">
+                    {{rowData[col.field] | date: 'dd/MM/yyyy hh:mm:ss'}}
+                </div>
+                <div *ngIf="col.field!=='createdAt'">
+                    {{rowData[col.field]}}
+                </div>
             </td>
-            <td  *ngFor="let col of columns">
-                <p-cellEditor *ngIf="col.field!=='imagepath'">
-                    <ng-template pTemplate="input">
-                        <input pInputText type="text" [(ngModel)]="rowData[col.field]" required>
-                    </ng-template>
-                    <ng-template pTemplate="output">
-                        {{rowData[col.field]}}
-                    </ng-template>
-                </p-cellEditor>
-                <p-cellEditor *ngIf="col.field=='imagepath'">
-                    <ng-template pTemplate="input">
-                        <p-fileUpload name="file" 
-                        accept="image/*"
-                        (onUpload)="onBasicUpload($event)"
-                        url="http://smartevn.com:8089/api/uploadone"
-                    >
-                        <ng-template pTemplate="content">
-                            <ul *ngIf="uploadedFiles.length">
-                                <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
-                            </ul>
-                        </ng-template>
-                        </p-fileUpload>
-                    </ng-template>
-                    <ng-template pTemplate="output">
-                        <div >
-                            <img src="{{rowData[col.field]}}" style="height: 50px;"/>
-                        </div>
-                    </ng-template>
-                </p-cellEditor>
-            </td>
-<!--            <td style="text-align:center">-->
-<!--                <button *ngIf="!editing" pButton type="button" pInitEditableRow icon="pi pi-pencil" class="ui-button-info" (click)="onRowEditInit(rowData)"></button>-->
-<!--                <button *ngIf="editing" pButton type="button" pSaveEditableRow icon="pi pi-check" class="ui-button-success" style="margin-right: .5em" (click)="onRowEditSave(rowData)"></button>-->
-<!--                <button *ngIf="editing" pButton type="button" pCancelEditableRow icon="pi pi-times" class="ui-button-danger" (click)="onRowEditCancel(rowData, ri)"></button>-->
-<!--            </td>-->
         </tr>
     </ng-template>
+
+<!--    <ng-template pTemplate="body" let-rowData let-editing="editing" let-ri="rowIndex" -->
+<!--        let-expanded="expanded" let-columns="columns"-->
+<!--    >-->
+<!--        <tr [pEditableRow]="rowData">-->
+<!--            <td>-->
+<!--                <a href="#" [pRowToggler]="rowData">-->
+<!--                    <i [ngClass]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></i>-->
+<!--                </a>-->
+<!--            </td>-->
+<!--            <td  *ngFor="let col of columns">-->
+<!--                <p-cellEditor *ngIf="col.field!=='imagepath'">-->
+<!--                    <ng-template pTemplate="input">-->
+<!--                        <input pInputText type="text" [(ngModel)]="rowData[col.field]" required>-->
+<!--                    </ng-template>-->
+<!--                    <ng-template pTemplate="output">-->
+<!--                        {{rowData[col.field]}}-->
+<!--                    </ng-template>-->
+<!--                </p-cellEditor>-->
+<!--                <p-cellEditor *ngIf="col.field=='imagepath'">-->
+<!--                    <ng-template pTemplate="input">-->
+<!--                        <p-fileUpload name="file" -->
+<!--                        accept="image/*"-->
+<!--                        (onUpload)="onBasicUpload($event)"-->
+<!--                        url="http://smartevn.com:8089/api/uploadone"-->
+<!--                    >-->
+<!--                        <ng-template pTemplate="content">-->
+<!--                            <ul *ngIf="uploadedFiles.length">-->
+<!--                                <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>-->
+<!--                            </ul>-->
+<!--                        </ng-template>-->
+<!--                        </p-fileUpload>-->
+<!--                    </ng-template>-->
+<!--                    <ng-template pTemplate="output">-->
+<!--                        <div >-->
+<!--                            <img src="{{rowData[col.field]}}" style="height: 50px;"/>-->
+<!--                        </div>-->
+<!--                    </ng-template>-->
+<!--                </p-cellEditor>-->
+<!--            </td>-->
+<!--&lt;!&ndash;            <td style="text-align:center">&ndash;&gt;-->
+<!--&lt;!&ndash;                <button *ngIf="!editing" pButton type="button" pInitEditableRow icon="pi pi-pencil" class="ui-button-info" (click)="onRowEditInit(rowData)"></button>&ndash;&gt;-->
+<!--&lt;!&ndash;                <button *ngIf="editing" pButton type="button" pSaveEditableRow icon="pi pi-check" class="ui-button-success" style="margin-right: .5em" (click)="onRowEditSave(rowData)"></button>&ndash;&gt;-->
+<!--&lt;!&ndash;                <button *ngIf="editing" pButton type="button" pCancelEditableRow icon="pi pi-times" class="ui-button-danger" (click)="onRowEditCancel(rowData, ri)"></button>&ndash;&gt;-->
+<!--&lt;!&ndash;            </td>&ndash;&gt;-->
+<!--        </tr>-->
+<!--    </ng-template>-->
     <ng-template pTemplate="rowexpansion" let-rowData let-columns="columns">
         <tr>
             <td [attr.colspan]="columns.length + 1">
