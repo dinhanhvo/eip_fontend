@@ -16,6 +16,8 @@ const SAVE_AS: string = 'onSaveAs';
 const SAVE_AS_FILE: string = 'onSaveAsFile';
 const DELETE_SHEET: string = 'onDeleteSheet';
 
+const CODE_SELLER: string = 'codeSeller';
+
 export const AppStore = {
   LANG,
   PROFILE,
@@ -28,7 +30,8 @@ export const AppStore = {
   SHEET,
   SAVE,
   SAVE_AS,
-  SAVE_AS_FILE
+  SAVE_AS_FILE,
+  CODE_SELLER
 };
 
 @Injectable({

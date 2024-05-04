@@ -20,6 +20,7 @@ export class LoginComponent implements OnInit {
   @Input() email = '';
   @Input() username = '';
   @Input() password = '';
+  @Input() serialWeigher = '';
 
   logo: string = env.contextPath + '/assets/images/logo.jpg';
   bgImg: string = env.contextPath + '/assets/images/bg.jpg';
@@ -124,11 +125,11 @@ export class LoginComponent implements OnInit {
           console.log('errors', this.errors);
         } else {
           // localStorage.setItem('isLoggedin', 'true');
-          // localStorage.setItem('token', data.data.token);
+          localStorage.setItem('token', data.token);
           this.appStore.login(this.username, data.accessToken, this.selLang, this.selProfile);
           // console.log('current session token', this.appStore.getAuth()['token']);
           // this.appStore.setData(AppStore.LANG, this.selLang);
-          // this.appStore.setData(AppStore.LOGIN, this.username);
+          this.appStore.setData(AppStore.LOGIN, this.username);
           this.router.navigate(['main']);
         }
       },
@@ -142,14 +143,14 @@ error => {
   }
 
   onSubmitSignup() {
-    console.log('Send signup request to server: ', this.name, this.email, this.username, this.password);
+    console.log('Send signup request to server: ', this.name, this.email, this.username, this.password, this.serialWeigher);
     if (this.username.trim().length === 0 || this.password.length === 0) {
       this.errors = ['Username and password must not be empty.'];
       return;
     }
     this.processing = true;
     this.appStore.setData(AppStore.PROFILE, this.selProfile);
-    this.loginService.signUp(this.name, this.email, this.username, this.password).subscribe(
+    this.loginService.signUp(this.name, this.email, this.username, this.password, this.serialWeigher).subscribe(
       data => {
         this.processing = false;
         // console.log('receive login response', data);
@@ -165,7 +166,7 @@ error => {
           this.appStore.login(this.username, data.accessToken, this.selLang, this.selProfile);
           // console.log('current session token', this.appStore.getAuth()['token']);
           // this.appStore.setData(AppStore.LANG, this.selLang);
-          // this.appStore.setData(AppStore.LOGIN, this.username);
+          this.appStore.setData(AppStore.LOGIN, this.username);
           this.router.navigate(['admin']);
         }
       },

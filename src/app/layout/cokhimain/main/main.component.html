@@ -2,6 +2,7 @@
     resizableColumns="true"  columnResizeMode="fit" 
     autoLayout="true"
     editMode="row"
+    [rows]="50" [paginator]="true"
     >
     <ng-template pTemplate="caption">
         <div style="text-align: right">
@@ -86,5 +87,13 @@
 </p-table>
 
 <br>
-<p-button label="Subscribe" (onClick)="doSubscribe()"></p-button>
+<div class="row">
+    <div class="col-md-2">
+        <p-button label="Subscribe" (onClick)="doSubscribe()"></p-button>
+    </div>
+    <div class="col-md-8"></div>
+    <div class="col-md-2">
+        <p-button label="UnSubscribe" (onClick)="doUnSubscribe()"></p-button>
+    </div>
+</div>
 <!--<label> {{message | json}} </label>-->

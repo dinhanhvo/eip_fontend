@@ -1,21 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
-import { MessageService } from 'primeng/api';
-import { Message } from 'primeng/components/common/api';
-import { NhiXuanOptions, NXOption } from '../../../shared/common/selectitem';
-import { PatientModel } from '../../../shared/model/patient.model ';
-import { PhieuKhamBenh, PhieuKhamBenhModel } from '../../../shared/model/phieukhambenh';
-import { SotheodoiModel } from '../../../shared/model/sotheodoi.model';
-import { DateService } from '../../../shared/services/date.util.service';
-import { PatientService } from '../../../shared/services/patient.service';
-import { PhieukhambenhService } from '../../../shared/services/phieukhambenh.service';
-import { PdfUtil } from '../../../shared/utils/pdf-util';
-import { ConfirmationService } from 'primeng/api';
-import { SoTinhtienHocvien } from '../../../shared/utils/pdf-tinhtien-hocvien';
-import { DonthuocService } from '../../../shared/services/donthuocs.service';
-import { ThuocService } from '../../../shared/services/thuoc.service';
-import { ThuocModel } from '../../../shared/model/thuoc.model';
+import {ConfirmationService, MessageService} from 'primeng/api';
+import {Message} from 'primeng/components/common/api';
+import {NhiXuanOptions, NXOption} from '../../../shared/common/selectitem';
+import {PatientModel} from '../../../shared/model/patient.model ';
+import {PhieuKhamBenh, PhieuKhamBenhModel} from '../../../shared/model/phieukhambenh';
+import {SotheodoiModel} from '../../../shared/model/sotheodoi.model';
+import {DateService} from '../../../shared/services/date.util.service';
+import {PhieukhambenhService} from '../../../shared/services/phieukhambenh.service';
+import {PdfUtil} from '../../../shared/utils/pdf-util';
+import {SoTinhtienHocvien} from '../../../shared/utils/pdf-tinhtien-hocvien';
+import {DonthuocService} from '../../../shared/services/donthuocs.service';
+import {ThuocService} from '../../../shared/services/thuoc.service';
+import {ThuocModel} from '../../../shared/model/thuoc.model';
+import {User} from '../../../shared/model/user';
+import {LoginService} from '../../../shared';
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
@@ -25,6 +25,8 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
   styleUrls: ['./tomtat.component.scss']
 })
 export class TomtatComponent implements OnInit {
+
+  user: User = {};
 
   headerCSS = {
     fontSize: 14,
@@ -100,59 +102,75 @@ export class TomtatComponent implements OnInit {
 
   constructor(
     // private scriptService: ScriptService,
-    private patientService: PatientService,
+    // private patientService: PatientService,
     private phieukhambenhService: PhieukhambenhService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
     private donthuocService: DonthuocService,
-    private thuocService: ThuocService
+    private thuocService: ThuocService,
+    private loginService: LoginService
 
     // private dateService: DateService
     // private thuocService: ThuocService
   ) { }
 
   ngOnInit() {
-    this.xemFrom = DateService.newUTCDate(new Date());
-    this.xemTo = DateService.newUTCDate(new Date());
-    this.cols = [
-      { field: 'sohoso', header: 'Số hồ sơ' },
-      { field: 'patientId', header: 'Mã bệnh nhân' },
-      { field: 'patientName', header: 'Tên bệnh nhân' },
-      // { field: 'sotheodoi', header: 'Dữ liệu' },
-      // { field: 'color', header: 'Color' }
-    ];
+    this.loginService.getMe().subscribe(
+        data => {
+          //console.log('got data', data);
+          if (data.errors && data.errors.length > 0) {
+            console.log('Current session invalid. Getting out...');
+          } else {
+            this.user = data;
+          }
+        },
+        error => {
+          console.log('Error while validating session', error);
+        }
+    );
 
-    this.colPKBs = [
-      // { field: 'id', header: 'ID' },
-      { field: 'mabenhnhan', header: 'Mã bệnh nhân' },
-      { field: 'fullname', header: 'Tên bệnh nhân' },
-      { field: 'khu_name', header: 'Khu' },
-      { field: 'clsjs', header: 'Cận lâm sàng' },
-      { field: 'ketluan', header: 'Kết quả CLS' },
-      { field: 'ngaykham', header: 'Ngày khám' },
-      // { field: 'donthuocjs', header: 'Đơn thuốc' },
-      // { field: 'others', header: 'KHác' }
-    ];
-    this.patientsTB = [];
-    this.patients = this.patientService.getAllPatients();
-    this.selectedPatient = new PatientModel();
-    this.checkValidBT();
 
-    this.initTTBA();
-
-    this.thuocService.getAllThuocs().subscribe((data) => {
-      this.thuocs = data.data;
-    }, err => { })
+    // this.xemFrom = DateService.newUTCDate(new Date());
+    // this.xemTo = DateService.newUTCDate(new Date());
+    // this.cols = [
+    //   { field: 'sohoso', header: 'Số hồ sơ' },
+    //   { field: 'patientId', header: 'Mã bệnh nhân' },
+    //   { field: 'patientName', header: 'Tên bệnh nhân' },
+    //   // { field: 'sotheodoi', header: 'Dữ liệu' },
+    //   // { field: 'color', header: 'Color' }
+    // ];
+    //
+    // this.colPKBs = [
+    //   // { field: 'id', header: 'ID' },
+    //   { field: 'mabenhnhan', header: 'Mã bệnh nhân' },
+    //   { field: 'fullname', header: 'Tên bệnh nhân' },
+    //   { field: 'khu_name', header: 'Khu' },
+    //   { field: 'clsjs', header: 'Cận lâm sàng' },
+    //   { field: 'ketluan', header: 'Kết quả CLS' },
+    //   { field: 'ngaykham', header: 'Ngày khám' },
+    //   // { field: 'donthuocjs', header: 'Đơn thuốc' },
+    //   // { field: 'others', header: 'KHác' }
+    // ];
+    // this.patientsTB = [];
+    // this.patients = this.patientService.getAllPatients();
+    // this.selectedPatient = new PatientModel();
+    // this.checkValidBT();
+    //
+    // this.initTTBA();
+    //
+    // this.thuocService.getAllThuocs().subscribe((data) => {
+    //   this.thuocs = data.data;
+    // }, err => { })
 
   }
 
-  initDanhSach() {
-    this.patientsTB = [];
-    this.patients = this.patientService.getAllPatients();
-    this.patients.forEach((e) => {
-      this.patientsTB.push({ ...e });
-    });
-  }
+  // initDanhSach() {
+  //   this.patientsTB = [];
+  //   this.patients = this.patientService.getAllPatients();
+  //   this.patients.forEach((e) => {
+  //     this.patientsTB.push({ ...e });
+  //   });
+  // }
 
   parPKBModelToForm(pmd: PhieuKhamBenhModel): PhieuKhamBenh {
     let phieukhambenh = new PhieuKhamBenh();
@@ -193,13 +211,13 @@ export class TomtatComponent implements OnInit {
     return s;
   }
 
-  focusPatient() {
-    console.log('--khambenh----focusPatient-------', this.patients);
-    if (this.patients) {
-      return;
-    }
-    this.patients = this.patientService.getAllPatients();
-  }
+  // focusPatient() {
+  //   console.log('--khambenh----focusPatient-------', this.patients);
+  //   if (this.patients) {
+  //     return;
+  //   }
+  //   this.patients = this.patientService.getAllPatients();
+  // }
 
   getPdfPKBsData() {
     this.searching = true;
@@ -353,26 +371,6 @@ export class TomtatComponent implements OnInit {
     }
   }
 
-  xoaSotheodoi() {
-    this.confirmationService.confirm({
-      message: 'Bạn có chắc chắn muốn xóa Sổ theo dõi của '+this.selectedPatient.patientName+'?',
-      accept: () => {
-          //Actual logic to perform a confirmation
-          console.log('>>delete>>>>> selected: ', this.selectedPatient);
-          this.patientService.deletePatient(this.selectedPatient.id).subscribe(
-            res => {
-              console.log(res);
-              this.patients = res.data;
-              this.patientService.setClientPatiens(this.patients);
-              this.addSingle('success', 'Thành công', 'Đã Xóa bệnh nhân ' + this.selectedPatient.patientName);
-            },
-            err => {
-              this.addSingle('error', 'Lỗi Server', 'Không kết nối được CSDL ' + this.selectedPatient.patientName);
-            }
-          )      }
-    });
-  }
-
   getKhacText(s1, s): string {
     let sr = '';
     if (s) {
@@ -498,98 +496,23 @@ export class TomtatComponent implements OnInit {
     this.huongdieutriBA = '';
   }
 
-  saveTTBA() {
-    if (!this.validateForm()) {
-      return;
-    }
-    const tomtatBA = {
-      buongBA: this.buongBA,
-      giuongBA: this.giuongBA,
-      chandoanBA: this.chandoanBA,
-      fromBA: this.fromBA,
-      toBA: this.toBA,
-      dienbienBA: this.dienbienBA,
-      qtdtBA: this.qtdtBA,
-      XNClsBA: this.XNClsBA,
-      danhgiaBA: this.danhgiaBA,
-      huongdieutriBA: this.huongdieutriBA,
-    };
-
-    this.selectedPatient.tomtatba = JSON.stringify(tomtatBA);
-    console.log('==========sotheodoi==========================');
-    console.log(this.selectedPatient);
-    console.log('====================================');
-    this.patientService.editPatient(this.selectedPatient).subscribe(
-      res => {
-        this.patients = res.data;
-        this.patientsTB = [];
-        this.patients.forEach(e => {
-          this.patientsTB.push({ ...e });
-        });
-        this.addSingle('success', 'Đã lưu', 'Đã lưu tóm tắt quá trình điều trị Bệnh Án');
-        // this.selectedPatient = new PatientModel();
-        this.resetForm();
-        this.initTTBA();
-      },
-      err => {
-        this.addSingle('error', 'Lỗi', 'Có lỗi xảy ra');
-      }
-    );
-  }
-
-  saveTTCCon() {
-    if (!this.validateForm()) {
-      return;
-    }
-    const sotheodoi = {
-      // patient: this.selectedPatient,
-      hoiChung: this.selectedHoiChung,
-      ketquaCLS: this.selectedKetquaCLS,
-      benhChinh: this.selectedBenhChinh,
-      benhPhu: this.selectedBenhPhu,
-      ppDieuTri: this.selectedPpDieuTri,
-      kqDieuTri: this.selectedKqDieuTri,
-      huongDieuTri: this.selectedHuongDieuTri,
-      qtdtKhac: this.qtdtKhac,
-      kqClsKhac: this.kqClsKhac,
-      benhKhac: this.benhKhac,
-      ppDieuTriKhac: this.ppDieuTriKhac,
-      kkDieuTriKhac: this.kqDieuTriKhac,
-      huongDieuTriKhac: this.huongDieuTriKhac
-    };
-
-    this.selectedPatient.sotheodoi = JSON.stringify(sotheodoi);
-    console.log('==========sotheodoi==========================');
-    console.log(this.selectedPatient);
-    console.log('====================================');
-    // if (this.formMode) { // them moi
-    //   this.selectedPatient.patient_id = this.selectedPatient.id;
-    //   this.selectedPatient.mabenhnhan = this.selectedPatient.patientId;
-    //   // update patient
-    this.patientService.editPatient(this.selectedPatient).subscribe(
-      res => {
-        this.patients = res.data;
-        this.patientsTB = [];
-        this.patients.forEach(e => {
-          this.patientsTB.push({ ...e });
-        });
-        this.addSingle('success', 'Đã lưu', 'Đã lưu tóm tắt quá trình điều trị');
-        // this.selectedPatient = new PatientModel();
-        this.resetForm();
-        this.initTTBA();
-      },
-      err => {
-        this.addSingle('error', 'Lỗi', 'Có lỗi xảy ra');
-      }
+  saveUser() {
+    this.loginService.changeUser(this.user).subscribe(
+        res => {
+          this.user = res.data;
+        },
+        err => {
+          this.addSingle('error', 'Lỗi', 'Có lỗi xảy ra');
+        }
     );
   }
   onTabOpen(event) {
     // this.messageService.add({ severity: 'info', summary: 'Tab Expanded', detail: 'Index: ' + event.index });
     // this.addSingle('info', 'abc', 'Index: ' + event.index);
-    if (this.patientsTB.length === 0) {
-      this.initDanhSach();
-    }
-    this.tabIndex = event.tabIndex;
+    // if (this.patientsTB.length === 0) {
+    //   this.initDanhSach();
+    // }
+    // this.tabIndex = event.tabIndex;
   }
   
   onRowSelect(event) {

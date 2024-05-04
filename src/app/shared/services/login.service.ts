@@ -5,6 +5,7 @@ import { tap } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { AppStoreService, AppStore } from './app-store.service';
+import {User} from '../model/user';
 
 @Injectable({
   providedIn: 'root'
@@ -63,14 +64,15 @@ export class LoginService {
     );
   }
 
-  public signUp(name: string, email: string, username: string, password: string): Observable<any> {
+  public signUp(name: string, email: string, username: string, password: string, serialWeigher: string): Observable<any> {
     const loginUrl = this.appStore.getData(AppStore.PROFILE, {}).api + '/auth/signup';
     console.log('Login to Dashboard using API url: ' + loginUrl);
     const body = {
       name: name,
       email: email,
       username: username,
-      password: password
+      password: password,
+      serialWeigher: serialWeigher
       // language: language
     };
     const options = {
@@ -110,6 +112,46 @@ export class LoginService {
     );
   }
 
+  public getMe(): Observable<any> {
+    let token = this.appStore.getAuth()['token'];
+    let url = this.appStore.getData(AppStore.PROFILE, {}).api + '/auth/me' + `?token=${token}`;
+    let body = {};
+    let options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+    return this.http.post(url, body, options).pipe(
+        tap(
+            data => {
+              //console.log('got session data', data);
+            },
+            error => {
+              //console.log('session validation error', error);
+            }
+        )
+    );
+  }
+
+  public changeUser(user: User): Observable<any> {
+    let url = this.appStore.getData(AppStore.PROFILE, {}).api + '/auth/user/' + user.id + '/change?serialWeigher=' + user.serialWeigher;
+    let body = {};
+    let options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+    return this.http.post(url, body, options).pipe(
+        tap(
+            data => {
+              //console.log('got session data', data);
+            },
+            error => {
+              //console.log('session validation error', error);
+            }
+        )
+    );
+  }
   public uploadFile() {
     
   }

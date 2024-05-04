@@ -1,22 +1,18 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { SelectItem } from 'primeng/api';
-import { MessageService } from 'primeng/api';
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {MessageService, SelectItem} from 'primeng/api';
 
-import { FilterUtils } from '../../../shared/utils/filterutils';
+import {ProductsService} from '../../../shared/services/products.service';
+import {ProductModel} from '../../../shared/model/product.model';
+import {animate, state, style, transition, trigger} from '@angular/animations';
+import {IMqttMessage, IMqttServiceOptions, MqttService} from 'ngx-mqtt';
 
-import { ProductsService } from '../../../shared/services/products.service';
-import { ProductModel } from '../../../shared/model/product.model';
-import { trigger, state, style, transition, animate } from '@angular/animations';
-import {
-  IMqttMessage,
-  IMqttServiceOptions,
-  MqttService,
-  IPublishOptions,
-  MqttModule
-} from 'ngx-mqtt';
-
-import { environment as env } from '../../../../environments/environment';
+import {environment as env} from '../../../../environments/environment';
+import {IClientSubscribeOptions} from 'mqtt-browser';
+import {Subscription} from 'rxjs';
+import {MilkCollect} from '../../../shared/model/MilkCollect';
+import {LoginService} from '../../../shared';
+import {User} from '../../../shared/model/user';
 
 const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
   hostname: env.mqtt.server,
@@ -24,11 +20,6 @@ const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
   protocol: (env.mqtt.protocol === 'wss') ? 'wss' : 'ws',
   path: '',
 };
-
-import { IClientSubscribeOptions } from 'mqtt-browser';
-import { Subscription } from 'rxjs';
-import { error } from 'protractor';
-import { MilkCollect } from '../../../shared/model/MilkCollect';
 
 @Component({
   selector: 'app-main',
@@ -72,8 +63,8 @@ export class MainComponent implements OnInit {
     port: 8084,
     path: '/mqtt',
     clean: true, // 保留会话
-    connectTimeout: 4000, // 超时时间
-    reconnectPeriod: 4000, // 重连时间间隔
+    connectTimeout: 10000, // 超时时间
+    // reconnectPeriod: 4000, // 重连时间间隔
     // 认证信息
     clientId: 'eip-dashboard',
     username: 'voda',
@@ -83,7 +74,7 @@ export class MainComponent implements OnInit {
   };
 
   subscription = {
-    topic: 'ThuMuaSua',
+    topic: 'response/ThuMuaSua',
     qos: 2,
   };
 
@@ -106,7 +97,8 @@ export class MainComponent implements OnInit {
   messages: MilkCollect[] = [];
 
   constructor(
-    private prodService: ProductsService,
+
+    private loginService: LoginService,
     private messageService: MessageService,
     private router: Router,
     private client: MqttService
@@ -171,7 +163,7 @@ export class MainComponent implements OnInit {
     this.client.onConnect.subscribe(() => {
       this.isConnection = true;
       console.log('Connection succeeded!');
-      this.doSubscribe();
+      // this.doSubscribe();
     });
 
     this.client.onError.subscribe((error: any) => {
@@ -180,11 +172,15 @@ export class MainComponent implements OnInit {
     });
 
     this.client.onMessage.subscribe((packet: any) => {
-      this.receiveNews = this.receiveNews.concat(packet.payload.toString());
-      console.log(`Received message ${packet.payload.toString()} from topic ${packet.topic}`);
+      // this.receiveNews = this.receiveNews.concat(packet.payload.toString());
+      // console.log(`Received message ${packet.payload.toString()} from topic ${packet.topic}`);
       try {
         this.message = JSON.parse(packet.payload.toString());
-        this.messages.push(this.message);
+        // this.messages.push(this.message);
+        let msg = {...this.message};
+        msg.mqttStatus = "Completed";
+
+        this.messages.splice(0, 0, msg);
       } catch (e) {
         console.log(' parse error');
       }
@@ -192,37 +188,78 @@ export class MainComponent implements OnInit {
   }
 
   doSubscribe() {
-    const { topic, qos } = this.subscription;
-    console.log('-------------- subscribing to ' + topic);
-    this.curSubscription = this.client.observe(topic, { qos } as IClientSubscribeOptions).subscribe(
-      (message: IMqttMessage) => {
-      this.subscribeSuccess = true;
-      console.log('Subscribe to topics res', message.payload.toString());
-    })
-    ;
+
+    this.loginService.getMe().subscribe(
+        data => {
+          //console.log('got data', data);
+          if (data.errors && data.errors.length > 0) {
+            console.log('Current session invalid. Getting out...');
+          } else {
+            let user: User = data;
+            const { topic, qos } = this.subscription;
+            const tp = topic + '/' + user.serialWeigher;
+            console.log('-------------- subscribing to ' + tp);
+            this.curSubscription = this.client.observe(tp, { qos } as IClientSubscribeOptions).subscribe(
+                (message: IMqttMessage) => {
+                  this.subscribeSuccess = true;
+                  console.log('Subscribe to topics res', message.payload.toString());
+                });
+          }
+        },
+        error => {
+          console.log('Error while validating session', error);
+        }
+    );
+  }
+
+  doUnSubscribe() {
+
+    this.loginService.getMe().subscribe(
+        data => {
+          //console.log('got data', data);
+          if (data.errors && data.errors.length > 0) {
+            console.log('Current session invalid. Getting out...');
+          } else {
+            let user: User = data;
+            const { topic, qos } = this.subscription;
+            const tp = topic + '/' + user.serialWeigher;
+            console.log('-------------- subscribing to ' + tp);
+            this.curSubscription.unsubscribe();
+            console.log('-------------- unSubscribed to ' + tp);
+            // this.curSubscription = this.client.observe(tp, { qos } as IClientSubscribeOptions).subscribe(
+            //     (message: IMqttMessage) => {
+            //       this.subscribeSuccess = true;
+            //       console.log('Subscribe to topics res', message.payload.toString());
+            //     });
+          }
+        },
+        error => {
+          console.log('Error while validating session', error);
+        }
+    );
   }
 
   onRowEditInit(pr: ProductModel) {
     this.clonedProducts[pr.id] = { ...pr };
   }
 
-  onRowEditSave(pr: ProductModel, index: number) {
-    console.log('pr  will be edit: ', index);
-    pr.imagepath = this.imagepath;
-    console.log('imgpath update: ', this.imagepath);
-
-    console.log(pr);
-
-    this.prodService.editProduct(pr).subscribe(res => {
-      console.log(res);
-      console.log('======main products: ', this.products);
-    },
-      err => {
-        console.log(err);
-
-      }
-    );
-  }
+  // onRowEditSave(pr: ProductModel, index: number) {
+  //   console.log('pr  will be edit: ', index);
+  //   pr.imagepath = this.imagepath;
+  //   console.log('imgpath update: ', this.imagepath);
+  //
+  //   console.log(pr);
+  //
+  //   this.prodService.editProduct(pr).subscribe(res => {
+  //     console.log(res);
+  //     console.log('======main products: ', this.products);
+  //   },
+  //     err => {
+  //       console.log(err);
+  //
+  //     }
+  //   );
+  // }
 
   onRowEditCancel(pr: ProductModel, index: number) {
       this.products[index] = this.clonedProducts[pr.id];
