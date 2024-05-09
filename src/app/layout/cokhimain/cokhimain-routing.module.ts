@@ -38,7 +38,7 @@ const routes: Routes = [{
     { path: '', redirectTo: 'main' },
     { path: 'main', component: MainComponent },
     { path: 'insert', component: InsertProductComponent },
-    { path: 'category', component: CategoryComponent },
+    { path: 'user', component: CategoryComponent },
     { path: 'thuoc', component: ThuocComponent },
     { path: 'can', component: PatientComponent },
     { path: 'khambenh', component: KhambenhComponent },
@@ -60,7 +60,7 @@ const routes: Routes = [{
     { path: 'thekho', component: ThekhoComponent },
     { path: 'patientreport', component: PatientReportComponent },
     { path: 'tonghop', component: TonghopComponent },
-    { path: 'thuocreport', component: ThuocReportComponent },
+    { path: 'report', component: ThuocReportComponent },
   ]
 }];
 

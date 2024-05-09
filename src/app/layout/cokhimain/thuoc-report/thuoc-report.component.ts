@@ -7,6 +7,11 @@ import { RecordeImportExportService } from '../../../shared/services/record-impo
 import { ThuocService } from '../../../shared/services/thuoc.service';
 import { ThuocModel } from '../../../shared/model/thuoc.model';
 import { NhiXuanUtil } from '../../../shared/utils/nhixuan_utils';
+import { MilkCollect } from '../../../shared/model/MilkCollect';
+import { WeighService } from '../../../shared/services/weigh.service';
+import { MilkCollectService } from '../../../shared/services/milk-collect.service';
+import { Weigh } from '../../../shared/model/user';
+import { LoginService } from '../../../shared';
 
 @Component({
   selector: 'app-thuoc-report',
@@ -14,6 +19,11 @@ import { NhiXuanUtil } from '../../../shared/utils/nhixuan_utils';
   styleUrls: ['./thuoc-report.component.scss']
 })
 export class ThuocReportComponent implements OnInit {
+
+  cols: any[];
+  message: MilkCollect = null;
+  messages: MilkCollect[] = [];
+  weighs: Weigh[] = [];
 
   msgs: any[] = [];
   searching = false;
@@ -41,13 +51,32 @@ export class ThuocReportComponent implements OnInit {
   selectedThuoc: ThuocModel;
 
   constructor(
+    private logginService: LoginService,
     private thuocService: ThuocService,
     private categoryService: CategoryService,
-    private recordService: RecordeImportExportService
+    private recordService: RecordeImportExportService,
+    private weighService: WeighService,
+    private milkCollect: MilkCollectService
   ) {
    }
 
   ngOnInit() {
+    this.cols = [
+      { field: 'id', header: 'id' },
+      { field: 'serialWeigher', header: 'Serial_Weigher' },
+      { field: 'codeSeller', header: 'Code_Seller' },
+      { field: 'nameSeller', header: 'Name_Seller' },
+      // { field: 'imported_at', header: 'imported_at' },
+      { field: 'codeTankSeller', header: 'Code_Tank_Seller' },
+      { field: 'tankTareWeight', header: 'Tank_Tare_Weight' },
+      { field: 'tankGrossWeight', header: 'Tank_Gross_Weight' },
+      { field: 'tankNetWeght', header: 'Tank_Net_Weight' },
+      { field: 'mqttStatus', header: 'Mqtt_Status' },
+      // { field: 'type', header: 'created' },
+      { field: 'createdAt', header: 'createdAt' }
+    ];
+    this.getWeighsByUser(this.logginService.getCurrentUser().id);
+
     this.selectedKho = this.khoNhaps[0];
     this.selectedType = this.thuocTypes[0];
     this.colsByType = [
@@ -110,6 +139,29 @@ export class ThuocReportComponent implements OnInit {
     
   }
 
+  xemDuLieu() {
+
+
+    // this.milkCollect.getWeighsByUser().subscribe(
+    //   res => {
+    //
+    //   },
+    //   error => {
+    //
+    //   }
+    // );
+    //
+  }
+  getWeighsByUser(id) {
+    this.weighService.getWeighsByUser(id).subscribe(
+      res => {
+        this.weighs = res;
+      },
+      error => {
+
+      }
+    );
+  }
   xemDS() {
     this.recordService.getBCTonghopLoaiThuoc(this.tkFrom, this.tkTo, this.selectedKho.id).subscribe(
       res => {
@@ -178,16 +230,15 @@ export class ThuocReportComponent implements OnInit {
   //   });
   // }
 
-  changeGroup() {
-
-  }
-
-  changeType() {
-    
-  }
-
-  changeThuoc() {
-    
+  changWeigh(selectedCan) {
+    this.milkCollect.getMilkCollectByCan(selectedCan, this.tkFrom, this.tkTo).subscribe(
+      res => {
+        this.messages = res.data;
+      },
+      err => {
+        console.log(err);
+      }
+    );
   }
 
   changKho() {

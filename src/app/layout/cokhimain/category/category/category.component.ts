@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CategoryService } from '../../../../shared/services/category.service';
+import { User } from '../../../../shared/model/user';
+import { LoginService } from '../../../../shared';
 
 export interface CategoryModel {
   id: number,
@@ -27,6 +29,17 @@ export class CategoryComponent implements OnInit {
     icon: ''
   };
 
+  user: User = {};
+  users: User[] = [];
+  //   id: null,
+  //   name: '',
+  //   email: '',
+  //   username: '',
+  //   serialWeigher: '',
+  //   password: '',
+  //   address: '',
+  //   phone: ''
+  // };
   selectedCate: CategoryModel;
 
   newCate: boolean;
@@ -36,26 +49,38 @@ export class CategoryComponent implements OnInit {
   cols: any[];
 
   constructor(
-    private categoryService: CategoryService
+    private categoryService: CategoryService,
+    private loginService: LoginService
   ) { }
 
   ngOnInit() {
 
-    this.categoryService.getAllCategories().subscribe(
+    this.loginService.getAllUser().subscribe(
       data => {
-        console.log('getAllCategories: ', data.data);
-        this.categories = data.data;
-      },
-      err => {
-        console.log(err);
+        this.user =  data;
+      }, error => {
+
       }
-    );
+    )
+
+    // this.categoryService.getAllCategories().subscribe(
+    //   data => {
+    //     console.log('getAllCategories: ', data.data);
+    //     this.categories = data.data;
+    //   },
+    //   err => {
+    //     console.log(err);
+    //   }
+    // );
 
     this.cols = [
-      { field: 'name', header: 'Tên nhóm' },
-      { field: 'description', header: 'Miêu tả' },
-      { field: 'icon', header: 'Hình/Ảnh' },
-      // { field: 'color', header: 'Color' }
+      { field: 'name', header: 'Tên ' },
+      { field: 'email', header: 'Email' },
+      { field: 'username', header: 'Tên Đăng Nhập' },
+      // { field: 'password', header: 'Mật khẩu' },
+      { field: 'address', header: 'Địa chỉ' },
+      { field: 'phone', header: 'Số điện thoại' },
+      { field: 'serialWeigher', header: 'Mã Cân' }
     ];
   }
 
@@ -67,6 +92,9 @@ export class CategoryComponent implements OnInit {
     this.displayDialog = true;
   }
 
+  saveUser() {
+    this.loginService.addUser(this.user);
+  }
   save() {
     console.log('-----add cate: ', this.category);
 

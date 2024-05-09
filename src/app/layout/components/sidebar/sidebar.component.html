@@ -14,8 +14,14 @@
         <ul class="submenu">
           <li>
             <a class="fa fa-fw fa-list" style="width: 70%; font-size: 14px; text-align: left;"
+               [routerLink]="['/admin/user']" [routerLinkActive]="['router-link-active']">
+              Người dùng
+            </a>
+          </li>
+          <li>
+            <a class="fa fa-fw fa-list" style="width: 70%; font-size: 14px; text-align: left;"
               [routerLink]="['/admin/can']" [routerLinkActive]="['router-link-active']">
-              Thêm cân
+              Cân
             </a>
           </li>
 <!--          <li>-->
@@ -27,7 +33,13 @@
           <li>
             <a class="fa fa-fw fa-list" style="width: 70%; font-size: 14px; text-align: left;"
               [routerLink]="['/admin/tomtatcc']" [routerLinkActive]="['router-link-active']">
-              Cập nhật thông tin
+              Chỉnh sửa thông tin
+            </a>
+          </li>
+          <li>
+            <a class="fa fa-fw fa-list" style="width: 70%; font-size: 14px; text-align: left;"
+              [routerLink]="['/admin/report']" [routerLinkActive]="['router-link-active']">
+              Báo Cáo
             </a>
           </li>
           <!-- <li>

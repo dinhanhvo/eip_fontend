@@ -50,12 +50,6 @@ export class TomtatComponent implements OnInit {
   patients: PatientModel[] = [];
   patientsTB: PatientModel[] = [];
   hoiChungOpts = NhiXuanOptions.hoiChungOpt;
-  ketquaCLSs = NhiXuanOptions.ketquaCLSs;
-  benhChinhs = NhiXuanOptions.benhChinh;
-  ppDieuTris = NhiXuanOptions.ppDieuTri;
-  kqDieuTris = NhiXuanOptions.kqDieuTri;
-  huongDieuTris = NhiXuanOptions.huongDieuTri;
-  benhphus = NhiXuanOptions.chandoans; // get from IDC;
 
   qtdtKhac: string = '';
   kqClsKhac: string = '';

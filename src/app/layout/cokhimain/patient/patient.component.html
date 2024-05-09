@@ -3,50 +3,58 @@
 <p-dialog header="Nhập thông tin Cân:" [(visible)]="displayDialog" [responsive]="true" showEffect="fade"
     [modal]="true" [style]="{width: '700px'}">
     <form #resumeForm="ngForm">
-        <div  class="ui-g" style="float: right;">
-            <button type="button" pButton icon="fa fa-check" (click)="save()" 
-                [disabled]="patient.patientName===undefined || patient.patientName.trim()===''" label="Save"></button>
-        </div>
+<!--        <div  class="ui-g" style="float: right;">-->
+<!--            <button type="button" pButton icon="fa fa-check" (click)="save()" -->
+<!--                [disabled]="weigh.serialWeigher===undefined || weigh.serialWeigher.trim()===''" label="Save"></button>-->
+<!--        </div>-->
         <br>
+      <div class="ui-g">
+        <div class="ui-g-12 ui-md-4 ui-lg-4">Mã Cân:</div>
+        <div class="ui-g-12 ui-md-8 ui-lg-8">
+          <!-- <p-dropdown [options]="birthYears" [(ngModel)]="selectedYear"
+          name="selectedYear" #SelectedYear="ngModel">
+          </p-dropdown> -->
+          <input type="text" pInputText [(ngModel)]="weigh.serialWeigher" style="width: 100%;" name="serialWeigher"
+          />
+        </div>
+      </div>
+
+      <div class="ui-g">
+        <div class="ui-g-12 ui-md-4 ui-lg-4">Model:</div>
+        <div class="ui-g-12 ui-md-8 ui-lg-8">
+          <!-- <p-dropdown [options]="birthYears" [(ngModel)]="selectedYear"
+          name="selectedYear" #SelectedYear="ngModel">
+          </p-dropdown> -->
+          <input type="text" pInputText [(ngModel)]="weigh.model" style="width: 100%;" name="model"
+          />
+        </div>
+      </div>
         <div class="ui-g">
-            <div class="ui-g-12 ui-md-4 ui-lg-4">Tên:</div>
+            <div class="ui-g-12 ui-md-4 ui-lg-4">Nguồn:</div>
             <div class="ui-g-12 ui-md-8 ui-lg-8">
-                <input type="text" class="form-control" [(ngModel)]="patient.patientName" placeholder="Tên Cân"
-                    name="name" #Name="ngModel" required
-                    [ngClass]="{'is-invalid': Name.invalid && (Name.touched || resumeForm.submitted) }">
+                <!-- <p-dropdown [options]="birthYears" [(ngModel)]="selectedYear"
+                name="selectedYear" #SelectedYear="ngModel">
+                </p-dropdown> -->
+                <input type="text" pInputText [(ngModel)]="weigh.power" style="width: 100%;" name="power"
+                     />
             </div>
         </div>
 
-<!--        <div class="ui-g">-->
-<!--            <div class="ui-g-12 ui-md-4 ui-lg-4">Mã:</div>-->
-<!--            <div class="ui-g-12 ui-md-8 ui-lg-8">-->
-<!--                <input type="text" class="form-control" [(ngModel)]="patient.patientId" placeholder="Mã Cân"-->
-<!--                    name="patientId" #PatientId="ngModel">-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <div class="ui-g">-->
-<!--            <div class="ui-g-12 ui-md-4 ui-lg-4">Năm sinh:</div>-->
-<!--            <div class="ui-g-12 ui-md-8 ui-lg-8">-->
-<!--                &lt;!&ndash; <p-dropdown [options]="birthYears" [(ngModel)]="selectedYear" -->
-<!--                name="selectedYear" #SelectedYear="ngModel">-->
-<!--                </p-dropdown> &ndash;&gt;-->
-<!--                <input type="number" pInputText [(ngModel)]="patient.birthYear" style="width: 100%;" name="birthYear"-->
-<!--                    #BirthYear="ngModel" />-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        -->
-<!--        <div class="ui-g">-->
-<!--            <div class="ui-g-12 ui-md-4 ui-lg-4">Tên tìm kiếm:</div>-->
-<!--            <div class="ui-g-12 ui-md-8 ui-lg-8 form-group">-->
-<!--                <input type="text" pInputText [(ngModel)]="patient.fullname" style="width: 100%;" name="fullname"-->
-<!--                    placeholder="Nhập tên không dấu và năm sinh viết liền, vd: 'nhan1989'"-->
-<!--                    #Fullname="ngModel" />-->
-<!--            </div>-->
-<!--        </div>-->
+        <div class="ui-g">
+            <div class="ui-g-12 ui-md-4 ui-lg-4">Ngày sản xuất:</div>
+            <div class="ui-g-12 ui-md-8 ui-lg-8">
+                <!-- <input type="text" pInputText [(ngModel)]="patient.imported_at" style="width: 100%;" name="imported_at"
+                    #Imported_at="ngModel" /> -->
+                <p-calendar [(ngModel)]="weigh.dateProduce"
+                dateFormat="dd/mm/yy"
+                name="dateProduce" [showIcon]="true">
+                </p-calendar>
+            </div>
+        </div>
 <!--        <div class="ui-g">-->
 <!--            <div class="ui-g-12 ui-md-6 ui-lg-4">Địa chỉ:</div>-->
 <!--            <div class="ui-g-12 ui-md-6 ui-lg-8">-->
-<!--                <input type="text" pInputText [(ngModel)]="patient.address" -->
+<!--                <input type="text" pInputText [(ngModel)]="weigh.address" -->
 <!--                style="width: 100%;"-->
 <!--                name="address" #Address="ngModel" />-->
 <!--            </div>-->
@@ -56,7 +64,7 @@
 <!--            <div class="ui-g-12 ui-md-8 ui-lg-8">-->
 <!--                &lt;!&ndash; <input type="text" pInputText [(ngModel)]="patient.imported_at" style="width: 100%;" name="imported_at"-->
 <!--                    #Imported_at="ngModel" /> &ndash;&gt;-->
-<!--                <p-calendar [(ngModel)]="patient.imported_at" -->
+<!--                <p-calendar [(ngModel)]="weigh.imported_at" -->
 <!--                dateFormat="dd/mm/yy"-->
 <!--                name="imported_at" [showIcon]="true">-->
 <!--                </p-calendar>-->
@@ -169,12 +177,12 @@
 <!--        </div>-->
 
         <div class="ui-dialog-buttonpane ui-helper-clearfix">
-            <div style="float: left;" *ngIf="!newPatient">
+            <div style="float: left;" *ngIf="!weigh">
                 <button type="button" pButton icon="fa fa-close" (click)="delete()" label="Delete"></button>
             </div>
             <div style="float: right;">
                 <button type="button" pButton icon="fa fa-check" (click)="save()" 
-                [disabled]="patient.patientName===undefined || patient.patientName.trim()===''" label="Save"></button>
+                [disabled]="weigh.serialWeigher===undefined || weigh.serialWeigher.trim()===''" label="Save"></button>
             </div>
         </div>
     </form>

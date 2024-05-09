@@ -1,8 +1,8 @@
-<p-table [columns]="cols" [value]="categories" selectionMode="single"
+<p-table [columns]="cols" [value]="users" selectionMode="single"
  [(selection)]="selectedCate" (onRowSelect)="onRowSelect($event)" 
  [paginator]="true" [rows]="15">
     <ng-template pTemplate="caption">
-        Danh mục 
+        Danh Sách Người Dùng
     </ng-template>
     <ng-template pTemplate="header" let-columns>
         <tr>
@@ -26,33 +26,65 @@
     </ng-template>    
 </p-table>
 
-<p-dialog header="Chi Tiết Danh Mục" [(visible)]="displayDialog" [responsive]="true" 
+<p-dialog header="Thêm người dùng" [(visible)]="displayDialog" [responsive]="true"
     showEffect="fade" [modal]="true"  [style]="{width: '500px'}">
     <div class="ui-g ui-fluid">
         <div class="ui-g-12">
             <div class="ui-g-4">
-                <label for="name">Name</label>
+                <label for="name">Tên</label>
             </div>
             <div class="ui-g-8">
-                <input pInputText id="name" [(ngModel)]="category.name" autofocus />
+                <input pInputText id="name" [(ngModel)]="user.name" autofocus />
+            </div>
+        </div>
+      <div class="ui-g-12">
+        <div class="ui-g-4">
+          <label for="email">Email</label>
+        </div>
+        <div class="ui-g-8">
+          <input pInputText id="email" [(ngModel)]="user.email" autofocus />
+        </div>
+      </div>
+      <div class="ui-g-12">
+        <div class="ui-g-4">
+          <label for="username">Tên Đăng Nhập</label>
+        </div>
+        <div class="ui-g-8">
+          <input pInputText id="username" [(ngModel)]="user.username" autofocus />
+        </div>
+      </div>
+      <div class="ui-g-12">
+        <div class="ui-g-4">
+          <label for="password">Mật Khẩu</label>
+        </div>
+        <div class="ui-g-8">
+          <input pInputText id="password" [(ngModel)]="user.password" autofocus />
+        </div>
+      </div>
+        <div class="ui-g-12">
+            <div class="ui-g-4">
+                <label for="address">Địa Chỉ</label>
+            </div>
+            <div class="ui-g-8">
+                <input pInputText id="address" [(ngModel)]="user.address" />
             </div>
         </div>
         <div class="ui-g-12">
             <div class="ui-g-4">
-                <label for="description">Description</label>
+                <label for="phone">Phone</label>
             </div>
             <div class="ui-g-8">
-                <input pInputText id="description" [(ngModel)]="category.description" />
+                <input pInputText id="phone" [(ngModel)]="user.phone" />
             </div>
         </div>
-        <div class="ui-g-12">
-            <div class="ui-g-4">
-                <label for="icon">icon</label>
-            </div>
-            <div class="ui-g-8">
-                <input pInputText id="icon" [(ngModel)]="category.icon" />
-            </div>
+      <div class="ui-g-12">
+        <div class="ui-g-4">
+          <label for="serialWeigher">Mã Cân</label>
         </div>
+        <div class="ui-g-8">
+          <input pInputText id="serialWeigher" [(ngModel)]="user.serialWeigher" />
+        </div>
+      </div>
     </div>
     <div class="ui-dialog-buttonpane ui-helper-clearfix">
         <div style="float: left;">
@@ -61,7 +93,7 @@
         </div>
         <div style="float: right;">
             <button type="button" pButton icon="fa fa-check"
-                (click)="save()" label="Save"></button>
+                (click)="saveUser()" label="Lưu"></button>
         </div>
     </div>
 </p-dialog>

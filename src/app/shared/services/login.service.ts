@@ -11,6 +11,7 @@ import {User} from '../model/user';
   providedIn: 'root'
 })
 export class LoginService {
+  user: User = {}
   constructor(private http: HttpClient, private appStore: AppStoreService) {}
 
   /**
@@ -55,6 +56,7 @@ export class LoginService {
     return this.http.post(loginUrl, body, options).pipe(
       tap(
         data => {
+          this.user = data;
           //console.log('got response data', data);
         },
         error => {
@@ -62,6 +64,10 @@ export class LoginService {
         }
       )
     );
+  }
+
+  public addUser(user: User): Observable<any> {
+    return this.signUp(user.name, user.email, user.username, user.password, user.serialWeigher);
   }
 
   public signUp(name: string, email: string, username: string, password: string, serialWeigher: string): Observable<any> {
@@ -125,12 +131,38 @@ export class LoginService {
         tap(
             data => {
               //console.log('got session data', data);
+              this.user = data;
             },
             error => {
               //console.log('session validation error', error);
             }
         )
     );
+  }
+
+  public getAllUser(): Observable<any> {
+    let token = this.appStore.getAuth()['token'];
+    let url = this.appStore.getData(AppStore.PROFILE, {}).api + '/auth/uses' + `?token=${token}`;
+    let body = {};
+    let options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+    return this.http.post(url, body, options).pipe(
+      tap(
+        data => {
+          //console.log('got session data', data);
+        },
+        error => {
+          //console.log('session validation error', error);
+        }
+      )
+    );
+  }
+  
+  getCurrentUser(): User {
+    return this.user;
   }
 
   public changeUser(user: User): Observable<any> {

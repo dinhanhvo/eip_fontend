@@ -9,6 +9,8 @@ import { Message } from 'primeng/components/common/api';
 
 import { DateService} from '../../../shared/services/date.util.service';
 import { ExcelUtil } from '../../../shared/utils/excel-util';
+import { Weigh } from '../../../shared/model/user';
+import { WeighService } from '../../../shared/services/weigh.service';
 
 @Component({
   selector: 'app-patient',
@@ -16,6 +18,8 @@ import { ExcelUtil } from '../../../shared/utils/excel-util';
   styleUrls: ['./patient.component.scss']
 })
 export class PatientComponent implements OnInit {
+  weigh: Weigh = {};
+  weighs: Weigh = {};
 
   patient: PatientModel;
   displayDialog: boolean;
@@ -56,7 +60,8 @@ export class PatientComponent implements OnInit {
     private patientService: PatientService,
     private router: Router,
     private messageService: MessageService,
-    private dateService: DateService
+    private dateService: DateService,
+    private weighService: WeighService
   ) { }
 
 
@@ -81,12 +86,12 @@ export class PatientComponent implements OnInit {
     // this.patient.imported_at = new Date();
 
     this.cols = [
-      { field: 'patientName', header: 'Tên' },
+      // { field: 'patientName', header: 'Tên' },
       // { field: 'fullname', header: 'Tên tìm kiếm' },
-      { field: 'patientId', header: 'Mã Cân' },
-      { field: 'birthYear', header: 'Hãng sản xuất' },
-      // { field: 'address', header: 'Địa chỉ' },
-      // { field: 'khu', header: 'Khu' },
+      { field: 'serialWeigher', header: 'Mã Cân' },
+      { field: 'model', header: 'Hãng sản xuất' },
+      { field: 'power', header: 'Nguồn' },
+      { field: 'dateProduce', header: 'Ngày sản xuất' },
       // { field: 'sohoso', header: 'Số hồ sơ' },
       // { field: 'mobile', header: 'Di động' },
       // { field: 'gender', header: 'Giới tính' },
@@ -145,6 +150,20 @@ export class PatientComponent implements OnInit {
   }
 
   save() {
+    this.weighService.addWeigh(this.weigh).subscribe(
+      data => {
+        console.log('saved weigh: ', data);
+        // let ts: PatientModel[] = data.data;
+        this.weighs = data.data;
+        this.addSingle('success', 'Thành công', 'Đã thêm Cân ' + this.weigh.serialWeigher);
+      },
+      err => {
+        this.addSingle('error', 'Lỗi Server', 'Không kết nối được CSDL ');
+      }
+    )
+  }
+
+  savePatient() {
     console.log('-----save patient: ', this.patient);
     if (this.patient.patientName === undefined || this.patient.patientName === '') {
       this.msgs.push({ severity: 'error', summary: 'Lỗi: ', detail: 'Chưa nhập tên Cân !!!' });
