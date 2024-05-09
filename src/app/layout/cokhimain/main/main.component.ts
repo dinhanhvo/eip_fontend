@@ -59,12 +59,12 @@ export class MainComponent implements OnInit {
 
   private curSubscription: Subscription | undefined;
   connection = {
-    hostname: 'w795de7b.ala.us-east-1.emqxsl.com',
+    hostname: 't9b2a99e.ala.asia-southeast1.emqxsl.com',
     port: 8084,
     path: '/mqtt',
     clean: true, // 保留会话
-    connectTimeout: 10000, // 超时时间
-    // reconnectPeriod: 4000, // 重连时间间隔
+    connectTimeout: 4000, // 超时时间
+    reconnectPeriod: 400, // 重连时间间隔
     // 认证信息
     clientId: 'eip-dashboard',
     username: 'voda',
@@ -74,7 +74,7 @@ export class MainComponent implements OnInit {
   };
 
   subscription = {
-    topic: 'response/ThuMuaSua',
+    topic: 'ThuMuaSua',
     qos: 2,
   };
 
@@ -178,7 +178,7 @@ export class MainComponent implements OnInit {
         this.message = JSON.parse(packet.payload.toString());
         // this.messages.push(this.message);
         let msg = {...this.message};
-        msg.mqttStatus = 'Completed';
+        // msg.mqttStatus = 'Completed';
         msg.createdAt = new Date();
 
         this.messages.splice(0, 0, msg);
@@ -221,7 +221,7 @@ export class MainComponent implements OnInit {
           if (data.errors && data.errors.length > 0) {
             console.log('Current session invalid. Getting out...');
           } else {
-            let user: User = data;
+            const user: User = data;
             const { topic, qos } = this.subscription;
             const tp = topic + '/' + user.serialWeigher;
             console.log('-------------- subscribing to ' + tp);

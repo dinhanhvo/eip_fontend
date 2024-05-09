@@ -42,7 +42,7 @@ const routes: Routes = [{
     { path: 'thuoc', component: ThuocComponent },
     { path: 'can', component: PatientComponent },
     { path: 'khambenh', component: KhambenhComponent },
-    { path: 'tomtatcc', component: TomtatComponent },
+    { path: 'config', component: TomtatComponent },
     { path: 'thongke', component: ThongkeComponent },
     { path: 'nhacc', component: ProviderComponent },
     { path: 'logo', component: LogoComponent },

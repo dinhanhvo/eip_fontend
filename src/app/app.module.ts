@@ -51,12 +51,12 @@ const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
 };
 
 export const connection: IMqttServiceOptions = {
-  hostname: 'w795de7b.ala.us-east-1.emqxsl.com',
+  hostname: 't9b2a99e.ala.asia-southeast1.emqxsl.com',
   port: 8084,
   path: '/mqtt',
   clean: true, // 保留会话
   connectTimeout: 4000, // 超时时间
-  // reconnectPeriod: 4000, // 重连时间间隔
+  reconnectPeriod: 400, // 重连时间间隔
   // 认证信息
   clientId: 'eip-dashboard',
   username: 'voda',
