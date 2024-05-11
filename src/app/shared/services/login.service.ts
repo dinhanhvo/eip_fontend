@@ -11,7 +11,15 @@ import {User} from '../model/user';
   providedIn: 'root'
 })
 export class LoginService {
+
+  serviceName = '';
+  options = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json'
+    })
+  };
   user: User = {}
+
   constructor(private http: HttpClient, private appStore: AppStoreService) {}
 
   /**
@@ -41,7 +49,7 @@ export class LoginService {
      * }
      */
   public login(user: string, credentials: string, language): Observable<any> {
-    const loginUrl = this.appStore.getData(AppStore.PROFILE, {}).api + '/auth/signin';
+    const loginUrl = this.appStore.getData(AppStore.PROFILE, {}).api + this.serviceName + '/auth/signin';
     console.log('Login to Dashboard using API url: ' + loginUrl);
     let body = {
       usernameOrEmail: user,
@@ -71,8 +79,8 @@ export class LoginService {
   }
 
   public signUp(name: string, email: string, username: string, password: string, serialWeigher: string): Observable<any> {
-    const loginUrl = this.appStore.getData(AppStore.PROFILE, {}).api + '/auth/signup';
-    console.log('Login to Dashboard using API url: ' + loginUrl);
+    const loginUrl = this.appStore.getData(AppStore.PROFILE, {}).api  + this.serviceName + '/auth/signup';
+    console.log('Signup using API url: ' + loginUrl);
     const body = {
       name: name,
       email: email,
@@ -81,12 +89,8 @@ export class LoginService {
       serialWeigher: serialWeigher
       // language: language
     };
-    const options = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      })
-    };
-    return this.http.post(loginUrl, body, options).pipe(
+
+    return this.http.post(loginUrl, body, this.options).pipe(
       tap(
         data => {
           //console.log('got response data', data);
@@ -99,7 +103,7 @@ export class LoginService {
   }
 
   public validateSession(token: string): Observable<any> {
-    let url = this.appStore.getData(AppStore.PROFILE, {}).api + '/me' + `?token=${token}`;
+    let url = this.appStore.getData(AppStore.PROFILE, {}).api  + this.serviceName + '/me' + `?token=${token}`;
     let body = {};
     let options = {
       headers: new HttpHeaders({
@@ -120,7 +124,7 @@ export class LoginService {
 
   public getMe(): Observable<any> {
     let token = this.appStore.getAuth()['token'];
-    let url = this.appStore.getData(AppStore.PROFILE, {}).api + '/auth/me' + `?token=${token}`;
+    let url = this.appStore.getData(AppStore.PROFILE, {}).api  + this.serviceName + '/auth/me' + `?token=${token}`;
     let body = {};
     let options = {
       headers: new HttpHeaders({
@@ -142,14 +146,8 @@ export class LoginService {
 
   public getAllUser(): Observable<any> {
     let token = this.appStore.getAuth()['token'];
-    let url = this.appStore.getData(AppStore.PROFILE, {}).api + '/auth/uses' + `?token=${token}`;
-    let body = {};
-    let options = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      })
-    };
-    return this.http.post(url, body, options).pipe(
+    let url = this.appStore.getData(AppStore.PROFILE, {}).api  + this.serviceName + '/users' + `?token=${token}`;
+    return this.http.get(url, this.options).pipe(
       tap(
         data => {
           //console.log('got session data', data);
@@ -174,6 +172,28 @@ export class LoginService {
       })
     };
     return this.http.post(url, body, options).pipe(
+        tap(
+            data => {
+              //console.log('got session data', data);
+            },
+            error => {
+              //console.log('session validation error', error);
+            }
+        )
+    );
+  }
+
+  public saveUser(user: User): Observable<any> {
+    let url = this.appStore.getData(AppStore.PROFILE, {}).api + '/user';
+    let body = {
+      user: user
+    };
+    let options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+    return this.http.put(url, user, options).pipe(
         tap(
             data => {
               //console.log('got session data', data);

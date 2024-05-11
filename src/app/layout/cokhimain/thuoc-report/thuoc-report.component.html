@@ -3,10 +3,10 @@
         <!-- Thuoc type -->
         <div class="ui-g card-body" style="width: 100%;">
             <div class="ui-g-3">
-                Cân: <p-dropdown [options]="weighs" optionLabel="name"
+                Cân: <p-dropdown [options]="weighs" optionLabel="serialWeigher"
                     (onChange)="changWeigh()"
                      [autoDisplayFirst]="false"
-                    [(ngModel)]="selectedKho" name="optWeigh">
+                    [(ngModel)]="selectedWeigh" name="optWeigh">
                 </p-dropdown>
             </div>
             <!-- Dates -->
@@ -34,10 +34,16 @@
                     </p-calendar>
                 </div>
             </div>
-            <div class="ui-g-2">
+
+            <div class="ui-g-1">
                 <span style="float: right;">
                     <button type="button" pButton icon="fa fa-check" (click)="xemDuLieu()" label="Xem"></button>
                 </span>
+            </div>
+            <div class="ui-g-1">
+                <button type="button" pButton icon="fa fa-check" iconPos="left" label="EXCEL"
+                        (click)="exportBNExcel()" style="margin-right: 0.5em; float:right"
+                        class="ui-button-success" ></button>
             </div>
         </div>
         <!-- </div> -->

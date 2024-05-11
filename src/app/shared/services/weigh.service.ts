@@ -11,6 +11,7 @@ import { Weigh } from '../model/user';
 })
 export class WeighService {
 
+    serviceName = '';
   options = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json'
@@ -25,7 +26,7 @@ export class WeighService {
   }
 
   getAllWeighs(): Observable<any> {
-    const url = this.appStore.getData(AppStore.PROFILE, {}).api + '/weighs';
+    const url = this.appStore.getData(AppStore.PROFILE, {}).api + this.serviceName + '/weighs';
 
     // return this.http.get<any>('assets/data/weighs.json').pipe(
     return this.http.get<any>(url, this.options).pipe(
@@ -41,7 +42,7 @@ export class WeighService {
   }
 
   getWeighsByUser(id): Observable<any> {
-    const url = this.appStore.getData(AppStore.PROFILE, {}).api + '/weighs/user/' + id;
+    const url = this.appStore.getData(AppStore.PROFILE, {}).api + this.serviceName + '/weighs/user/' + id;
 
     // return this.http.get<any>('assets/data/weighs.json').pipe(
     return this.http.get<any>(url, this.options).pipe(
@@ -57,7 +58,7 @@ export class WeighService {
   }
 
   getWeighsByCate(serial): Observable<any> {
-    const url = this.appStore.getData(AppStore.PROFILE, {}).api + '/weighs/serial/' + serial;
+    const url = this.appStore.getData(AppStore.PROFILE, {}).api + this.serviceName + '/weighs/serial/' + serial;
 
     // return this.http.get<any>('assets/data/weighs.json').pipe(
     return this.http.get<any>(url, this.options).pipe(
@@ -74,13 +75,13 @@ export class WeighService {
 
   addWeigh(weigh: Weigh): Observable<any> {
     console.log('insert weigh: ', weigh);
-    const url = this.appStore.getData(AppStore.PROFILE, {}).api + '/weigh';
+    const url = this.appStore.getData(AppStore.PROFILE, {}).api + this.serviceName + '/weigh';
     const body = {
       'weigh': weigh
       // 'categories': cates
     };
 
-    return this.http.post(url, body, this.options).pipe(
+    return this.http.post(url, weigh, this.options).pipe(
       tap(
         data => {
           console.log('got response data', data);
@@ -94,7 +95,7 @@ export class WeighService {
 
   deleteWeigh(id): Observable<any> {
     console.log(' weigh delete: ', id);
-    const url = this.appStore.getData(AppStore.PROFILE, {}).api + '/weigh/' + id;
+    const url = this.appStore.getData(AppStore.PROFILE, {}).api + this.serviceName + '/weigh/' + id;
     return this.http.delete(url).pipe(
       tap(
         data => {

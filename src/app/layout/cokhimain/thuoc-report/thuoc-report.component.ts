@@ -24,6 +24,7 @@ export class ThuocReportComponent implements OnInit {
   message: MilkCollect = null;
   messages: MilkCollect[] = [];
   weighs: Weigh[] = [];
+  selectedWeigh: Weigh;
 
   msgs: any[] = [];
   searching = false;
@@ -56,7 +57,7 @@ export class ThuocReportComponent implements OnInit {
     private categoryService: CategoryService,
     private recordService: RecordeImportExportService,
     private weighService: WeighService,
-    private milkCollect: MilkCollectService
+    private milkCollectService: MilkCollectService
   ) {
    }
 
@@ -75,48 +76,73 @@ export class ThuocReportComponent implements OnInit {
       // { field: 'type', header: 'created' },
       { field: 'createdAt', header: 'createdAt' }
     ];
-    this.getWeighsByUser(this.logginService.getCurrentUser().id);
+    // this.getWeighsByUser(this.logginService.getCurrentUser().id);
 
-    this.selectedKho = this.khoNhaps[0];
-    this.selectedType = this.thuocTypes[0];
-    this.colsByType = [
-      { field: 'loai', header: 'Thuốc' },
-      { field: 'soluong', header: 'Số lượng' },
-      { field: 'thanhtien', header: 'Thành tiền' },
-    ];
+    // this.selectedKho = this.khoNhaps[0];
+    // this.selectedType = this.thuocTypes[0];
+    // this.colsByType = [
+    //   { field: 'loai', header: 'Thuốc' },
+    //   { field: 'soluong', header: 'Số lượng' },
+    //   { field: 'thanhtien', header: 'Thành tiền' },
+    // ];
     //  thuoc, dongia, solo, shd, sum(soluong) sln, sum(soluongton) slton 
-    this.colsByKho = [
-      { field: 'maThuoc', header: 'Mã thuốc' },
-      { field: 'thuoc', header: 'Thuốc' },
-      { field: 'unit', header: 'Đơn vị' },
-      { field: 'dongia', header: 'Đơn giá' },
-      { field: 'solo', header: 'Lô' },
-      { field: 'shd', header: 'Số HĐ' },
-      { field: 'sln', header: 'Số lượng nhập' },
-      { field: 'slton', header: 'Tồn' },
-      { field: 'thanhtien', header: 'Thành tiền' },
-    ];
+    // this.colsByKho = [
+    //   { field: 'maThuoc', header: 'Mã thuốc' },
+    //   { field: 'thuoc', header: 'Thuốc' },
+    //   { field: 'unit', header: 'Đơn vị' },
+    //   { field: 'dongia', header: 'Đơn giá' },
+    //   { field: 'solo', header: 'Lô' },
+    //   { field: 'shd', header: 'Số HĐ' },
+    //   { field: 'sln', header: 'Số lượng nhập' },
+    //   { field: 'slton', header: 'Tồn' },
+    //   { field: 'thanhtien', header: 'Thành tiền' },
+    // ];
     // pkb.mabenhnhan, pkb.fullname, rie.thuoc, 
     // t.tenthuoc, t.unit, sum(rie.soluong) tong
-    this.colsPatientThuoc = [
-      { field: 'mabenhnhan', header: 'Mã' },
-      { field: 'fullname', header: 'Tên' },
-      { field: 'thuoc', header: 'Mã thuốc' },
-      { field: 'tenthuoc', header: 'Tên thuốc' },
-      { field: 'unit', header: 'Đơn vị' },
-      { field: 'tong', header: 'Số lượng' },
-      // { field: 'thanhtien', header: 'Thành tiền' },
-    ];
+    // this.colsPatientThuoc = [
+    //   { field: 'mabenhnhan', header: 'Mã' },
+    //   { field: 'fullname', header: 'Tên' },
+    //   { field: 'thuoc', header: 'Mã thuốc' },
+    //   { field: 'tenthuoc', header: 'Tên thuốc' },
+    //   { field: 'unit', header: 'Đơn vị' },
+    //   { field: 'tong', header: 'Số lượng' },
+    //   // { field: 'thanhtien', header: 'Thành tiền' },
+    // ];
     // this.initCategories();
-    this.thuocService.getThuocsByType(1).subscribe(
-      res => {
-        this.thuocs = res.data;
-      },
-      err => {
-        console.log(err);
-        this.searching = false;
-      }
+    // this.thuocService.getThuocsByType(1).subscribe(
+    //   res => {
+    //     this.thuocs = res.data;
+    //   },
+    //   err => {
+    //     console.log(err);
+    //     this.searching = false;
+    //   }
+    // );
+
+    this.initCan()
+  }
+
+  initCan() {
+    this.categories = []
+    this.weighService.getAllWeighs().subscribe(
+        data => {
+          console.log('getAllCan: ', data);
+          this.weighs = data;
+          // this.categories = data.data;
+          this.weighs.forEach(element => {
+            if (element.serialWeigher) {
+              const e = { label: element.serialWeigher, value: element.id };
+              this.categories.push(e);
+            }
+          });
+          this.selectedWeigh = this.weighs[0];
+          console.log(' nhom categories: ', this.categories);
+        },
+        err => {
+          console.log(err);
+        }
     );
+
   }
 
   initCategories() {
@@ -140,7 +166,25 @@ export class ThuocReportComponent implements OnInit {
   }
 
   xemDuLieu() {
+    if (this.selectedWeigh != undefined && this.selectedWeigh.serialWeigher) {
+      this.milkCollectService.getMilkCollectByCan(this.selectedWeigh.serialWeigher, this.tkFrom, this.tkTo).subscribe(
+          data => {
+            this.messages = data
+          }, error => {
 
+          }
+      )
+
+    } else {
+
+      this.milkCollectService.getMilkCollectByDate(this.tkFrom, this.tkTo).subscribe(
+          data => {
+            this.messages = data
+          }, error => {
+
+          }
+      )
+    }
 
     // this.milkCollect.getWeighsByUser().subscribe(
     //   res => {
@@ -230,16 +274,19 @@ export class ThuocReportComponent implements OnInit {
   //   });
   // }
 
-  changWeigh(selectedCan) {
-    this.milkCollect.getMilkCollectByCan(selectedCan, this.tkFrom, this.tkTo).subscribe(
-      res => {
-        this.messages = res.data;
-      },
-      err => {
-        console.log(err);
-      }
-    );
+  changWeigh() {
+    // this.milkCollectService.getMilkCollectByCan(this.selectedWeigh.serialWeigher, this.tkFrom, this.tkTo).subscribe(
+    //   res => {
+    //     this.messages = res.data;
+    //   },
+    //   err => {
+    //     console.log(err);
+    //   }
+    // );
+    console.log('------this.selectedWeigh.serialWeigher: ', this.selectedWeigh.serialWeigher);
   }
+
+  exportBNExcel() {}
 
   changKho() {
     this.thuocService.getThuocsByTypeAndKho(1, this.selectedKho.id).subscribe(

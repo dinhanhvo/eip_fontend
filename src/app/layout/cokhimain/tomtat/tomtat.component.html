@@ -37,14 +37,25 @@
 <!--                                </div>-->
 <!--                            </div>-->
                             <div class="row">
+                                <div class="ui-g-2" style="text-align: right">Người dùng: </div>
+                                <div class="ui-g-4">
+                                    <p-dropdown [options]="users" optionLabel="name"
+                                                     (onChange)="changUser()"
+                                                     [autoDisplayFirst]="false"
+                                                     [(ngModel)]="selectedUser" name="optUser">
+                                    </p-dropdown>
+                                </div>
+                            </div>
+
+                            <div class="row">
                                 <div class="ui-g-2" style="text-align: right">Mã cân: </div>
                                 <div class="ui-g-4">
-                                    <input type="text" [(ngModel)]="user.serialWeigher"
-                                     name="weight">
+                                     <p-dropdown [options]="weighs" optionLabel="serialWeigher"
+                                                     (onChange)="changWeigh()"
+                                                     [autoDisplayFirst]="false"
+                                                     [(ngModel)]="selectedWeigh" name="optWeigh">
+                                     </p-dropdown>
                                 </div>
-<!--                                <div class="ui-g-4">-->
-<!--                                    Huyết áp: <input type="text" [(ngModel)]="selectedPatient.huyetap" name="huyetap">-->
-<!--                                </div>-->
                             </div>
                         </div>
 

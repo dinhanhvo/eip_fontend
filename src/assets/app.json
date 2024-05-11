@@ -9,7 +9,7 @@
     {
       "name": "LOCAL SERVER",
       "api": "http://localhost:9093/api",
-      "default": false
+      "default": true
     },
     {
       "name": "LOCAL SERVER",
@@ -19,7 +19,7 @@
     {
       "name": "PRODUCT SERVER",
       "api": "http://68.183.176.58:9093/api",
-      "default": true
+      "default": false
     }
 
   ]

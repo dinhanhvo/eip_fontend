@@ -178,8 +178,8 @@ export class MainComponent implements OnInit {
         this.message = JSON.parse(packet.payload.toString());
         // this.messages.push(this.message);
         let msg = {...this.message};
-        // msg.mqttStatus = 'Completed';
-        msg.createdAt = new Date();
+        msg.mqttStatus = 'Completed';
+        // msg.createdAt = new Date();
 
         this.messages.splice(0, 0, msg);
       } catch (e) {

@@ -18,8 +18,8 @@ import { WeighService } from '../../../shared/services/weigh.service';
   styleUrls: ['./patient.component.scss']
 })
 export class PatientComponent implements OnInit {
-  weigh: Weigh = {};
-  weighs: Weigh = {};
+  weigh: Weigh;
+  weighs: Weigh[] = [];
 
   patient: PatientModel;
   displayDialog: boolean;
@@ -67,50 +67,46 @@ export class PatientComponent implements OnInit {
 
   ngOnInit() {
     this.searching = true;
-    // this.patientService.getAllPatients().subscribe(
-    //   data => {
-    //     console.log('getAllPatients: ', data.data);
-    //     this.patients = data.data;
-    //     this.searching = false;
-    //   },
-    //   err => {
-    //     console.log(err);
-    //     this.searching = false;
-    //   }
-    // );
+    this.weighService.getAllWeighs().subscribe(
+      data => {
+        // console.log('getAllPatients: ', data.data);
+        this.weighs = data;
+        this.searching = false;
+      },
+      err => {
+        console.log(err);
+        this.searching = false;
+      }
+    );
     // get from client
-    this.patients = this.patientService.getAllPatients();
+    // this.patients = this.patientService.getAllPatients();
 
-    this.patient = new PatientModel();
-    this.patient.imported_at = DateService.newUTCDate(new Date());
+    // this.patient = new PatientModel();
+    // this.patient.imported_at = DateService.newUTCDate(new Date());
     // this.patient.imported_at = new Date();
 
+    this.weigh = new Weigh();
+    this.weigh.dateProduce = new Date();
+
+    // @ts-ignore
     this.cols = [
-      // { field: 'patientName', header: 'Tên' },
-      // { field: 'fullname', header: 'Tên tìm kiếm' },
       { field: 'serialWeigher', header: 'Mã Cân' },
       { field: 'model', header: 'Hãng sản xuất' },
       { field: 'power', header: 'Nguồn' },
       { field: 'dateProduce', header: 'Ngày sản xuất' },
-      // { field: 'sohoso', header: 'Số hồ sơ' },
-      // { field: 'mobile', header: 'Di động' },
-      // { field: 'gender', header: 'Giới tính' },
-      // { field: 'weight', header: 'Cân nặng' },
-      // { field: 'huyetap', header: 'Huyết áp' },
-      // { field: 'imported_at', header: 'Ngày nhập' },
     ];
 
-    let i = 1, begin = 1900, end = 2022;
-    for (i = begin; i < end; i++) {
-      let e = { label: i.toString(), value: i }
-      this.birthYears.push(e);
-    }
-
-    this.selectedBlood = this.bloods[0].value;
-    this.selectedGender = this.genders[0].value;
-    this.selectedYear = this.birthYears[this.birthYears.length - 1].value;
-    // this.patient.categories = [];
-    this.searching = false;
+    // let i = 1, begin = 1900, end = 2022;
+    // for (i = begin; i < end; i++) {
+    //   let e = { label: i.toString(), value: i }
+    //   this.birthYears.push(e);
+    // }
+    //
+    // this.selectedBlood = this.bloods[0].value;
+    // this.selectedGender = this.genders[0].value;
+    // this.selectedYear = this.birthYears[this.birthYears.length - 1].value;
+    // // this.patient.categories = [];
+    // this.searching = false;
   }
 
   onSelectType(e) {
@@ -122,13 +118,13 @@ export class PatientComponent implements OnInit {
     this.router.navigate(['/admin/excelltool']);
   }
 
-  layDulieu() {
-    this.searching = true;
-    this.patients = this.patientService.getAllPatients();
-    setTimeout(() => {
-      this.searching = false;
-    }, 1000);
-  }
+  // layDulieu() {
+  //   this.searching = true;
+  //   this.patients = this.patientService.getAllPatients();
+  //   setTimeout(() => {
+  //     this.searching = false;
+  //   }, 1000);
+  // }
 
   exportBNExcel() {
       ExcelUtil.exportExcell('DS Cân', this.patients);
@@ -137,9 +133,9 @@ export class PatientComponent implements OnInit {
   showDialogToAdd() {
     this.selectedPatient = null;
     // this.patient = null;
-    this.resetForm();
-    console.log('showDialogToAdd =========', this.patient);
-    this.newPatient = true;
+    // this.resetForm();
+    console.log('showDialogToAdd =========', this.weigh);
+    // this.newPatient = true;
     this.displayDialog = true;
   }
 
@@ -154,7 +150,8 @@ export class PatientComponent implements OnInit {
       data => {
         console.log('saved weigh: ', data);
         // let ts: PatientModel[] = data.data;
-        this.weighs = data.data;
+        this.weighs.splice(0, 0, data);
+        this.displayDialog = false;
         this.addSingle('success', 'Thành công', 'Đã thêm Cân ' + this.weigh.serialWeigher);
       },
       err => {
@@ -301,6 +298,8 @@ export class PatientComponent implements OnInit {
   ngOnDestroy(): void {
     this.patient = null;
     this.patients = null;
+    this.weighs = null;
+    this.weigh = null;
   }
 
   onBasicUpload(e) {

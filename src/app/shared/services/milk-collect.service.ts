@@ -26,7 +26,7 @@ export class MilkCollectService {
   }
 
   getAllMilkCollects(): Observable<any> {
-    const url = this.appStore.getData(AppStore.PROFILE, {}).api + '/milkcollectts';
+    const url = this.appStore.getData(AppStore.PROFILE, {}).api + '/milks';
 
     // return this.http.get<any>('assets/data/milkcollectts.json').pipe(
     return this.http.get<any>(url, this.options).pipe(
@@ -42,7 +42,7 @@ export class MilkCollectService {
   }
 
   getMilkCollectsByUser(id): Observable<any> {
-    const url = this.appStore.getData(AppStore.PROFILE, {}).api + '/milkcollectts/user/' + id;
+    const url = this.appStore.getData(AppStore.PROFILE, {}).api + '/milks/user/' + id;
 
     // return this.http.get<any>('assets/data/milkcollectts.json').pipe(
     return this.http.get<any>(url, this.options).pipe(
@@ -60,8 +60,8 @@ export class MilkCollectService {
   getMilkCollectByCan(serial: string, tkfrom: Date, tkto: Date): Observable<any> {
     let from = DateService.newUTCDate(tkfrom);
     let to = DateService.newUTCDate(tkto);
-    const url = this.appStore.getData(AppStore.PROFILE, {}).api + '/milkcollectts?serial='
-       + serial + '&from=' + from.toUTCString() + '&to=' + to.toUTCString();
+    const url = this.appStore.getData(AppStore.PROFILE, {}).api + '/milks?serialWeigh='
+       + serial + '&from=' + from.toISOString() + '&to=' + to.toISOString();
     return this.http.get<any>(url, this.options).pipe(
       tap(
         data => {
@@ -73,4 +73,21 @@ export class MilkCollectService {
       )
     );
   }
+
+    getMilkCollectByDate(tkfrom: Date, tkto: Date): Observable<any> {
+        let from = DateService.newUTCDate(tkfrom);
+        let to = DateService.newUTCDate(tkto);
+        const url = this.appStore.getData(AppStore.PROFILE, {}).api + '/milks/dates?from='
+             + from.toISOString() + '&to=' + to.toISOString();
+        return this.http.get<any>(url, this.options).pipe(
+            tap(
+                data => {
+                    console.log(data);
+                },
+                error => {
+                    console.log(' getMilkCollectByCan error: ', error);
+                }
+            )
+        );
+    }
 }

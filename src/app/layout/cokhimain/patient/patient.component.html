@@ -51,86 +51,6 @@
                 </p-calendar>
             </div>
         </div>
-<!--        <div class="ui-g">-->
-<!--            <div class="ui-g-12 ui-md-6 ui-lg-4">Địa chỉ:</div>-->
-<!--            <div class="ui-g-12 ui-md-6 ui-lg-8">-->
-<!--                <input type="text" pInputText [(ngModel)]="weigh.address" -->
-<!--                style="width: 100%;"-->
-<!--                name="address" #Address="ngModel" />-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <div class="ui-g">-->
-<!--            <div class="ui-g-12 ui-md-4 ui-lg-4">Ngày nhập:</div>-->
-<!--            <div class="ui-g-12 ui-md-8 ui-lg-8">-->
-<!--                &lt;!&ndash; <input type="text" pInputText [(ngModel)]="patient.imported_at" style="width: 100%;" name="imported_at"-->
-<!--                    #Imported_at="ngModel" /> &ndash;&gt;-->
-<!--                <p-calendar [(ngModel)]="weigh.imported_at" -->
-<!--                dateFormat="dd/mm/yy"-->
-<!--                name="imported_at" [showIcon]="true">-->
-<!--                </p-calendar>-->
-<!--            </div>-->
-<!--        </div>-->
-        <!-- <div class="ui-g">
-            <div class="ui-g-12 ui-md-4 ui-lg-4">Tên đăng nhập:</div>
-            <div class="ui-g-12 ui-md-8 ui-lg-8 form-group">
-                <input type="text" pInputText [(ngModel)]="patient.username" style="width: 100%;" name="username"
-                    #Username="ngModel" />
-            </div>
-        </div> -->
-
-<!--        <div class="ui-g">-->
-<!--            <div class="ui-g-12 ui-md-4 ui-lg-4">Khu:</div>-->
-<!--            <div class="ui-g-12 ui-md-8 ui-lg-8 form-group">-->
-<!--                <input type="text" pInputText [(ngModel)]="patient.khu" style="width: 100%;" name="khu"-->
-<!--                    #khu="ngModel" />-->
-<!--            </div>-->
-<!--        </div>-->
-
-<!--        <div class="ui-g">-->
-<!--            <div class="ui-g-12 ui-md-4 ui-lg-4">Số hồ sơ:</div>-->
-<!--            <div class="ui-g-12 ui-md-8 ui-lg-8 form-group">-->
-<!--                <input type="text" pInputText [(ngModel)]="patient.sohoso" style="width: 100%;" name="sohoso"-->
-<!--                    #sohoso="ngModel" />-->
-<!--            </div>-->
-<!--        </div>-->
-
-<!--        <div class="ui-g">-->
-<!--            <div class="ui-g-12 ui-md-6 ui-lg-4">CMT/CCCD:</div>-->
-<!--            <div class="ui-g-12 ui-md-6 ui-lg-8">-->
-<!--                <input type="text" pInputText [(ngModel)]="patient.idcard" name="idcard" #Idcard="ngModel" />-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <div class="ui-g">-->
-<!--            <div class="ui-g-12 ui-md-6 ui-lg-4">Di động:</div>-->
-<!--            <div class="ui-g-12 ui-md-6 ui-lg-8">-->
-<!--                <input type="text" pInputText [(ngModel)]="patient.mobile" name="mobile" #Mobile="ngModel" />-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <div class="ui-g">-->
-<!--            <div class="ui-g-12 ui-md-6 ui-lg-4">Giới tính:</div>-->
-<!--            <div class="ui-g-12 ui-md-6 ui-lg-8">-->
-<!--                <p-dropdown [options]="genders" [(ngModel)]="selectedGender" name="selectedGender"-->
-<!--                    #SelectedGender="ngModel"> </p-dropdown>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <div class="ui-g">-->
-<!--            <div class="ui-g-12 ui-md-6 ui-lg-4">ĐT Nhà:</div>-->
-<!--            <div class="ui-g-12 ui-md-6 ui-lg-8">-->
-<!--                <input type="text" pInputText [(ngModel)]="patient.homephone" name="homephone" #Homephone="ngModel" />-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <div class="ui-g">-->
-<!--            <div class="ui-g-12 ui-md-6 ui-lg-4">Cân nặng:</div>-->
-<!--            <div class="ui-g-12 ui-md-6 ui-lg-8">-->
-<!--                <input type="text" pInputText [(ngModel)]="patient.weight" name="weight" #Ưeight="ngModel" />-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <div class="ui-g">-->
-<!--            <div class="ui-g-12 ui-md-6 ui-lg-4">Chiều cao:</div>-->
-<!--            <div class="ui-g-12 ui-md-6 ui-lg-8">-->
-<!--                <input type="text" pInputText [(ngModel)]="patient.height" name="height" #Height="ngModel" />-->
-<!--            </div>-->
-<!--        </div>-->
 
         <!-- <div class="ui-g">
             <div class="ui-g-12 ui-md-4 ui-lg-4">Hình ảnh:</div>
@@ -187,7 +107,7 @@
         </div>
     </form>
 </p-dialog>
-<p-table #dt [columns]="cols" [value]="patients" 
+<p-table #dt [columns]="cols" [value]="weighs"
     [loading]="searching"
     [(selection)]="selectedPatient"
     (onRowSelect)="onRowSelect($event)" 
@@ -206,7 +126,6 @@
     </ng-template> -->
     <ng-template pTemplate="caption">
         Danh sách Cân 
-        <div *ngIf="patients">{{patients.length}}</div>
         <div class="ui-helper-clearfix" style="text-align: left">
             <button type="button" pButton icon="pi pi-file-excel" iconPos="left" label="EXCEL" 
             (click)="exportBNExcel()" style="margin-right: 0.5em; float:right" 

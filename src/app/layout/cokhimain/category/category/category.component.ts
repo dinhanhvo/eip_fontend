@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CategoryService } from '../../../../shared/services/category.service';
 import { User } from '../../../../shared/model/user';
 import { LoginService } from '../../../../shared';
+import {MessageService} from 'primeng/api';
 
 export interface CategoryModel {
   id: number,
@@ -50,14 +51,15 @@ export class CategoryComponent implements OnInit {
 
   constructor(
     private categoryService: CategoryService,
-    private loginService: LoginService
+    private loginService: LoginService,
+    private messageService: MessageService,
   ) { }
 
   ngOnInit() {
 
     this.loginService.getAllUser().subscribe(
       data => {
-        this.user =  data;
+        this.users =  data;
       }, error => {
 
       }
@@ -93,7 +95,22 @@ export class CategoryComponent implements OnInit {
   }
 
   saveUser() {
-    this.loginService.addUser(this.user);
+    this.loginService.signUp(this.user.name, this.user.email, this.user.username, this.user.password, this.user.serialWeigher)
+        .subscribe(
+            data => {
+              this.users.splice(0, 0, data);
+              this.displayDialog = false;
+              this.addSingle('success', 'Thành công', 'Đã thêm người dùng ' + this.user.username);
+            }, error => {
+
+              if (error.error.message) {
+                this.addSingle('error', 'Lỗi', error.error.message);
+                // tslint:disable-next-line:triple-equals
+              } else if (error.status == 400) {
+                this.addSingle('error', 'Lỗi', 'Dữ liệu đầu vào không đúng');
+              }
+            }
+        );
   }
   save() {
     console.log('-----add cate: ', this.category);
@@ -144,6 +161,11 @@ export class CategoryComponent implements OnInit {
     console.log('>>>>>>> selected: ', this.selectedCate);
 
     this.displayDialog = true;
+  }
+
+  addSingle(type, summary, detail) {
+    // this.messageService.add({severity:'success', summary:'Service Message', detail:'Via MessageService'});
+    this.messageService.add({ severity: type, summary: summary, detail: detail });
   }
 
   cloneCar(c: CategoryModel) {

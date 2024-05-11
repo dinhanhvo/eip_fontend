@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
-import {ConfirmationService, MessageService} from 'primeng/api';
+import {ConfirmationService, MessageService, SelectItem} from 'primeng/api';
 import {Message} from 'primeng/components/common/api';
 import {NhiXuanOptions, NXOption} from '../../../shared/common/selectitem';
 import {PatientModel} from '../../../shared/model/patient.model ';
@@ -14,8 +14,9 @@ import {SoTinhtienHocvien} from '../../../shared/utils/pdf-tinhtien-hocvien';
 import {DonthuocService} from '../../../shared/services/donthuocs.service';
 import {ThuocService} from '../../../shared/services/thuoc.service';
 import {ThuocModel} from '../../../shared/model/thuoc.model';
-import {User} from '../../../shared/model/user';
+import {User, Weigh} from '../../../shared/model/user';
 import {LoginService} from '../../../shared';
+import {WeighService} from '../../../shared/services/weigh.service';
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
@@ -27,6 +28,11 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
 export class TomtatComponent implements OnInit {
 
   user: User = {};
+  selectedUser: User;
+  users: User[] = [];
+  categories: SelectItem[] = [];
+  weighs: Weigh[] = [];
+  selectedWeigh: Weigh;
 
   headerCSS = {
     fontSize: 14,
@@ -102,7 +108,8 @@ export class TomtatComponent implements OnInit {
     private confirmationService: ConfirmationService,
     private donthuocService: DonthuocService,
     private thuocService: ThuocService,
-    private loginService: LoginService
+    private loginService: LoginService,
+    private weighService: WeighService
 
     // private dateService: DateService
     // private thuocService: ThuocService
@@ -123,7 +130,22 @@ export class TomtatComponent implements OnInit {
         }
     );
 
+    this.loginService.getAllUser().subscribe(
+        data => {
+          //console.log('got data', data);
+          if (data.errors && data.errors.length > 0) {
+            console.log('Current session invalid. Getting out...');
+          } else {
+            this.users = data;
+            this.selectedUser = this.users[0]
+          }
+        },
+        error => {
+          console.log('Error while validating session', error);
+        }
+    );
 
+    this.initCan();
     // this.xemFrom = DateService.newUTCDate(new Date());
     // this.xemTo = DateService.newUTCDate(new Date());
     // this.cols = [
@@ -158,6 +180,42 @@ export class TomtatComponent implements OnInit {
 
   }
 
+  initCan() {
+    this.categories = []
+    this.weighService.getAllWeighs().subscribe(
+        data => {
+          console.log('getAllCan: ', data);
+          this.weighs = data;
+          // this.categories = data.data;
+          this.weighs.forEach(element => {
+            if (element.serialWeigher) {
+              const e = {label: element.serialWeigher, value: element.id};
+              this.categories.push(e);
+            }
+          });
+          this.selectedWeigh = this.weighs[0];
+          console.log(' nhom categories: ', this.categories);
+        },
+        err => {
+          console.log(err);
+        }
+    );
+  }
+
+  changUser() {
+    console.log('');
+  }
+
+  changWeigh() {
+    // this.milkCollectService.getMilkCollectByCan(selectedWeigh, this.tkFrom, this.tkTo).subscribe(
+    //     res => {
+    //       this.messages = res.data;
+    //     },
+    //     err => {
+    //       console.log(err);
+    //     }
+    // );
+  }
   // initDanhSach() {
   //   this.patientsTB = [];
   //   this.patients = this.patientService.getAllPatients();
@@ -491,9 +549,11 @@ export class TomtatComponent implements OnInit {
   }
 
   saveUser() {
-    this.loginService.changeUser(this.user).subscribe(
+    this.selectedUser.serialWeigher = this.selectedWeigh.serialWeigher;
+    this.loginService.saveUser(this.selectedUser).subscribe(
         res => {
           this.user = res.data;
+          this.addSingle('success', 'Thành công', 'Đã lưu thông tin người dùng');
         },
         err => {
           this.addSingle('error', 'Lỗi', 'Có lỗi xảy ra');
