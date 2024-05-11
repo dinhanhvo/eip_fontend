@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { routerTransition } from '../../../router.animations';
+import {LoginService} from '../../../shared';
+import {Role, User} from '../../../shared/model/user';
 
 @Component({
     selector: 'app-sidebar',
@@ -9,12 +11,16 @@ import { routerTransition } from '../../../router.animations';
     styleUrls: ['./sidebar.component.scss'],
     animations: [routerTransition()]
 })
-export class SidebarComponent {
+export class SidebarComponent implements OnInit {
     isActive: boolean = false;
     showMenu: string = 'publication';
     pushRightClass: string = 'push-right';
 
-    constructor(private translate: TranslateService, public router: Router) {
+    currentUser: User = {};
+
+    constructor(private translate: TranslateService,
+                private logginService: LoginService,
+                public router: Router) {
         this.router.events.subscribe(val => {
             if (
                 val instanceof NavigationEnd &&
@@ -24,6 +30,29 @@ export class SidebarComponent {
                 this.toggleSidebar();
             }
         });
+    }
+
+    ngOnInit() {
+        this.logginService.getMe().subscribe(
+            data => {
+                this.currentUser = data;
+                console.log('-------------currentUser: ', this.currentUser);
+                }, error => {
+                        console.log('-------------currentUser: error');
+            }
+        );
+    }
+
+    isPermission(roleName: string): boolean {
+        if (this.currentUser === undefined || this.currentUser.roles === undefined) {
+            return false;
+        }
+        let ok = false;
+        let roles: Role[] = [];
+        roles = this.currentUser.roles.filter(r => r.name === roleName);
+        ok = roles.length > 0;
+        // console.log('---------- check permission: ', ok);
+        return ok;
     }
 
     eventCalled() {

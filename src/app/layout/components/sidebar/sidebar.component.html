@@ -12,13 +12,13 @@
       </a>
       <li class="nested" [class.expand]="showMenu === 'publication'">
         <ul class="submenu">
-          <li>
+          <li *ngIf="isPermission('ROLE_ADMIN')">
             <a class="fa fa-fw fa-list" style="width: 70%; font-size: 14px; text-align: left;"
                [routerLink]="['/admin/user']" [routerLinkActive]="['router-link-active']">
               Người dùng
             </a>
           </li>
-          <li>
+          <li *ngIf="isPermission('ROLE_ADMIN')">
             <a class="fa fa-fw fa-list" style="width: 70%; font-size: 14px; text-align: left;"
               [routerLink]="['/admin/can']" [routerLinkActive]="['router-link-active']">
               Cân
@@ -30,13 +30,13 @@
 <!--              Khám bệnh-->
 <!--            </a>-->
 <!--          </li>-->
-          <li>
+          <li *ngIf="isPermission('ROLE_ADMIN')">
             <a class="fa fa-fw fa-list" style="width: 70%; font-size: 14px; text-align: left;"
               [routerLink]="['/admin/config']" [routerLinkActive]="['router-link-active']">
               Chỉnh sửa thông tin
             </a>
           </li>
-          <li>
+          <li *ngIf="isPermission('ROLE_USER')">
             <a class="fa fa-fw fa-list" style="width: 70%; font-size: 14px; text-align: left;"
               [routerLink]="['/admin/report']" [routerLinkActive]="['router-link-active']">
               Báo Cáo

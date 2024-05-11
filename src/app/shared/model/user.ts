@@ -7,6 +7,7 @@ export interface User {
     password?;
     address?;
     phone?;
+    roles?;
 }
 
 export interface Weigh {
@@ -19,6 +20,11 @@ export interface Weigh {
     // qos?;
     // constructor() {
     // }
+}
+
+export interface Role {
+    id?;
+    name?;
 }
 
 // export class Weigh {

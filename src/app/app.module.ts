@@ -56,7 +56,7 @@ export const connection: IMqttServiceOptions = {
   path: '/mqtt',
   clean: true, // 保留会话
   connectTimeout: 4000, // 超时时间
-  reconnectPeriod: 400, // 重连时间间隔
+  reconnectPeriod: 4000, // 重连时间间隔
   // 认证信息
   clientId: 'eip-dashboard',
   username: 'voda',
