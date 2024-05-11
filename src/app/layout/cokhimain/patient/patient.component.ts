@@ -20,40 +20,16 @@ import { WeighService } from '../../../shared/services/weigh.service';
 export class PatientComponent implements OnInit {
   weigh: Weigh;
   weighs: Weigh[] = [];
+  selectedWeigh: Weigh;
 
-  patient: PatientModel;
   displayDialog: boolean;
-  selectedPatient: PatientModel;
-  newPatient: boolean;
-  patients: PatientModel[] = [];
+
+  // patient: PatientModel;
+  // selectedPatient: PatientModel;
+  // patients: PatientModel[] = [];
   cols: any[];
-  uploadedFiles: any[] = [];
-  selectedGender: number;
-  selectedYear: number;
-  selectedBlood: number;
 
   searching = false;
-  genders = [
-    { label: 'Nam', value: 1 },
-    { label: 'Nữ', value: 2 },
-    { label: 'Khác', value: 3 }
-  ];
-
-  bloods = [
-    { label: 'Khác', value: 0 },
-    { label: 'A', value: 1 },
-    { label: 'B', value: 2 },
-    { label: 'AB', value: 3 },
-    { label: 'O', value: 4 },
-  ];
-
-  birthYears = [
-    // { label: '1982', value: 0 },
-    // { label: '1982', value: 1 },
-    // { label: '1982', value: 2 },
-    // { label: '1982', value: 3 },
-    // { label: '1982', value: 4 },
-  ];
 
   msgs: Message[] = [];
   constructor(
@@ -78,12 +54,6 @@ export class PatientComponent implements OnInit {
         this.searching = false;
       }
     );
-    // get from client
-    // this.patients = this.patientService.getAllPatients();
-
-    // this.patient = new PatientModel();
-    // this.patient.imported_at = DateService.newUTCDate(new Date());
-    // this.patient.imported_at = new Date();
 
     this.weigh = new Weigh();
     this.weigh.dateProduce = new Date();
@@ -96,42 +66,18 @@ export class PatientComponent implements OnInit {
       { field: 'dateProduce', header: 'Ngày sản xuất' },
     ];
 
-    // let i = 1, begin = 1900, end = 2022;
-    // for (i = begin; i < end; i++) {
-    //   let e = { label: i.toString(), value: i }
-    //   this.birthYears.push(e);
-    // }
-    //
-    // this.selectedBlood = this.bloods[0].value;
-    // this.selectedGender = this.genders[0].value;
-    // this.selectedYear = this.birthYears[this.birthYears.length - 1].value;
-    // // this.patient.categories = [];
-    // this.searching = false;
-  }
-
-  onSelectType(e) {
-    // console.log('onSelectType', this.patient.type);
-    console.log('onSelectType---', e.value);
   }
 
   addFromFile() {
     this.router.navigate(['/admin/excelltool']);
   }
 
-  // layDulieu() {
-  //   this.searching = true;
-  //   this.patients = this.patientService.getAllPatients();
-  //   setTimeout(() => {
-  //     this.searching = false;
-  //   }, 1000);
-  // }
-
   exportBNExcel() {
-      ExcelUtil.exportExcell('DS Cân', this.patients);
+      ExcelUtil.exportExcell('DS Cân', this.weighs);
   }
 
   showDialogToAdd() {
-    this.selectedPatient = null;
+    // this.selectedPatient = null;
     // this.patient = null;
     // this.resetForm();
     console.log('showDialogToAdd =========', this.weigh);
@@ -139,156 +85,67 @@ export class PatientComponent implements OnInit {
     this.displayDialog = true;
   }
 
-  resetForm() {
-    this.patient = null;
-    this.patient = new PatientModel();
-    this.patient.imported_at = DateService.newUTCDate(new Date());
-  }
+  // resetForm() {
+  //   this.patient = null;
+  //   this.patient = new PatientModel();
+  //   this.patient.imported_at = DateService.newUTCDate(new Date());
+  // }
 
   save() {
-    this.weighService.addWeigh(this.weigh).subscribe(
-      data => {
-        console.log('saved weigh: ', data);
-        // let ts: PatientModel[] = data.data;
-        this.weighs.splice(0, 0, data);
-        this.displayDialog = false;
-        this.addSingle('success', 'Thành công', 'Đã thêm Cân ' + this.weigh.serialWeigher);
-      },
-      err => {
-        this.addSingle('error', 'Lỗi Server', 'Không kết nối được CSDL ');
-      }
-    )
-  }
+    if (this.weigh.id) {
+      this.weighService.updateWeigh(this.weigh).subscribe(
+          data => {
+            console.log('saved weigh: ', data);
+            // let ts: PatientModel[] = data.data;
+              // tslint:disable-next-line:triple-equals
+              this.weighs = this.weighs.map(w => w.id == data.id ? data : w);
+            this.displayDialog = false;
+            this.addSingle('success', 'Thành công', 'Đã  cập nhật  Cân ' + this.weigh.serialWeigher);
+          },
+          err => {
+            this.addSingle('error', 'Lỗi Server', 'Không cập nhật được Cân ');
+          }
+      );
+    } else {
+      this.weighService.addWeigh(this.weigh).subscribe(
+          data => {
+            console.log('updated weigh: ', data);
+            // this.weighs.splice(0, 0, data);
+            // tslint:disable-next-line:triple-equals
+            this.weighs.splice(0, 0, data);
+            this.displayDialog = false;
+            this.addSingle('success', 'Thành công', 'Đã thêm Cân ' + this.weigh.serialWeigher);
+          },
+          err => {
+            this.addSingle('error', 'Lỗi Server', 'Không thêm được cân ');
+          }
+      );
 
-  savePatient() {
-    console.log('-----save patient: ', this.patient);
-    if (this.patient.patientName === undefined || this.patient.patientName === '') {
-      this.msgs.push({ severity: 'error', summary: 'Lỗi: ', detail: 'Chưa nhập tên Cân !!!' });
-      return;
     }
-
-    this.bloods.forEach(e => {
-      if (e.value == this.selectedBlood) {
-        this.patient.blood = e.label;
-      }
-    });
-
-    this.genders.forEach(e => {
-      if (e.value == this.selectedGender) {
-        this.patient.gender = e.label;
-      }
-    });
-
-    if (this.newPatient) {
-      this.patientService.addPatient(this.patient).subscribe(
-        data => {
-          console.log('saved ', data);
-          // let ts: PatientModel[] = data.data;
-          this.patients = data.data;
-          this.patientService.setClientPatiens(this.patients);
-          // this.displayDialog = false;
-          this.patient = new PatientModel();
-          this.patient.imported_at = DateService.newUTCDate(new Date());
-          this.addSingle('success', 'Thành công', 'Đã thêm Cân ' + this.patient.patientName);
-        },
-        err => {
-          this.addSingle('error', 'Lỗi Server', 'Không kết nối được CSDL ' + this.patient.patientName);
-        }
-      )
-    }
-    else {
-      this.bloods.forEach(e => {
-        if (e.value == this.selectedBlood) {
-          this.patient.blood = e.label;
-        }
-      });
-
-      this.genders.forEach(e => {
-        if (e.value == this.selectedGender) {
-          this.patient.gender = e.label;
-        }
-      });
-      
-      this.patientService.editPatient(this.patient).subscribe(
-        res => {
-          console.log('updated: ', res);
-          this.patients = res.data;
-          this.patientService.setClientPatiens(this.patients);
-          // let ts: PatientModel[] = res.data;
-          this.displayDialog = false;
-          this.addSingle('success', 'Thành công', 'Đã cập nhật Cân ' + this.patient.patientName);
-
-        },
-        err => {
-          this.addSingle('error', 'Lỗi Server', 'Không kết nối được CSDL ' + this.patient.patientName);
-        }
-      )
-    }
-
   }
 
   delete() {
-    console.log('>>delete>>>>> selected: ', this.selectedPatient);
-    let index = this.patients.indexOf(this.selectedPatient);
-    this.patientService.deletePatient(this.selectedPatient.id).subscribe(
-      res => {
-        console.log(res);
-        this.displayDialog = false;
-        this.patients = res.data;
-        this.patientService.setClientPatiens(this.patients);
-        this.addSingle('success', 'Thành công', 'Đã Xóa Cân ' + this.patient.patientName);
+    const index = this.weighs.indexOf(
+        this.selectedWeigh, 0
+    );
 
-      },
-      err => {
-        this.addSingle('error', 'Lỗi Server', 'Không kết nối được CSDL ' + this.patient.patientName);
-      }
-    )
+    console.log('>>delete>>>>> selected: ', this.selectedWeigh);
+    this.weighService.deleteWeigh(this.selectedWeigh.id).subscribe(
+        res => {
+          this.weighs.splice(index, 1);
+          this.displayDialog = false;
+          this.addSingle('success', 'Thành công', 'Đã xóa Cân ' + this.weigh.serialWeigher);
+        }, error => {
+          this.addSingle('error', 'Lỗi', 'Không xóa được Cân ');
+        }
+    );
   }
 
   onRowSelect(event) {
-    this.newPatient = false;
-    this.patient = this.cloneCar(event.data);
-    this.selectedPatient = event.data;
-    console.log(' onRowSelect >>>>>>> selected: ', this.selectedPatient);
-    // map to patient to show correct info
-    this.genders.forEach(e => {
-      // console.log(e.label);
-      // console.log(this.selectedPatient.unit);
-
-      if (e.label == this.selectedPatient.gender) {
-        this.selectedGender = e.value;
-      }
-    });
-    this.bloods.forEach(e => {
-      if (e.label == this.selectedPatient.blood) {
-        this.selectedBlood = e.value;
-      }
-    });
-    this.birthYears.forEach(e => {
-      if (e.label == this.selectedPatient.birthday) {
-        this.selectedYear = e.value;
-      }
-    });
+    console.log(' onRowSelect >>>>>>> selected: ', this.selectedWeigh);
+    this.weigh = {...this.selectedWeigh};
 
     this.displayDialog = true;
-  }
-
-  cloneCar(c: PatientModel) {
-    let cate = {};
-    for (let prop in c) {
-      cate[prop] = c[prop];
-    }
-    return { ...c };
-  }
-
-  onUpload(event) {
-    console.log('onUpload', event);
-
-    for (let file of event.files) {
-      this.uploadedFiles.push(file);
-    }
-
-    this.messageService.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded' });
   }
 
   hideMessage() {
@@ -296,8 +153,6 @@ export class PatientComponent implements OnInit {
   }
 
   ngOnDestroy(): void {
-    this.patient = null;
-    this.patients = null;
     this.weighs = null;
     this.weigh = null;
   }
@@ -309,7 +164,6 @@ export class PatientComponent implements OnInit {
     // console.log('File uploaded: ', this.imagepath);
   }
 
-  
   addSingle(type, summary, detail) {
     // this.messageService.add({severity:'success', summary:'Service Message', detail:'Via MessageService'});
     this.messageService.add({ severity: type, summary: summary, detail: detail });

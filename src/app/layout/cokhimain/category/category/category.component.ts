@@ -1,16 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CategoryService } from '../../../../shared/services/category.service';
-import { User } from '../../../../shared/model/user';
+import {User, Weigh} from '../../../../shared/model/user';
 import { LoginService } from '../../../../shared';
-import {MessageService} from 'primeng/api';
-
-export interface CategoryModel {
-  id: number,
-  name: '',
-  description: '',
-  imagepath: '',
-  icon: ''
-};
+import {ConfirmationService, MessageService} from 'primeng/api';
+import {WeighService} from '../../../../shared/services/weigh.service';
 
 @Component({
   selector: 'app-category',
@@ -21,38 +14,22 @@ export interface CategoryModel {
 export class CategoryComponent implements OnInit {
 
   displayDialog: boolean;
-
-  category: any = {
-    id: 0,
-    name: '',
-    description: '',
-    imagepath: '',
-    icon: ''
-  };
+  titleDialog: string = "Thêm người dùng";
 
   user: User = {};
   users: User[] = [];
-  //   id: null,
-  //   name: '',
-  //   email: '',
-  //   username: '',
-  //   serialWeigher: '',
-  //   password: '',
-  //   address: '',
-  //   phone: ''
-  // };
-  selectedCate: CategoryModel;
+  selectedUser: User = {};
 
-  newCate: boolean;
-
-  categories: CategoryModel[] = [];
+  weighs: Weigh[] = [];
+  selectedWeigh: Weigh;
 
   cols: any[];
 
   constructor(
-    private categoryService: CategoryService,
     private loginService: LoginService,
     private messageService: MessageService,
+    private confirmationService: ConfirmationService,
+    private weighService: WeighService
   ) { }
 
   ngOnInit() {
@@ -63,39 +40,56 @@ export class CategoryComponent implements OnInit {
       }, error => {
 
       }
-    )
+    );
 
-    // this.categoryService.getAllCategories().subscribe(
-    //   data => {
-    //     console.log('getAllCategories: ', data.data);
-    //     this.categories = data.data;
-    //   },
-    //   err => {
-    //     console.log(err);
-    //   }
-    // );
+    this.initCan();
 
     this.cols = [
       { field: 'name', header: 'Tên ' },
       { field: 'email', header: 'Email' },
       { field: 'username', header: 'Tên Đăng Nhập' },
-      // { field: 'password', header: 'Mật khẩu' },
       { field: 'address', header: 'Địa chỉ' },
       { field: 'phone', header: 'Số điện thoại' },
-      { field: 'serialWeigher', header: 'Mã Cân' }
+      { field: 'serialWeigher', header: 'Mã Cân' },
     ];
+  }
+
+  initCan() {
+    this.weighService.getAllWeighs().subscribe(
+        data => {
+          console.log('getAllCan: ', data);
+          this.weighs = data;
+          // this.categories = data.data;
+          // this.weighs.forEach(element => {
+          //   if (element.serialWeigher) {
+          //     const e = {label: element.serialWeigher, value: element.id};
+          //     this.categories.push(e);
+          //   }
+          // });
+          // console.log(' nhom categories: ', this.categories);
+          this.selectedWeigh = this.weighs[0];
+        },
+        err => {
+          console.log(err);
+        }
+    );
   }
 
   showDialogToAdd() {
     console.log('showDialogToAdd =========');
-
-    this.newCate = true;
-    this.category = {};
     this.displayDialog = true;
   }
 
   saveUser() {
-    this.loginService.signUp(this.user.name, this.user.email, this.user.username, this.user.password, this.user.serialWeigher)
+    if (this.user.id) {
+       this.updateUser(this.user);
+    } else {
+      this.addUser();
+    }
+  }
+
+  addUser() {
+    this.loginService.addUser(this.user)
         .subscribe(
             data => {
               this.users.splice(0, 0, data);
@@ -112,54 +106,57 @@ export class CategoryComponent implements OnInit {
             }
         );
   }
-  save() {
-    console.log('-----add cate: ', this.category);
 
-    // let cates = [...this.categories];
-    if (this.newCate) {
-      this.categoryService.addCategory(this.category).subscribe(
-        data => {
-          console.log('saved ', data);
-          this.categories = data.data;
-          this.displayDialog = false;
-        },
-        err => {
+  updateUser(user: User) {
+    this.loginService.updateUser(user)
+        .subscribe(
+            data => {
+              this.users = this.users.map(u => u.id !== data.id ? u : data);
+              this.displayDialog = false;
+              this.addSingle('success', 'Thành công', 'Đã cập nhật người dùng ' + this.user.username);
+            }, error => {
 
-        }
-      )
-    }
-    else {
-      this.categoryService.editCategory(this.category).subscribe(
-        res => {
-          console.log('updated: ', res);
-          this.categories = res.data;
-          this.displayDialog = false;
-        }
-      )
-    }
+              if (error.error.message) {
+                this.addSingle('error', 'Lỗi', error.error.message);
+                // tslint:disable-next-line:triple-equals
+              } else if (error.status == 400) {
+                this.addSingle('error', 'Lỗi', 'Dữ liệu đầu vào không đúng');
+              }
+            }
+        );
   }
 
-  delete() {
-    console.log('>>>>>>> selected: ', this.selectedCate);
-    let index = this.categories.indexOf(this.selectedCate);
-    this.categoryService.deleteCategory(this.selectedCate.id).subscribe(
-      res => {
-        console.log(res);
-        this.displayDialog = false;
-        this.categories = res.data;
-      }
-    )
+  delete(rowData) {
+    console.log('>>>>>>> selected rowData: ', rowData);
 
-    // this.category = this.category.filter((val, i) => i != index);
-    // this.category = null;
+    this.confirmationService.confirm({
+      message: 'Bạn có chắc chắn muốn xóa người dùng: ' + rowData.username + '?',
+      accept: () => {
+        // Actual logic to perform a confirmation
+        const index = this.users.indexOf(rowData);
+        this.loginService.deleteUser(rowData.id).subscribe(
+            res => {
+              this.users.splice(index, 1);
+              this.displayDialog = false;
+              this.addSingle('success', 'Thành công', 'Đã xóa người dùng ' + this.user.username);
+            }
+        );
+      }
+    });
+  }
+
+  changWeigh() {
+    console.log('>>>>>>> selectedWeigh: ', this.selectedWeigh);
+  }
+
+  onHideEdit(event) {
+    console.log('>>>>>>> selectedUser: ', this.selectedUser);
+    this.selectedUser = {};
   }
 
   onRowSelect(event) {
-    this.newCate = false;
-    this.category = this.cloneCar(event.data);
-    this.selectedCate = event.data;
-    console.log('>>>>>>> selected: ', this.selectedCate);
-
+    console.log('>>>>>>> selected: ', this.selectedUser);
+    this.user = {...this.selectedUser};
     this.displayDialog = true;
   }
 
@@ -168,11 +165,4 @@ export class CategoryComponent implements OnInit {
     this.messageService.add({ severity: type, summary: summary, detail: detail });
   }
 
-  cloneCar(c: CategoryModel) {
-    let cate = {};
-    for (let prop in c) {
-      cate[prop] = c[prop];
-    }
-    return cate;
-  }
 }

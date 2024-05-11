@@ -93,9 +93,29 @@ export class WeighService {
     );
   }
 
+    updateWeigh(weigh: Weigh): Observable<any> {
+        console.log('insert weigh: ', weigh);
+        const url = this.appStore.getData(AppStore.PROFILE, {}).api + this.serviceName + '/weigh';
+        const body = {
+            'weigh': weigh
+            // 'categories': cates
+        };
+
+        return this.http.put(url, weigh, this.options).pipe(
+            tap(
+                data => {
+                    console.log('got response data', data);
+                },
+                error => {
+                    console.log('login error', error);
+                }
+            )
+        );
+    }
+
   deleteWeigh(id): Observable<any> {
     console.log(' weigh delete: ', id);
-    const url = this.appStore.getData(AppStore.PROFILE, {}).api + this.serviceName + '/weigh/' + id;
+    const url = this.appStore.getData(AppStore.PROFILE, {}).api + this.serviceName + '/weigh?id=' + id;
     return this.http.delete(url).pipe(
       tap(
         data => {

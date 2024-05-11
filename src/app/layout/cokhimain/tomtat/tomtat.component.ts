@@ -146,42 +146,11 @@ export class TomtatComponent implements OnInit {
     );
 
     this.initCan();
-    // this.xemFrom = DateService.newUTCDate(new Date());
-    // this.xemTo = DateService.newUTCDate(new Date());
-    // this.cols = [
-    //   { field: 'sohoso', header: 'Số hồ sơ' },
-    //   { field: 'patientId', header: 'Mã bệnh nhân' },
-    //   { field: 'patientName', header: 'Tên bệnh nhân' },
-    //   // { field: 'sotheodoi', header: 'Dữ liệu' },
-    //   // { field: 'color', header: 'Color' }
-    // ];
-    //
-    // this.colPKBs = [
-    //   // { field: 'id', header: 'ID' },
-    //   { field: 'mabenhnhan', header: 'Mã bệnh nhân' },
-    //   { field: 'fullname', header: 'Tên bệnh nhân' },
-    //   { field: 'khu_name', header: 'Khu' },
-    //   { field: 'clsjs', header: 'Cận lâm sàng' },
-    //   { field: 'ketluan', header: 'Kết quả CLS' },
-    //   { field: 'ngaykham', header: 'Ngày khám' },
-    //   // { field: 'donthuocjs', header: 'Đơn thuốc' },
-    //   // { field: 'others', header: 'KHác' }
-    // ];
-    // this.patientsTB = [];
-    // this.patients = this.patientService.getAllPatients();
-    // this.selectedPatient = new PatientModel();
-    // this.checkValidBT();
-    //
-    // this.initTTBA();
-    //
-    // this.thuocService.getAllThuocs().subscribe((data) => {
-    //   this.thuocs = data.data;
-    // }, err => { })
 
   }
 
   initCan() {
-    this.categories = []
+    this.categories = [];
     this.weighService.getAllWeighs().subscribe(
         data => {
           console.log('getAllCan: ', data);
@@ -550,7 +519,7 @@ export class TomtatComponent implements OnInit {
 
   saveUser() {
     this.selectedUser.serialWeigher = this.selectedWeigh.serialWeigher;
-    this.loginService.saveUser(this.selectedUser).subscribe(
+    this.loginService.updateUser(this.selectedUser).subscribe(
         res => {
           this.user = res.data;
           this.addSingle('success', 'Thành công', 'Đã lưu thông tin người dùng');

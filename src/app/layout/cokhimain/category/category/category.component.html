@@ -1,7 +1,8 @@
 <p-toast [style]="{marginTop: '80px'}"></p-toast>
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
 <p-table [columns]="cols" [value]="users" selectionMode="single"
- [(selection)]="selectedCate" (onRowSelect)="onRowSelect($event)" 
- [paginator]="true" [rows]="15">
+ [(selection)]="selectedUser" (onRowSelect)="onRowSelect($event)"
+ [paginator]="true" [rows]="20">
     <ng-template pTemplate="caption">
         Danh Sách Người Dùng
     </ng-template>
@@ -11,12 +12,17 @@
                 {{col.header}}
                 <p-sortIcon [field]="col.field"></p-sortIcon>
             </th>
+            <th style="width:3em"></th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-rowData let-columns="columns">
         <tr [pSelectableRow]="rowData">
             <td *ngFor="let col of columns">
                 {{rowData[col.field]}}
+            </td>
+            <td >
+                <button type="button" pButton icon="fa fa-close" class="ui-button-danger"
+                        (click)="delete(rowData)" ></button>
             </td>
         </tr>
     </ng-template>
@@ -27,7 +33,7 @@
     </ng-template>    
 </p-table>
 
-<p-dialog header="Thêm người dùng" [(visible)]="displayDialog" [responsive]="true"
+<p-dialog header="Người dùng" [(visible)]="displayDialog" [responsive]="true" (onHide)="onHideEdit($event)"
     showEffect="fade" [modal]="true"  [style]="{width: '500px'}">
     <div class="ui-g ui-fluid">
         <div class="ui-g-12">
@@ -38,20 +44,33 @@
                 <input pInputText id="name" [(ngModel)]="user.name" autofocus />
             </div>
         </div>
+        <div class="ui-g-12">
+            <div class="ui-g-4">
+                <label for="username">Tên Đăng Nhập</label>
+            </div>
+            <div class="ui-g-8">
+                <input pInputText id="username" [(ngModel)]="user.username" autofocus />
+            </div>
+        </div>
+        <div class="ui-g-12">
+            <div class="ui-g-4">
+                <label for="serialWeigher">Mã Cân</label>
+            </div>
+            <div class="ui-g-8">
+                <!--          <input pInputText id="serialWeigher" [(ngModel)]="user.serialWeigher" />-->
+                <p-dropdown [options]="weighs" optionLabel="serialWeigher" id="serialWeigher"
+                            (onChange)="changWeigh()"
+                            [autoDisplayFirst]="false"
+                            [(ngModel)]="selectedWeigh" name="optWeigh">
+                </p-dropdown>
+            </div>
+        </div>
       <div class="ui-g-12">
         <div class="ui-g-4">
           <label for="email">Email</label>
         </div>
         <div class="ui-g-8">
           <input pInputText id="email" [(ngModel)]="user.email" autofocus />
-        </div>
-      </div>
-      <div class="ui-g-12">
-        <div class="ui-g-4">
-          <label for="username">Tên Đăng Nhập</label>
-        </div>
-        <div class="ui-g-8">
-          <input pInputText id="username" [(ngModel)]="user.username" autofocus />
         </div>
       </div>
       <div class="ui-g-12">
@@ -78,20 +97,12 @@
                 <input pInputText id="phone" [(ngModel)]="user.phone" />
             </div>
         </div>
-      <div class="ui-g-12">
-        <div class="ui-g-4">
-          <label for="serialWeigher">Mã Cân</label>
-        </div>
-        <div class="ui-g-8">
-          <input pInputText id="serialWeigher" [(ngModel)]="user.serialWeigher" />
-        </div>
-      </div>
     </div>
     <div class="ui-dialog-buttonpane ui-helper-clearfix">
-        <div style="float: left;">
-            <button type="button" pButton icon="fa fa-close" 
-                (click)="delete()" label="Delete"></button>
-        </div>
+<!--        <div style="float: left;">-->
+<!--            <button type="button" pButton icon="fa fa-close" -->
+<!--                (click)="delete()" label="Delete"></button>-->
+<!--        </div>-->
         <div style="float: right;">
             <button type="button" pButton icon="fa fa-check"
                 (click)="saveUser()" label="Lưu"></button>

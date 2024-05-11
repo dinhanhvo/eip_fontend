@@ -1,4 +1,3 @@
-<!-- <p-messages [(value)]="msgs"></p-messages> -->
 <p-toast [style]="{marginTop: '80px'}"></p-toast>
 <p-dialog header="Nhập thông tin Cân:" [(visible)]="displayDialog" [responsive]="true" showEffect="fade"
     [modal]="true" [style]="{width: '700px'}">
@@ -52,20 +51,6 @@
             </div>
         </div>
 
-        <!-- <div class="ui-g">
-            <div class="ui-g-12 ui-md-4 ui-lg-4">Hình ảnh:</div>
-            <div class="ui-g-12 ui-md-8 ui-lg-8">
-                <p-fileUpload name="files" multiple="multiple" accept="image/*" (onUpload)="onBasicUpload($event)"
-                    url="http://smartevn.com:8089/api/upload">
-                    <ng-template pTemplate="content">
-                        <ul *ngIf="uploadedFiles.length">
-                            <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
-                        </ul>
-                    </ng-template>
-                </p-fileUpload>
-            </div>
-        </div> -->
- 
 <!--        <div class="ui-g">-->
 <!--            <div class="ui-g-12 ui-md-4 ui-lg-4">Nhóm máu:</div>-->
 <!--            <div class="ui-g-12 ui-md-8 ui-lg-8">-->
@@ -97,33 +82,26 @@
 <!--        </div>-->
 
         <div class="ui-dialog-buttonpane ui-helper-clearfix">
-            <div style="float: left;" *ngIf="!weigh">
-                <button type="button" pButton icon="fa fa-close" (click)="delete()" label="Delete"></button>
+            <div style="float: left;" >
+                <button type="button" pButton icon="fa fa-close" class="ui-button-danger"
+                        (click)="delete()" label="Delete"></button>
             </div>
             <div style="float: right;">
                 <button type="button" pButton icon="fa fa-check" (click)="save()" 
-                [disabled]="weigh.serialWeigher===undefined || weigh.serialWeigher.trim()===''" label="Save"></button>
+                [disabled]="weigh===undefined" label="Save"></button>
             </div>
         </div>
     </form>
 </p-dialog>
 <p-table #dt [columns]="cols" [value]="weighs"
     [loading]="searching"
-    [(selection)]="selectedPatient"
+    [(selection)]="selectedWeigh"
     (onRowSelect)="onRowSelect($event)" 
     [paginator]="true" [rows]="30" 
     selectionMode="single" 
     autoLayout="true"
     [resizableColumns]="true"
     >
-    <!-- <ng-template pTemplate="caption">
-        Danh sách Cân
-        <div class="ui-helper-clearfix" style="text-align: left">
-            <button type="button" pButton icon="pi pi-file-excel" iconPos="left" label="EXCEL" 
-            (click)="exportBNExcel(false)" style="margin-right: 0.5em; float:right" 
-            class="ui-button-success" ></button>
-        </div>
-    </ng-template> -->
     <ng-template pTemplate="caption">
         Danh sách Cân 
         <div class="ui-helper-clearfix" style="text-align: left">
@@ -161,23 +139,18 @@
                 (input)="dt.filter($event.target.value, col.field, 'contains')"> -->
 <!--              <input *ngSwitchCase="'patientName'" pInputText type="text"-->
 <!--                (input)="dt.filter($event.target.value, col.field, 'contains')">-->
-<!--              <input *ngSwitchCase="'fullname'" pInputText type="text"-->
-<!--              (input)="dt.filter($event.target.value, col.field, 'contains')">-->
-<!--              <input *ngSwitchCase="'patientId'" pInputText type="text"-->
-<!--                (input)="dt.filter($event.target.value, col.field, 'contains')">-->
-<!--                <input *ngSwitchCase="'sohoso'" pInputText type="text"-->
-<!--                (input)="dt.filter($event.target.value, col.field, 'contains')">-->
-<!--                <input *ngSwitchCase="'address'" pInputText type="text"-->
-<!--                (input)="dt.filter($event.target.value, col.field, 'contains')">-->
-<!--                <input *ngSwitchCase="'birthYear'" pInputText type="text"-->
-<!--                (input)="dt.filter($event.target.value, col.field, 'contains')">-->
             </th>
-          </tr>
+        </tr>
     </ng-template>
     <ng-template pTemplate="body" let-rowData let-columns="columns">
         <tr [pSelectableRow]="rowData">
             <td *ngFor="let col of columns">
-                {{rowData[col.field]}}
+                <div  *ngIf="col.field=='dateProduce' ">
+                    {{rowData[col.field] | date: 'dd/MM/yyyy'}}
+                </div>
+                <div *ngIf="col.field!=='dateProduce'">
+                    {{rowData[col.field]}}
+                </div>
             </td>
         </tr>
     </ng-template>
@@ -185,19 +158,14 @@
         <tr>
             <td [attr.colspan]="columns.length" style="text-align: center; height: 150px; 
             font-weight: bold; color: #027E3F; font-size: 16px;">
-                Click 
+<!--                Click -->
                 <!-- <div style="text-align:left"> -->
-                    <button type="button" pButton icon="fa fa-flash" (click)="layDulieu()" 
-                    label="Lấy dữ liệu"></button>
-                     để lấy dữ liệu
+<!--                    <button type="button" pButton icon="fa fa-flash" (click)="layDulieu()" -->
+<!--                    label="Lấy dữ liệu"></button>-->
+<!--                     để lấy dữ liệu-->
                 <!-- </div> -->
+                Chưa có dữ liệu
             </td>
         </tr>
     </ng-template>
-<!--    <ng-template pTemplate="summary" let-rowData>-->
-<!--        <div style="text-align:left">-->
-<!--            <button type="button" pButton icon="fa fa-plus" (click)="showDialogToAdd()" -->
-<!--            label="Thêm Cân"></button>-->
-<!--        </div>-->
-<!--    </ng-template>-->
 </p-table>

@@ -75,6 +75,7 @@ export class LoginService {
   }
 
   public addUser(user: User): Observable<any> {
+
     return this.signUp(user.name, user.email, user.username, user.password, user.serialWeigher);
   }
 
@@ -183,7 +184,7 @@ export class LoginService {
     );
   }
 
-  public saveUser(user: User): Observable<any> {
+  public updateUser(user: User): Observable<any> {
     let url = this.appStore.getData(AppStore.PROFILE, {}).api + '/user';
     let body = {
       user: user
@@ -204,7 +205,19 @@ export class LoginService {
         )
     );
   }
-  public uploadFile() {
-    
+
+  deleteUser(id): Observable<any> {
+    console.log('  delete user: ', id);
+    const url = this.appStore.getData(AppStore.PROFILE, {}).api + this.serviceName + '/user?id=' + id;
+    return this.http.delete(url).pipe(
+        tap(
+            data => {
+              console.log('got response data', data);
+            },
+            error => {
+              console.log('login error', error);
+            }
+        )
+    );
   }
 }
