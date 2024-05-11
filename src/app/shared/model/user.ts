@@ -8,17 +8,30 @@ export interface User {
     address?;
     phone?;
 }
-export class Weigh {
-    id: number;
-    model: string;
-    power: string;
-    dateProduce: Date;
-    serialWeigher: string;
+
+export interface Weigh {
+    id?;
+    model?;
+    power?;
+    dateProduce?;
+    serialWeigher?;
     // topic?;
     // qos?;
-    constructor() {
-    }
+    // constructor() {
+    // }
 }
+
+// export class Weigh {
+//     id: number;
+//     model: string;
+//     power: string;
+//     dateProduce: Date;
+//     serialWeigher: string;
+//     // topic?;
+//     // qos?;
+//     constructor() {
+//     }
+// }
 
 
 // id: number;

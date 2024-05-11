@@ -44,10 +44,16 @@
             <div class="ui-g-12 ui-md-8 ui-lg-8">
                 <!-- <input type="text" pInputText [(ngModel)]="patient.imported_at" style="width: 100%;" name="imported_at"
                     #Imported_at="ngModel" /> -->
-                <p-calendar [(ngModel)]="weigh.dateProduce"
-                dateFormat="dd/mm/yy"
-                name="dateProduce" [showIcon]="true">
-                </p-calendar>
+<!--                <p-calendar [(ngModel)]="weigh.dateProduce"-->
+<!--                dateFormat="dd/MM/yyyy"-->
+<!--                name="dateProduce" [showIcon]="true">-->
+<!--                </p-calendar>-->
+
+                <span class="ui-float-label">
+                        <p-calendar [(ngModel)]="dateProduce" [showIcon]="true"
+                                    dateFormat="dd/mm/yy" name="dateProduce">
+                        </p-calendar>
+                    </span>
             </div>
         </div>
 

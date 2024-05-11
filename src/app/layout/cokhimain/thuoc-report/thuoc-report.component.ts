@@ -25,7 +25,7 @@ export class ThuocReportComponent implements OnInit {
   messages: MilkCollect[] = [];
   weighs: Weigh[] = [];
   selectedWeigh: Weigh;
-
+  dateProduce: Date = new Date();
   msgs: any[] = [];
   searching = false;
   colsByType: any[];

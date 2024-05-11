@@ -18,11 +18,14 @@ import { WeighService } from '../../../shared/services/weigh.service';
   styleUrls: ['./patient.component.scss']
 })
 export class PatientComponent implements OnInit {
-  weigh: Weigh;
+  weigh: Weigh = {};
   weighs: Weigh[] = [];
   selectedWeigh: Weigh;
 
   displayDialog: boolean;
+
+  tkFrom: Date = new Date();
+  dateProduce: Date = new Date();
 
   // patient: PatientModel;
   // selectedPatient: PatientModel;
@@ -55,8 +58,8 @@ export class PatientComponent implements OnInit {
       }
     );
 
-    this.weigh = new Weigh();
-    this.weigh.dateProduce = new Date();
+    this.weigh = {};
+    // this.weigh.dateProduce = new Date();
 
     // @ts-ignore
     this.cols = [
@@ -77,11 +80,7 @@ export class PatientComponent implements OnInit {
   }
 
   showDialogToAdd() {
-    // this.selectedPatient = null;
-    // this.patient = null;
-    // this.resetForm();
     console.log('showDialogToAdd =========', this.weigh);
-    // this.newPatient = true;
     this.displayDialog = true;
   }
 
@@ -93,12 +92,12 @@ export class PatientComponent implements OnInit {
 
   save() {
     if (this.weigh.id) {
+      this.weigh.dateProduce = new Date(this.dateProduce);
       this.weighService.updateWeigh(this.weigh).subscribe(
           data => {
             console.log('saved weigh: ', data);
-            // let ts: PatientModel[] = data.data;
-              // tslint:disable-next-line:triple-equals
-              this.weighs = this.weighs.map(w => w.id == data.id ? data : w);
+            // tslint:disable-next-line:triple-equals
+            this.weighs = this.weighs.map(w => w.id == data.id ? data : w);
             this.displayDialog = false;
             this.addSingle('success', 'Thành công', 'Đã  cập nhật  Cân ' + this.weigh.serialWeigher);
           },
@@ -110,8 +109,6 @@ export class PatientComponent implements OnInit {
       this.weighService.addWeigh(this.weigh).subscribe(
           data => {
             console.log('updated weigh: ', data);
-            // this.weighs.splice(0, 0, data);
-            // tslint:disable-next-line:triple-equals
             this.weighs.splice(0, 0, data);
             this.displayDialog = false;
             this.addSingle('success', 'Thành công', 'Đã thêm Cân ' + this.weigh.serialWeigher);
@@ -143,6 +140,7 @@ export class PatientComponent implements OnInit {
 
   onRowSelect(event) {
     console.log(' onRowSelect >>>>>>> selected: ', this.selectedWeigh);
+    this.dateProduce = new Date(this.selectedWeigh.dateProduce);
     this.weigh = {...this.selectedWeigh};
 
     this.displayDialog = true;
@@ -152,6 +150,7 @@ export class PatientComponent implements OnInit {
     this.msgs = [];
   }
 
+  // tslint:disable-next-line:use-life-cycle-interface
   ngOnDestroy(): void {
     this.weighs = null;
     this.weigh = null;
